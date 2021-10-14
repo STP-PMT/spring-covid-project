@@ -10,14 +10,9 @@ import javax.swing.border.EmptyBorder;
 import org.springframework.stereotype.Component;
 import java.awt.Color;
 import java.awt.Toolkit;
-
 @Component
 public class MainFrame extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
@@ -40,7 +35,7 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Documents\\Data_warehouse\\eclipse-workspace\\covid-project\\src\\asssets\\imgaes\\icon.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\icon.png"));
 		setTitle("Covid Vaccination Project For Students");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
@@ -54,4 +49,5 @@ public class MainFrame extends JFrame {
 		panel.setBounds(0, 0, 684, 47);
 		contentPane.add(panel);
 	}
+
 }
