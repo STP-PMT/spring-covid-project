@@ -10,6 +10,9 @@ import javax.swing.table.DefaultTableModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import net.csmsu.covid.entity.Register;
+import net.csmsu.covid.service.ServiceRegister;
+
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.util.List;
@@ -29,6 +32,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @Component
 public class MainFrame extends JFrame {
@@ -36,6 +41,9 @@ public class MainFrame extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTable table;
+	
+	@Autowired
+	ServiceRegister service_register;
 	/**
 	 * Launch the application.
 	 */
@@ -48,7 +56,8 @@ public class MainFrame extends JFrame {
 	 * @throws ClassNotFoundException 
 	 */
 	public MainFrame() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-		setResizable(false);
+		
+		setResizable(false);	
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\icon.png"));
 		setTitle("Covid Vaccination Project For Students");
@@ -89,17 +98,37 @@ public class MainFrame extends JFrame {
 		panel_1.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("ลงทะเบียน");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.err.println(service_register);
+				LoadDataRegister();
+			}
+		});
 		btnNewButton_1.setBounds(10, 42, 112, 23);
 		panel_1.add(btnNewButton_1);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(142, 120, 632, 330);
-		contentPane.add(scrollPane);
+		
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		//LoadDataRegister();
+		contentPane.add(scrollPane);
 		
+	}
+	void LoadDataRegister() {
+		List<Register> registers =  service_register.getAllRegister();
+		
+		DefaultTableModel model = new DefaultTableModel();
+		Object[] columns = {"รหัสลงทะเบียน","รหัสนิสิต","ชื่อ","นามสกุล","เบอร์โทร","วันที่ลงทะเบียน"};
+		model.setColumnIdentifiers(columns);
+		
+		for(Register r:registers) {
+			Object[] obj = {r.getRid(),r.getTbStudent().getSid(),r.getTbStudent().getFirstname(),r.getTbStudent().getLastname(),
+					r.getTbStudent().getMobile(),r.getDate()};
+			model.addRow(obj);
+		}
+		table.setModel(model);
 	}
 
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="covid-project" transaction-type="RESOURCE_LOCAL">
+		<class>net.csmsu.covid.entity.Register</class>
+		<class>net.csmsu.covid.entity.Student</class>
+		<class>net.csmsu.covid.entity.Vaccine</class>
+		<class>net.csmsu.covid.entity.Vaccine1</class>
+		<class>net.csmsu.covid.entity.Vaccine2</class>
+		<class>net.csmsu.covid.entity.Vaccine3</class>
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://202.28.34.197/dw64_62011212109"/>
+			<property name="javax.persistence.jdbc.user" value="dw64_62011212109"/>
+			<property name="javax.persistence.jdbc.password" value="62011212109@csmsu"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+		</properties>
+	</persistence-unit>
+</persistence>
