@@ -28,7 +28,6 @@ public class Student implements Serializable {
 
 	private String mobile;
 	
-	private Date date;
 
 	//bi-directional many-to-one association to Register
 	@OneToMany(mappedBy="tbStudent")
@@ -71,14 +70,6 @@ public class Student implements Serializable {
 
 	public String getMobile() {
 		return this.mobile;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 	public void setMobile(String mobile) {
