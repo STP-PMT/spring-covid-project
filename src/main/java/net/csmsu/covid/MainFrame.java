@@ -105,7 +105,7 @@ public class MainFrame extends JFrame {
 				LoadDataStudent(students);
 			}
 		});
-		btnNewButton.setBounds(10, 11, 112, 23);
+		btnNewButton.setBounds(10, 45, 112, 23);
 		panel_menu.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("ลงทะเบียน");
@@ -116,13 +116,38 @@ public class MainFrame extends JFrame {
 				LoadDataRegister();
 			}
 		});
-		btnNewButton_1.setBounds(10, 42, 112, 23);
+		btnNewButton_1.setBounds(10, 79, 112, 23);
 		panel_menu.add(btnNewButton_1);
+		
+		JButton btnSohkcid = new JButton("หน้าแรก");
+		btnSohkcid.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl =(CardLayout) panel_card.getLayout();
+				cl.show(panel_card,"Home");
+			}
+		});
+		btnSohkcid.setBounds(10, 11, 112, 23);
+		panel_menu.add(btnSohkcid);
 		
 		panel_card = new JPanel();
 		panel_card.setBounds(134, 47, 650, 414);
 		contentPane.add(panel_card);
 		panel_card.setLayout(new CardLayout(0, 0));
+		
+		JPanel panel_home = new JPanel();
+		panel_home.setBackground(Color.CYAN);
+		panel_card.add(panel_home, "Home");
+		panel_home.setLayout(null);
+		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\icon.png"));
+		lblNewLabel_2.setBounds(251, 11, 128, 128);
+		panel_home.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("โครงการฉีดวัคซีนโควิดสำหรับนักศึกษา");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 35));
+		lblNewLabel_3.setBounds(54, 151, 563, 62);
+		panel_home.add(lblNewLabel_3);
 		
 		JPanel panel_student = new JPanel();
 		panel_card.add(panel_student, "Student");
