@@ -174,11 +174,15 @@ public class MainFrame extends JFrame {
 				LoadDataStudent(students);
 			}
 		});
-		search_student.setBounds(496, 11, 144, 20);
+		search_student.setBounds(412, 11, 144, 20);
 		panel_student.add(search_student);
 		search_student.setToolTipText("search");
 		search_student.setForeground(Color.BLACK);
 		search_student.setColumns(10);
+		
+		JButton btnNewButton_2 = new JButton("ค้นหา");
+		btnNewButton_2.setBounds(566, 10, 74, 23);
+		panel_student.add(btnNewButton_2);
 		
 		JPanel panel_register = new JPanel();
 		panel_register.setLayout(null);
@@ -200,8 +204,12 @@ public class MainFrame extends JFrame {
 		search_register.setToolTipText("search");
 		search_register.setForeground(Color.BLACK);
 		search_register.setColumns(10);
-		search_register.setBounds(496, 11, 144, 20);
+		search_register.setBounds(411, 11, 144, 20);
 		panel_register.add(search_register);
+		
+		JButton btnNewButton_2_1 = new JButton("ค้นหา");
+		btnNewButton_2_1.setBounds(565, 10, 74, 23);
+		panel_register.add(btnNewButton_2_1);
 		
 	}
 	
