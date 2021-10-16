@@ -1,6 +1,8 @@
 package net.csmsu.covid.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -25,6 +27,8 @@ public class Student implements Serializable {
 	private String lastname;
 
 	private String mobile;
+	
+	private Date date;
 
 	//bi-directional many-to-one association to Register
 	@OneToMany(mappedBy="tbStudent")
@@ -67,6 +71,14 @@ public class Student implements Serializable {
 
 	public String getMobile() {
 		return this.mobile;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public void setMobile(String mobile) {

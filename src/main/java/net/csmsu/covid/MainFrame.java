@@ -222,11 +222,11 @@ public class MainFrame extends JFrame {
 	
 	void LoadDataStudent(List<Student> students) {
 		DefaultTableModel model = new DefaultTableModel();
-		Object[] columns = {"รหัสนิสิต","ชื่อ","นามสกุล","เบอร์โทร","อีเมล"};
+		Object[] columns = {"รหัสนิสิต","ชื่อ","นามสกุล","เบอร์โทร","อีเมล","วันที่ลงทะเบียน"};
 		model.setColumnIdentifiers(columns);
 		
 		for(Student s:students) {
-			Object[] obj = {s.getSid(),s.getFirstname(),s.getLastname(),s.getMobile(),s.getEmail()};
+			Object[] obj = {s.getSid(),s.getFirstname(),s.getLastname(),s.getMobile(),s.getEmail(),s.getDate()};
 			model.addRow(obj);
 		}
 		table_student.setModel(model);
