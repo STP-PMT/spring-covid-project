@@ -37,12 +37,14 @@ import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.CardLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @Component
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField search_student;
 	private JTable table_student;
 	private JTable table_register;
 	
@@ -50,6 +52,7 @@ public class MainFrame extends JFrame {
 	
 	@Autowired ServiceRegister service_register;
 	@Autowired ServiceStudent service_student;
+	private JTextField search_register;
 	
 	/**
 	 * Launch the application.
@@ -87,25 +90,19 @@ public class MainFrame extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel.setForeground(Color.WHITE);
 		
-		textField = new JTextField();
-		textField.setForeground(Color.LIGHT_GRAY);
-		textField.setText("ค้นหา");
-		textField.setBounds(541, 15, 233, 20);
-		panel_title.add(textField);
-		textField.setColumns(10);
-		
 		JPanel panel_menu = new JPanel();
 		panel_menu.setBackground(new Color(51, 204, 255));
 		panel_menu.setBounds(0, 47, 132, 414);
 		contentPane.add(panel_menu);
 		panel_menu.setLayout(null);
 		
-		JButton btnNewButton = new JButton("รายชื่อนักเรียน");
+		JButton btnNewButton = new JButton("รายชื่อนิสิต");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout cl =(CardLayout) panel_card.getLayout();
 				cl.show(panel_card,"Student");
-				LoadDataStudent();
+				List<Student> students =  service_student.getAllStudent();
+				LoadDataStudent(students);
 			}
 		});
 		btnNewButton.setBounds(10, 11, 112, 23);
@@ -116,7 +113,6 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout cl =(CardLayout) panel_card.getLayout();
 				cl.show(panel_card,"Register");
-				System.err.println(service_register);
 				LoadDataRegister();
 			}
 		});
@@ -140,10 +136,24 @@ public class MainFrame extends JFrame {
 		table_student = new JTable();
 		scrollPane.setViewportView(table_student);
 		
-		JLabel lblNewLabel_1 = new JLabel("รายชื่อนักเรียน");
+		JLabel lblNewLabel_1 = new JLabel("นิสิตที่ต้องการฉีดวัคซีน");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_1.setBounds(10, 11, 160, 25);
+		lblNewLabel_1.setBounds(10, 11, 211, 25);
 		panel_student.add(lblNewLabel_1);
+		
+		search_student = new JTextField();
+		search_student.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int id = Integer.parseInt(search_student.getText());
+				List<Student> students =  service_student.getStudentById(id);
+				LoadDataStudent(students);
+			}
+		});
+		search_student.setBounds(496, 11, 144, 20);
+		panel_student.add(search_student);
+		search_student.setToolTipText("search");
+		search_student.setForeground(Color.BLACK);
+		search_student.setColumns(10);
 		
 		JPanel panel_register = new JPanel();
 		panel_register.setLayout(null);
@@ -158,10 +168,18 @@ public class MainFrame extends JFrame {
 		
 		JLabel lblNewLabel_1_1 = new JLabel("ลงทะเบียน");
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_1_1.setBounds(10, 11, 160, 25);
+		lblNewLabel_1_1.setBounds(10, 5, 160, 25);
 		panel_register.add(lblNewLabel_1_1);
 		
+		search_register = new JTextField();
+		search_register.setToolTipText("search");
+		search_register.setForeground(Color.BLACK);
+		search_register.setColumns(10);
+		search_register.setBounds(496, 11, 144, 20);
+		panel_register.add(search_register);
+		
 	}
+	
 	void LoadDataRegister() {
 		List<Register> registers =  service_register.getAllRegister();
 		
@@ -177,9 +195,7 @@ public class MainFrame extends JFrame {
 		table_register.setModel(model);
 	}
 	
-	void LoadDataStudent() {
-		List<Student> students =  service_student.getAllStudent();
-		
+	void LoadDataStudent(List<Student> students) {
 		DefaultTableModel model = new DefaultTableModel();
 		Object[] columns = {"รหัสนิสิต","ชื่อ","นามสกุล","เบอร์โทร","อีเมล"};
 		model.setColumnIdentifiers(columns);
