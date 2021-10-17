@@ -51,8 +51,11 @@ public class MainFrame extends JFrame {
 	
 	private JPanel panel_card;
 	
-	@Autowired ServiceRegister service_register;
-	@Autowired ServiceStudent service_student;
+	@Autowired public ServiceRegister service_register;
+	@Autowired public ServiceStudent service_student;
+	
+	@Autowired RegisterFrame register_frame;
+	
 	private JTextField search_register;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -99,7 +102,7 @@ public class MainFrame extends JFrame {
 		btnNewButton.setBounds(10, 45, 141, 23);
 		panel_menu.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("ลงทะเบียนฉีดวัคซีน");
+		JButton btnNewButton_1 = new JButton("ลงทะเบียน");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout cl =(CardLayout) panel_card.getLayout();
@@ -225,6 +228,11 @@ public class MainFrame extends JFrame {
 		panel_register.add(btnNewButton_2_1);
 		
 		JButton btnNewButton_3 = new JButton("ลงทะเบียน");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				register_frame.setVisible(true);
+			}
+		});
 		btnNewButton_3.setBackground(new Color(0, 204, 51));
 		btnNewButton_3.setBounds(10, 53, 89, 23);
 		panel_register.add(btnNewButton_3);
