@@ -68,16 +68,23 @@ public class RegisterFrame extends JFrame{
 		tfSid = new JTextField();
 		tfSid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setTextField(true);
 				int Sid = Integer.parseInt(tfSid.getText());
-				System.err.println(sevice);
-				if(Sid != 0) {
+				
+				if(!tfSid.getText().isEmpty()) {					
 					List<Student> students = sevice.getStudentById(Sid);
 					for(Student s : students) {
 						tfFirstname.setText(s.getFirstname());
 						tfLastname.setText(s.getLastname());
 						tfMobile.setText(s.getMobile());
-						tfEmail.setText(s.getEmail());
+						tfEmail.setText(s.getEmail());	
 					}
+					if(!students.isEmpty()) {
+						setTextField(false);
+					}else {
+						
+					}
+						
 				}
 			}
 		});
@@ -146,5 +153,19 @@ public class RegisterFrame extends JFrame{
 		JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setBounds(106, 208, 138, 20);
 		contentPane.add(dateChooser);
+	}
+	
+	void setTextField(boolean b) {
+		tfFirstname.setEnabled(b);
+		tfLastname.setEnabled(b);
+		tfMobile.setEnabled(b);
+		tfEmail.setEnabled(b);
+	}
+	
+	void clearTextField() {
+		tfFirstname.setText("");
+		tfLastname.setText("");
+		tfMobile.setText("");
+		tfEmail.setText("");
 	}
 }
