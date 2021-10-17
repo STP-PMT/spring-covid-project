@@ -39,6 +39,7 @@ import java.awt.event.ActionEvent;
 import java.awt.CardLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JTabbedPane;
 
 @Component
 public class MainFrame extends JFrame {
@@ -53,7 +54,8 @@ public class MainFrame extends JFrame {
 	@Autowired ServiceRegister service_register;
 	@Autowired ServiceStudent service_student;
 	private JTextField search_register;
-	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 	
 	/**
 	 * Launch the application.
@@ -119,8 +121,18 @@ public class MainFrame extends JFrame {
 		panel_menu.add(btnSohkcid);
 		
 		JButton btnNewButton_1_1 = new JButton("ฉีดวัคซีน");
-		btnNewButton_1_1.setBounds(10, 113, 141, 23);
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {				
+				CardLayout cl =(CardLayout) panel_card.getLayout();
+				cl.show(panel_card,"Vaccine");
+			}
+		});
+		btnNewButton_1_1.setBounds(10, 146, 141, 23);
 		panel_menu.add(btnNewButton_1_1);
+		
+		JButton btnNewButton_1_2 = new JButton("ลงทะเบียนฉีดวัคซีน");
+		btnNewButton_1_2.setBounds(10, 112, 141, 23);
+		panel_menu.add(btnNewButton_1_2);
 		
 		panel_card = new JPanel();
 		panel_card.setBounds(160, 0, 684, 461);
@@ -228,39 +240,91 @@ public class MainFrame extends JFrame {
 		btnNewButton_5.setBounds(205, 53, 89, 23);
 		panel_register.add(btnNewButton_5);
 		
-		JPanel panel_vaccine = new JPanel();
-		panel_vaccine.setLayout(null);
-		panel_card.add(panel_vaccine, "name_176611939048700");
+		JPanel panel_register_1 = new JPanel();
+		panel_register_1.setLayout(null);
+		panel_card.add(panel_register_1, "name_261379744916800");
 		
 		JScrollPane scrollPane_1_1 = new JScrollPane();
 		scrollPane_1_1.setBounds(10, 87, 664, 363);
-		panel_vaccine.add(scrollPane_1_1);
+		panel_register_1.add(scrollPane_1_1);
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("ฉีดวัคซีน");
-		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_1_1_1.setBounds(10, 5, 224, 25);
-		panel_vaccine.add(lblNewLabel_1_1_1);
+		JLabel lblNewLabel_1_1_2 = new JLabel("ลงทะเบียนเพื่อฉีดวัคซีน");
+		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_1_1_2.setBounds(10, 5, 224, 25);
+		panel_register_1.add(lblNewLabel_1_1_2);
 		
-		textField = new JTextField();
-		textField.setToolTipText("search");
-		textField.setForeground(Color.BLACK);
-		textField.setColumns(10);
-		textField.setBounds(454, 8, 144, 20);
-		panel_vaccine.add(textField);
+		textField_1 = new JTextField();
+		textField_1.setToolTipText("search");
+		textField_1.setForeground(Color.BLACK);
+		textField_1.setColumns(10);
+		textField_1.setBounds(454, 8, 144, 20);
+		panel_register_1.add(textField_1);
 		
-		JButton btnNewButton_2_1_1 = new JButton("ค้นหา");
-		btnNewButton_2_1_1.setBounds(600, 7, 74, 23);
-		panel_vaccine.add(btnNewButton_2_1_1);
+		JButton btnNewButton_2_1_2 = new JButton("ค้นหา");
+		btnNewButton_2_1_2.setBounds(600, 7, 74, 23);
+		panel_register_1.add(btnNewButton_2_1_2);
 		
-		JButton btnNewButton_3_1 = new JButton("ฉีดวัคซีน");
-		btnNewButton_3_1.setBackground(new Color(0, 204, 51));
-		btnNewButton_3_1.setBounds(10, 53, 89, 23);
-		panel_vaccine.add(btnNewButton_3_1);
+		JButton btnNewButton_3_2 = new JButton("ลงทะเบียน");
+		btnNewButton_3_2.setBackground(new Color(0, 204, 51));
+		btnNewButton_3_2.setBounds(10, 53, 89, 23);
+		panel_register_1.add(btnNewButton_3_2);
 		
-		JButton btnNewButton_4_1 = new JButton("แก้ไข");
-		btnNewButton_4_1.setBackground(new Color(255, 255, 51));
-		btnNewButton_4_1.setBounds(107, 53, 89, 23);
-		panel_vaccine.add(btnNewButton_4_1);
+		JButton btnNewButton_4_2 = new JButton("แก้ไข");
+		btnNewButton_4_2.setBackground(new Color(255, 255, 51));
+		btnNewButton_4_2.setBounds(107, 53, 89, 23);
+		panel_register_1.add(btnNewButton_4_2);
+		
+		JButton btnNewButton_5_1 = new JButton("ลบ");
+		btnNewButton_5_1.setForeground(Color.WHITE);
+		btnNewButton_5_1.setBackground(Color.RED);
+		btnNewButton_5_1.setBounds(205, 53, 89, 23);
+		panel_register_1.add(btnNewButton_5_1);
+		
+		JPanel panel_vaccine = new JPanel();
+		panel_vaccine.setLayout(null);
+		panel_card.add(panel_vaccine, "Vaccine");
+		
+		JLabel lblNewLabel_1_1_1_1 = new JLabel("ฉีดวัคซีน");
+		lblNewLabel_1_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_1_1_1_1.setBounds(10, 5, 224, 25);
+		panel_vaccine.add(lblNewLabel_1_1_1_1);
+		
+		textField_2 = new JTextField();
+		textField_2.setToolTipText("search");
+		textField_2.setForeground(Color.BLACK);
+		textField_2.setColumns(10);
+		textField_2.setBounds(454, 8, 144, 20);
+		panel_vaccine.add(textField_2);
+		
+		JButton btnNewButton_2_1_1_1 = new JButton("ค้นหา");
+		btnNewButton_2_1_1_1.setBounds(600, 7, 74, 23);
+		panel_vaccine.add(btnNewButton_2_1_1_1);
+		
+		JButton btnNewButton_3_1_1 = new JButton("ฉีดวัคซีน");
+		btnNewButton_3_1_1.setBackground(new Color(0, 204, 51));
+		btnNewButton_3_1_1.setBounds(10, 53, 89, 23);
+		panel_vaccine.add(btnNewButton_3_1_1);
+		
+		JButton btnNewButton_4_1_1 = new JButton("แก้ไข");
+		btnNewButton_4_1_1.setBackground(new Color(255, 255, 51));
+		btnNewButton_4_1_1.setBounds(107, 53, 89, 23);
+		panel_vaccine.add(btnNewButton_4_1_1);
+		
+		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_1.setBounds(10, 87, 664, 363);
+		panel_vaccine.add(tabbedPane_1);
+		
+		JPanel panel_dose1_1 = new JPanel();
+		tabbedPane_1.addTab("New tab", null, panel_dose1_1, null);
+		
+		JScrollPane scrollPane_1_1_1_1 = new JScrollPane();
+		panel_dose1_1.add(scrollPane_1_1_1_1);
+		
+		JPanel panel_dose2_1 = new JPanel();
+		tabbedPane_1.addTab("New tab", null, panel_dose2_1, null);
+		
+		JPanel panel_dose3_1 = new JPanel();
+		tabbedPane_1.addTab("New tab", null, panel_dose3_1, null);
 		
 	}
 	
