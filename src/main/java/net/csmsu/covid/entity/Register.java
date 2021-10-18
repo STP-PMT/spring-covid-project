@@ -29,6 +29,21 @@ public class Register implements Serializable {
 	private Student tbStudent;
 
 	//bi-directional many-to-one association to Vaccine1
+	@ManyToOne
+	@JoinColumn(name="dose1")
+	private Vaccine1 tbVaccine1;
+
+	//bi-directional many-to-one association to Vaccine2
+	@ManyToOne
+	@JoinColumn(name="dose2")
+	private Vaccine2 tbVaccine2;
+
+	//bi-directional many-to-one association to Vaccine3
+	@ManyToOne
+	@JoinColumn(name="dose3")
+	private Vaccine3 tbVaccine3;
+
+	//bi-directional many-to-one association to Vaccine1
 	@OneToMany(mappedBy="tbRegister")
 	private List<Vaccine1> tbVaccine1s;
 
@@ -65,6 +80,30 @@ public class Register implements Serializable {
 
 	public void setTbStudent(Student tbStudent) {
 		this.tbStudent = tbStudent;
+	}
+
+	public Vaccine1 getTbVaccine1() {
+		return this.tbVaccine1;
+	}
+
+	public void setTbVaccine1(Vaccine1 tbVaccine1) {
+		this.tbVaccine1 = tbVaccine1;
+	}
+
+	public Vaccine2 getTbVaccine2() {
+		return this.tbVaccine2;
+	}
+
+	public void setTbVaccine2(Vaccine2 tbVaccine2) {
+		this.tbVaccine2 = tbVaccine2;
+	}
+
+	public Vaccine3 getTbVaccine3() {
+		return this.tbVaccine3;
+	}
+
+	public void setTbVaccine3(Vaccine3 tbVaccine3) {
+		this.tbVaccine3 = tbVaccine3;
 	}
 
 	public List<Vaccine1> getTbVaccine1s() {

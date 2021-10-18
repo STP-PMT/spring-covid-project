@@ -16,4 +16,9 @@ public class ServiceRegister {
 	public List<Register> getAllRegister(){
 		return register_repo.findAll();
 	}
+	
+	public Register updateRegister(Register register) {
+		return register_repo.save(register);
+	}
+	
 }

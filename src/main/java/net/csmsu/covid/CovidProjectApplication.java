@@ -22,7 +22,7 @@ public class CovidProjectApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {				
+				try {
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
