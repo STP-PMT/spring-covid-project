@@ -17,7 +17,9 @@ import net.csmsu.covid.service.ServiceStudent;
 
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -46,6 +48,7 @@ import java.awt.event.HierarchyEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.VetoableChangeListener;
+import java.text.SimpleDateFormat;
 import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
 import java.awt.event.InputMethodListener;
@@ -309,16 +312,22 @@ public class MainFrame extends JFrame {
 		tabbedPane_1.addTab("เข็มที่ 3", null, panel_dose3, null);
 		
 		JDateChooser dateChooser = new JDateChooser();
+		
+		dateChooser.setBounds(563, 53, 111, 20);
+		panel_vaccine.add(dateChooser);
 		dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
-				
 				if(tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
-					System.err.println("inputMethodTextChanged");
+					try {
+						String strdate = setFormatDate(dateChooser);
+						System.err.println(strdate);
+					} catch (NullPointerException e) {
+						// TODO: handle exception
+					}
+					
 				}
 			}
 		});
-		dateChooser.setBounds(563, 53, 111, 20);
-		panel_vaccine.add(dateChooser);
 		
 	}
 	
@@ -347,5 +356,16 @@ public class MainFrame extends JFrame {
 			model.addRow(obj);
 		}
 		table_student.setModel(model);
+	}
+	
+	String setFormatDate(JDateChooser date) {
+		if(date.getDate() != null) {
+			Date d = date.getDate();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
+			return dateFormat.format(d);	
+		}else {
+			return "";
+		}
+		
 	}
 }
