@@ -148,20 +148,19 @@ public class RegisterFrame extends JFrame{
 				
 				if(!tfSid.getText().isEmpty()) {				
 					int Sid = Integer.parseInt(tfSid.getText());
-					if(service_register.isUniqueSid(Sid)) {
-						String date = setFormatDate(dateChooser);
-						List<Student> students = sevice.getStudentById(Sid);
-						for(Student s : students) {
-							register.setTbStudent(s);
-						}
-						register.setDate(java.sql.Date.valueOf(date));
-						
-						if(service_register.updateRegister(register)!=null) {
-							JOptionPane.showMessageDialog(null,"ลงทะเบียน Done");
-						}else {
-							JOptionPane.showMessageDialog(null,"ลงทะเบียน not");
-						}
-					}					
+					String date = setFormatDate(dateChooser);
+					List<Student> students = sevice.getStudentById(Sid);
+					for(Student s : students) {
+						register.setTbStudent(s);
+					}
+					register.setDate(java.sql.Date.valueOf(date));
+					
+					if(service_register.updateRegister(register)!=null) {
+						JOptionPane.showMessageDialog(null,"ลงทะเบียน Done");
+					}else {
+						JOptionPane.showMessageDialog(null,"ลงทะเบียน not");
+					
+					}				
 				}
 			}
 		});
