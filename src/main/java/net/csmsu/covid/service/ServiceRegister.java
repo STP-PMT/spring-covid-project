@@ -21,4 +21,7 @@ public class ServiceRegister {
 		return register_repo.save(register);
 	}
 	
+	public Register getRegisterByRid(int rid) {
+		return register_repo.findByRid(rid);
+	}
 }

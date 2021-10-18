@@ -32,6 +32,10 @@ import java.util.List;
 import java.util.Locale;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 @Component
 public class RegisterFrame extends JFrame{
@@ -46,6 +50,12 @@ public class RegisterFrame extends JFrame{
 	private JTextField tfMobile;
 	private JTextField tfEmail;
 	private JDateChooser dateChooser;
+	
+	private JLabel label_title;
+	
+	private int rid = 0;
+
+	
 
 	@Autowired ServiceStudent sevice;
 	@Autowired ServiceRegister service_register;
@@ -59,8 +69,29 @@ public class RegisterFrame extends JFrame{
 	 * @throws InstantiationException 
 	 * @throws ClassNotFoundException 
 	 */
+	
+	public int getRid() {
+		return rid;
+	}
+
+	public void setRid(int rid) {
+		this.rid=rid;
+		
+	}
+	public RegisterFrame(ServiceRegister service_register) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		this();
+		this.service_register = service_register;
+	}
+	
 	public RegisterFrame() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				LoadEdit();
+			}
+		});
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		UIManager.put("OptionPane.messageFont", new Font("Tahoma", Font.PLAIN, 14));
 		setTitle("ลงทะเบียนต้องการวัคซีน");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 300, 400);
@@ -145,22 +176,22 @@ public class RegisterFrame extends JFrame{
 		JButton btnNewButton = new JButton("ยืนยัน");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Register register = new Register();
-				
-				if(!tfSid.getText().isEmpty()) {				
-					int Sid = Integer.parseInt(tfSid.getText());
+				if(!tfSid.getText().isEmpty()&&rid==0) {
+					Register register = new Register();
+					int id = Integer.parseInt(tfSid.getText());
 					String date = setFormatDate(dateChooser);
-					List<Student> students = sevice.getStudentById(Sid);
+					List<Student> students = sevice.getStudentById(id);
 					for(Student s : students) {
 						register.setTbStudent(s);
 					}
 					register.setDate(java.sql.Date.valueOf(date));
 					if(service_register.updateRegister(register)!=null) {
-						JOptionPane.showMessageDialog(null,"ลงทะเบียน Done");
+						JOptionPane.showMessageDialog(null,"ลงทะเบียน สำเร็จ");
 					}else {
-						JOptionPane.showMessageDialog(null,"ลงทะเบียน not");
-					}
-								
+						JOptionPane.showMessageDialog(null,"ลงทะเบียน ไม่สำเร็จ!");
+					}			
+				}else if(rid != 0 ) {
+										
 				}
 			}
 		});
@@ -181,10 +212,10 @@ public class RegisterFrame extends JFrame{
 		lblNewLabel_1_1_2_1_1.setBounds(27, 208, 69, 14);
 		contentPane.add(lblNewLabel_1_1_2_1_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("ลงทะเบียนต้องการวัคซีน");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblNewLabel_2.setBounds(50, 11, 186, 23);
-		contentPane.add(lblNewLabel_2);
+		label_title = new JLabel("ลงทะเบียนต้องการวัคซีน");
+		label_title.setFont(new Font("Tahoma", Font.BOLD, 16));
+		label_title.setBounds(50, 11, 186, 23);
+		contentPane.add(label_title);
 		
 		dateChooser = new JDateChooser();
 		dateChooser.setDateFormatString("dd/MMMM/yyyy");
@@ -212,4 +243,25 @@ public class RegisterFrame extends JFrame{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
 		return dateFormat.format(d);	
 	}
+	
+	void LoadEdit() {
+		if(rid!=0) {
+			Register register = new Register();
+			tfSid.setEditable(false);
+			setTextField(false);
+			
+			register = service_register.getRegisterByRid(rid);
+			tfSid.setText(register.getTbStudent().getSid()+"");
+			tfFirstname.setText(register.getTbStudent().getFirstname());
+			tfLastname.setText(register.getTbStudent().getLastname());
+			tfMobile.setText(register.getTbStudent().getMobile());
+			tfEmail.setText(register.getTbStudent().getEmail());
+			dateChooser.setDate(register.getDate());
+			
+			label_title.setText("แก้ไขการลงทะเบียน");
+			setTitle("แก้ไขการลงทะเบียน");
+			rid=0;
+		}
+	}
+
 }

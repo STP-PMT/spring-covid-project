@@ -6,5 +6,5 @@ import net.csmsu.covid.entity.Register;
 import net.csmsu.covid.entity.Student;
 
 public interface RegisterRepository extends JpaRepository<Register, Integer> {
-	
+	public Register findByRid(int rid);
 }

@@ -84,9 +84,9 @@ public class MainFrame extends JFrame {
 	 * @throws ClassNotFoundException 
 	 */
 	public MainFrame() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-		
 		setResizable(false);	
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		UIManager.put("OptionPane.messageFont", new Font("Tahoma", Font.PLAIN, 14));
 		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\icon.png"));
 		setTitle("Covid Vaccination Project For Students");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -136,6 +136,7 @@ public class MainFrame extends JFrame {
 		panel_menu.add(btnSohkcid);
 		
 		JButton btnNewButton_1_1 = new JButton("ลงทะเบียนฉีดวัคซีน");
+		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				CardLayout cl =(CardLayout) panel_card.getLayout();
@@ -247,6 +248,17 @@ public class MainFrame extends JFrame {
 		panel_register.add(btnNewButton_3);
 		
 		JButton btnNewButton_4 = new JButton("แก้ไข");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+	        		int id = (Integer) table_register.getValueAt(table_register.getSelectedRow(), 0);
+	        		System.err.println("Selected : "+id);
+	        		RegisterFrame frame = new RegisterFrame(service_register);
+	        		frame.setRid(id);
+	        		frame.setVisible(true);
+	        	}catch(Exception ex){}
+			}
+		});
 		btnNewButton_4.setBackground(new Color(255, 255, 51));
 		btnNewButton_4.setBounds(107, 53, 89, 23);
 		panel_register.add(btnNewButton_4);
@@ -322,7 +334,7 @@ public class MainFrame extends JFrame {
 						String strdate = setFormatDate(dateChooser);
 						System.err.println(strdate);
 					} catch (NullPointerException e) {
-						// TODO: handle exception
+						
 					}
 					
 				}
