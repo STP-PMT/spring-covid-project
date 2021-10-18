@@ -25,15 +25,16 @@ import net.csmsu.covid.service.ServiceRegister;
 import net.csmsu.covid.service.ServiceStudent;
 
 import java.awt.event.ActionListener;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 
 @Component
 public class RegisterFrame extends JFrame{
-
 	/**
 	 * 
 	 */
@@ -154,13 +155,12 @@ public class RegisterFrame extends JFrame{
 						register.setTbStudent(s);
 					}
 					register.setDate(java.sql.Date.valueOf(date));
-					
 					if(service_register.updateRegister(register)!=null) {
 						JOptionPane.showMessageDialog(null,"ลงทะเบียน Done");
 					}else {
 						JOptionPane.showMessageDialog(null,"ลงทะเบียน not");
-					
-					}				
+					}
+								
 				}
 			}
 		});
@@ -210,7 +210,6 @@ public class RegisterFrame extends JFrame{
 	String setFormatDate(JDateChooser date) {
 		Date d = date.getDate();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
-		return dateFormat.format(d);
-		
+		return dateFormat.format(d);	
 	}
 }

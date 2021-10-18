@@ -40,6 +40,16 @@ import java.awt.CardLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTabbedPane;
+import com.toedter.calendar.JDateChooser;
+import java.awt.event.HierarchyListener;
+import java.awt.event.HierarchyEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.VetoableChangeListener;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.ContainerEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
 
 @Component
 public class MainFrame extends JFrame {
@@ -51,14 +61,13 @@ public class MainFrame extends JFrame {
 	
 	private JPanel panel_card;
 	
-	@Autowired public ServiceRegister service_register;
-	@Autowired public ServiceStudent service_student;
-	
+	@Autowired ServiceRegister service_register;
+	@Autowired ServiceStudent service_student;
 	@Autowired RegisterFrame register_frame;
 	
 	private JTextField search_register;
-	private JTextField textField_1;
 	private JTextField textField_2;
+	private JTable table_allvaccine;
 	
 	/**
 	 * Launch the application.
@@ -102,12 +111,12 @@ public class MainFrame extends JFrame {
 		btnNewButton.setBounds(10, 45, 141, 23);
 		panel_menu.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("ลงทะเบียน");
+		JButton btnNewButton_1 = new JButton("ลงทะเบียนเข้าระบบ");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout cl =(CardLayout) panel_card.getLayout();
 				cl.show(panel_card,"Register");
-				LoadDataRegister();
+				LoadDataRegister(table_register);
 			}
 		});
 		btnNewButton_1.setBounds(10, 79, 141, 23);
@@ -123,19 +132,16 @@ public class MainFrame extends JFrame {
 		btnSohkcid.setBounds(10, 11, 141, 23);
 		panel_menu.add(btnSohkcid);
 		
-		JButton btnNewButton_1_1 = new JButton("ฉีดวัคซีน");
+		JButton btnNewButton_1_1 = new JButton("ลงทะเบียนฉีดวัคซีน");
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				CardLayout cl =(CardLayout) panel_card.getLayout();
 				cl.show(panel_card,"Vaccine");
+				LoadDataRegister(table_allvaccine);
 			}
 		});
-		btnNewButton_1_1.setBounds(10, 146, 141, 23);
+		btnNewButton_1_1.setBounds(10, 113, 141, 23);
 		panel_menu.add(btnNewButton_1_1);
-		
-		JButton btnNewButton_1_2 = new JButton("ลงทะเบียนฉีดวัคซีน");
-		btnNewButton_1_2.setBounds(10, 112, 141, 23);
-		panel_menu.add(btnNewButton_1_2);
 		
 		panel_card = new JPanel();
 		panel_card.setBounds(160, 0, 684, 461);
@@ -248,46 +254,6 @@ public class MainFrame extends JFrame {
 		btnNewButton_5.setBounds(205, 53, 89, 23);
 		panel_register.add(btnNewButton_5);
 		
-		JPanel panel_register_1 = new JPanel();
-		panel_register_1.setLayout(null);
-		panel_card.add(panel_register_1, "name_261379744916800");
-		
-		JScrollPane scrollPane_1_1 = new JScrollPane();
-		scrollPane_1_1.setBounds(10, 87, 664, 363);
-		panel_register_1.add(scrollPane_1_1);
-		
-		JLabel lblNewLabel_1_1_2 = new JLabel("ลงทะเบียนเพื่อฉีดวัคซีน");
-		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_1_1_2.setBounds(10, 5, 224, 25);
-		panel_register_1.add(lblNewLabel_1_1_2);
-		
-		textField_1 = new JTextField();
-		textField_1.setToolTipText("search");
-		textField_1.setForeground(Color.BLACK);
-		textField_1.setColumns(10);
-		textField_1.setBounds(454, 8, 144, 20);
-		panel_register_1.add(textField_1);
-		
-		JButton btnNewButton_2_1_2 = new JButton("ค้นหา");
-		btnNewButton_2_1_2.setBounds(600, 7, 74, 23);
-		panel_register_1.add(btnNewButton_2_1_2);
-		
-		JButton btnNewButton_3_2 = new JButton("ลงทะเบียน");
-		btnNewButton_3_2.setBackground(new Color(0, 204, 51));
-		btnNewButton_3_2.setBounds(10, 53, 89, 23);
-		panel_register_1.add(btnNewButton_3_2);
-		
-		JButton btnNewButton_4_2 = new JButton("แก้ไข");
-		btnNewButton_4_2.setBackground(new Color(255, 255, 51));
-		btnNewButton_4_2.setBounds(107, 53, 89, 23);
-		panel_register_1.add(btnNewButton_4_2);
-		
-		JButton btnNewButton_5_1 = new JButton("ลบ");
-		btnNewButton_5_1.setForeground(Color.WHITE);
-		btnNewButton_5_1.setBackground(Color.RED);
-		btnNewButton_5_1.setBounds(205, 53, 89, 23);
-		panel_register_1.add(btnNewButton_5_1);
-		
 		JPanel panel_vaccine = new JPanel();
 		panel_vaccine.setLayout(null);
 		panel_card.add(panel_vaccine, "Vaccine");
@@ -322,21 +288,41 @@ public class MainFrame extends JFrame {
 		tabbedPane_1.setBounds(10, 87, 664, 363);
 		panel_vaccine.add(tabbedPane_1);
 		
-		JPanel panel_dose1_1 = new JPanel();
-		tabbedPane_1.addTab("New tab", null, panel_dose1_1, null);
+		JPanel panel_all = new JPanel();
+		tabbedPane_1.addTab("รายชื่อลงทะเบียน", null, panel_all, null);
+		panel_all.setLayout(null);
 		
-		JScrollPane scrollPane_1_1_1_1 = new JScrollPane();
-		panel_dose1_1.add(scrollPane_1_1_1_1);
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(0, 0, 659, 335);
+		panel_all.add(scrollPane_2);
 		
-		JPanel panel_dose2_1 = new JPanel();
-		tabbedPane_1.addTab("New tab", null, panel_dose2_1, null);
+		table_allvaccine = new JTable();
+		scrollPane_2.setViewportView(table_allvaccine);
 		
-		JPanel panel_dose3_1 = new JPanel();
-		tabbedPane_1.addTab("New tab", null, panel_dose3_1, null);
+		JPanel panel_dose1 = new JPanel();
+		tabbedPane_1.addTab("เข็มที่ 1", null, panel_dose1, null);
+		
+		JPanel panel_dose2 = new JPanel();
+		tabbedPane_1.addTab("เข็มที่ 2", null, panel_dose2, null);
+		
+		JPanel panel_dose3 = new JPanel();
+		tabbedPane_1.addTab("เข็มที่ 3", null, panel_dose3, null);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				
+				if(tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
+					System.err.println("inputMethodTextChanged");
+				}
+			}
+		});
+		dateChooser.setBounds(563, 53, 111, 20);
+		panel_vaccine.add(dateChooser);
 		
 	}
 	
-	void LoadDataRegister() {
+	void LoadDataRegister(JTable table) {
 		List<Register> registers =  service_register.getAllRegister();
 		
 		DefaultTableModel model = new DefaultTableModel();
@@ -348,7 +334,7 @@ public class MainFrame extends JFrame {
 					r.getTbStudent().getMobile(),r.getDate()};
 			model.addRow(obj);
 		}
-		table_register.setModel(model);
+		table.setModel(model);
 	}
 	
 	void LoadDataStudent(List<Student> students) {
