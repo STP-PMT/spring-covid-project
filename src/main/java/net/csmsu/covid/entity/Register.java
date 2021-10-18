@@ -19,7 +19,7 @@ public class Register implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int rid;
-
+	
 	@Temporal(TemporalType.DATE)
 	private Date date;
 

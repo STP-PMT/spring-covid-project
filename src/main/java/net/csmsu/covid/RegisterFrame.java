@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -18,11 +19,16 @@ import javax.swing.JButton;
 import java.awt.Font;
 import com.toedter.calendar.JDateChooser;
 
+import net.csmsu.covid.entity.Register;
 import net.csmsu.covid.entity.Student;
+import net.csmsu.covid.service.ServiceRegister;
 import net.csmsu.covid.service.ServiceStudent;
 
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.awt.event.ActionEvent;
 
 @Component
@@ -38,8 +44,10 @@ public class RegisterFrame extends JFrame{
 	private JTextField tfLastname;
 	private JTextField tfMobile;
 	private JTextField tfEmail;
+	private JDateChooser dateChooser;
 
-@Autowired ServiceStudent sevice;
+	@Autowired ServiceStudent sevice;
+	@Autowired ServiceRegister service_register;
 	/**
 	 * Launch the application.
 	 */
@@ -69,9 +77,8 @@ public class RegisterFrame extends JFrame{
 		tfSid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setTextField(true);
-				int Sid = Integer.parseInt(tfSid.getText());
-				
-				if(!tfSid.getText().isEmpty()) {					
+				if(!tfSid.getText().isEmpty()) {
+					int Sid = Integer.parseInt(tfSid.getText());
 					List<Student> students = sevice.getStudentById(Sid);
 					for(Student s : students) {
 						tfFirstname.setText(s.getFirstname());
@@ -82,9 +89,11 @@ public class RegisterFrame extends JFrame{
 					if(!students.isEmpty()) {
 						setTextField(false);
 					}else {
-						
+						clearTextField();
 					}
 						
+				}else {
+					clearTextField();
 				}
 			}
 		});
@@ -133,10 +142,38 @@ public class RegisterFrame extends JFrame{
 		contentPane.add(tfEmail);
 		
 		JButton btnNewButton = new JButton("ยืนยัน");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Register register = new Register();
+				
+				if(!tfSid.getText().isEmpty()) {				
+					int Sid = Integer.parseInt(tfSid.getText());
+					if(service_register.isUniqueSid(Sid)) {
+						String date = setFormatDate(dateChooser);
+						List<Student> students = sevice.getStudentById(Sid);
+						for(Student s : students) {
+							register.setTbStudent(s);
+						}
+						register.setDate(java.sql.Date.valueOf(date));
+						
+						if(service_register.updateRegister(register)!=null) {
+							JOptionPane.showMessageDialog(null,"ลงทะเบียน Done");
+						}else {
+							JOptionPane.showMessageDialog(null,"ลงทะเบียน not");
+						}
+					}					
+				}
+			}
+		});
 		btnNewButton.setBounds(86, 327, 89, 23);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("ยกเลิก");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		btnNewButton_1.setBounds(185, 327, 89, 23);
 		contentPane.add(btnNewButton_1);
 		
@@ -150,7 +187,9 @@ public class RegisterFrame extends JFrame{
 		lblNewLabel_2.setBounds(50, 11, 186, 23);
 		contentPane.add(lblNewLabel_2);
 		
-		JDateChooser dateChooser = new JDateChooser();
+		dateChooser = new JDateChooser();
+		dateChooser.setDateFormatString("dd/MMMM/yyyy");
+		dateChooser.setDate(new Date());
 		dateChooser.setBounds(106, 208, 138, 20);
 		contentPane.add(dateChooser);
 	}
@@ -167,5 +206,12 @@ public class RegisterFrame extends JFrame{
 		tfLastname.setText("");
 		tfMobile.setText("");
 		tfEmail.setText("");
+	}
+	
+	String setFormatDate(JDateChooser date) {
+		Date d = date.getDate();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
+		return dateFormat.format(d);
+		
 	}
 }
