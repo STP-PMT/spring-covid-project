@@ -3,6 +3,7 @@ package net.csmsu.covid.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -21,6 +22,10 @@ public class Vaccine1 implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	private Date date;
+
+	//bi-directional many-to-one association to Register
+	@OneToMany(mappedBy="tbVaccine1")
+	private List<Register> tbRegisters;
 
 	//bi-directional many-to-one association to Register
 	@ManyToOne
@@ -49,6 +54,28 @@ public class Vaccine1 implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public List<Register> getTbRegisters() {
+		return this.tbRegisters;
+	}
+
+	public void setTbRegisters(List<Register> tbRegisters) {
+		this.tbRegisters = tbRegisters;
+	}
+
+	public Register addTbRegister(Register tbRegister) {
+		getTbRegisters().add(tbRegister);
+		tbRegister.setTbVaccine1(this);
+
+		return tbRegister;
+	}
+
+	public Register removeTbRegister(Register tbRegister) {
+		getTbRegisters().remove(tbRegister);
+		tbRegister.setTbVaccine1(null);
+
+		return tbRegister;
 	}
 
 	public Register getTbRegister() {
