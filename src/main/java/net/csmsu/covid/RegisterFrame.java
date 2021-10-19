@@ -187,6 +187,7 @@ public class RegisterFrame extends JFrame{
 						JOptionPane.showMessageDialog(null,"แก้ไข ไม่สำเร็จ!");
 					}
 					rid=0;
+					dispose();
 				}
 				else if(!tfSid.getText().isEmpty()){
 					Register register = new Register();
@@ -229,7 +230,7 @@ public class RegisterFrame extends JFrame{
 		contentPane.add(label_title);
 		
 		dateChooser = new JDateChooser();
-		dateChooser.setDateFormatString("dd/MMMM/yyyy");
+		dateChooser.setDateFormatString("dd-MMMM-yyyy");
 		dateChooser.setDate(new Date());
 		dateChooser.setBounds(106, 208, 138, 20);
 		contentPane.add(dateChooser);

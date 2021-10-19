@@ -24,4 +24,13 @@ public class ServiceRegister {
 	public Register getRegisterByRid(int rid) {
 		return register_repo.findByRid(rid);
 	}
+	
+	public boolean deleteByRid(int rid) {
+		try {			
+			 register_repo.deleteById(rid);
+			 return true;
+		}catch (Exception e) {
+			return false;
+		}
+	}
 }

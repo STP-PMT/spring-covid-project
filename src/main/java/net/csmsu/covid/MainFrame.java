@@ -34,6 +34,7 @@ import java.awt.FlowLayout;
 import javax.swing.JDesktopPane;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
@@ -53,6 +54,8 @@ import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 @Component
 public class MainFrame extends JFrame {
@@ -84,6 +87,7 @@ public class MainFrame extends JFrame {
 	 * @throws ClassNotFoundException 
 	 */
 	public MainFrame() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		
 		setResizable(false);	
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		UIManager.put("OptionPane.messageFont", new Font("Tahoma", Font.PLAIN, 14));
@@ -256,6 +260,12 @@ public class MainFrame extends JFrame {
 	        		RegisterFrame frame = new RegisterFrame(service_register);
 	        		frame.setRid(id);
 	        		frame.setVisible(true);
+	        		frame.addWindowListener(new WindowAdapter() {
+	        			@Override
+	        			public void windowClosed(WindowEvent e) {
+	        				LoadDataRegister(table_register);
+	        			}
+	        		});
 	        	}catch(Exception ex){}
 			}
 		});
@@ -264,6 +274,20 @@ public class MainFrame extends JFrame {
 		panel_register.add(btnNewButton_4);
 		
 		JButton btnNewButton_5 = new JButton("ลบ");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+	        		int id = (Integer) table_register.getValueAt(table_register.getSelectedRow(), 0);
+	        		System.err.println("Delete rid : "+id);
+	        		if(service_register.deleteByRid(id)) {
+	        			JOptionPane.showMessageDialog(null,"ลบสำเร็จ");
+	        		}else {
+	        			JOptionPane.showMessageDialog(null,"ลบไม่สำเร็จ");
+	        		}
+	        		LoadDataRegister(table_register);
+	        	}catch(Exception ex){}
+			}
+		});
 		btnNewButton_5.setForeground(Color.WHITE);
 		btnNewButton_5.setBackground(Color.RED);
 		btnNewButton_5.setBounds(205, 53, 89, 23);

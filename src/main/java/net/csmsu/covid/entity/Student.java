@@ -84,7 +84,6 @@ public class Student implements Serializable {
 	public Register addTbRegister(Register tbRegister) {
 		getTbRegisters().add(tbRegister);
 		tbRegister.setTbStudent(this);
-
 		return tbRegister;
 	}
 
