@@ -109,7 +109,7 @@ public class RegisterFrame extends JFrame{
 		tfSid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setTextField(true);
-				if(!tfSid.getText().isEmpty()) {
+			 if(!tfSid.getText().isEmpty()) {
 					int Sid = Integer.parseInt(tfSid.getText());
 					List<Student> students = sevice.getStudentById(Sid);
 					for(Student s : students) {
@@ -176,7 +176,19 @@ public class RegisterFrame extends JFrame{
 		JButton btnNewButton = new JButton("ยืนยัน");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!tfSid.getText().isEmpty()&&rid==0) {
+				if(rid !=0) {
+					Register register = service_register.getRegisterByRid(rid);
+					String date = setFormatDate(dateChooser);
+					register.setRid(rid);
+					register.setDate(java.sql.Date.valueOf(date));
+					if(service_register.updateRegister(register)!=null) {
+						JOptionPane.showMessageDialog(null,"แก้ไข สำเร็จ");
+					}else {
+						JOptionPane.showMessageDialog(null,"แก้ไข ไม่สำเร็จ!");
+					}
+					rid=0;
+				}
+				else if(!tfSid.getText().isEmpty()){
 					Register register = new Register();
 					int id = Integer.parseInt(tfSid.getText());
 					String date = setFormatDate(dateChooser);
@@ -187,11 +199,10 @@ public class RegisterFrame extends JFrame{
 					register.setDate(java.sql.Date.valueOf(date));
 					if(service_register.updateRegister(register)!=null) {
 						JOptionPane.showMessageDialog(null,"ลงทะเบียน สำเร็จ");
+						
 					}else {
 						JOptionPane.showMessageDialog(null,"ลงทะเบียน ไม่สำเร็จ!");
 					}			
-				}else if(rid != 0 ) {
-										
 				}
 			}
 		});
@@ -260,7 +271,7 @@ public class RegisterFrame extends JFrame{
 			
 			label_title.setText("แก้ไขการลงทะเบียน");
 			setTitle("แก้ไขการลงทะเบียน");
-			rid=0;
+			
 		}
 	}
 
