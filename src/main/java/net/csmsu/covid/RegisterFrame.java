@@ -36,6 +36,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import javax.swing.DefaultComboBoxModel;
 
 @Component
 public class RegisterFrame extends JFrame{
@@ -50,14 +51,14 @@ public class RegisterFrame extends JFrame{
 	private JTextField tfMobile;
 	private JTextField tfEmail;
 	private JDateChooser dateChooser;
-	
+	private JComboBox<Integer> combo_student;
 	private JLabel label_title;
 	
 	private int rid = 0;
 
 	
 
-	@Autowired ServiceStudent sevice;
+	@Autowired ServiceStudent service_student;
 	@Autowired ServiceRegister service_register;
 	/**
 	 * Launch the application.
@@ -78,19 +79,32 @@ public class RegisterFrame extends JFrame{
 		this.rid=rid;
 		
 	}
-	public RegisterFrame(ServiceRegister service_register) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+	public RegisterFrame(ServiceRegister service_register) {
 		this();
 		this.service_register = service_register;
 	}
 	
-	public RegisterFrame() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+	public RegisterFrame()  {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				LoadEdit();
+				if(rid == 0) {
+					List<Student> student = service_student.getStudentNotInRegister();
+					for(Student s : student) {
+						combo_student.addItem(s.getSid());
+					}
+				}
+				
+				
 			}
 		});
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e1) {
+			e1.printStackTrace();
+		}
 		UIManager.put("OptionPane.messageFont", new Font("Tahoma", Font.PLAIN, 14));
 		setTitle("ลงทะเบียนต้องการวัคซีน");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -102,7 +116,7 @@ public class RegisterFrame extends JFrame{
 		
 		JLabel lblNewLabel = new JLabel("รหัสนิสิต");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(50, 77, 46, 14);
+		lblNewLabel.setBounds(33, 64, 46, 14);
 		contentPane.add(lblNewLabel);
 		
 		tfSid = new JTextField();
@@ -111,7 +125,7 @@ public class RegisterFrame extends JFrame{
 				setTextField(true);
 			 if(!tfSid.getText().isEmpty()) {
 					int Sid = Integer.parseInt(tfSid.getText());
-					List<Student> students = sevice.getStudentById(Sid);
+					List<Student> students = service_student.getStudentById(Sid);
 					for(Student s : students) {
 						tfFirstname.setText(s.getFirstname());
 						tfLastname.setText(s.getLastname());
@@ -129,48 +143,48 @@ public class RegisterFrame extends JFrame{
 				}
 			}
 		});
-		tfSid.setBounds(106, 77, 138, 20);
+		tfSid.setBounds(89, 64, 138, 20);
 		contentPane.add(tfSid);
 		tfSid.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("ชื่อ");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setBounds(50, 105, 46, 14);
+		lblNewLabel_1.setBounds(33, 124, 46, 14);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("นามสกุล");
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1.setBounds(50, 130, 46, 14);
+		lblNewLabel_1_1.setBounds(33, 149, 46, 14);
 		contentPane.add(lblNewLabel_1_1);
 		
 		JLabel lblNewLabel_1_1_2 = new JLabel("เบอร์โทร");
 		lblNewLabel_1_1_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_2.setBounds(50, 158, 46, 14);
+		lblNewLabel_1_1_2.setBounds(33, 177, 46, 14);
 		contentPane.add(lblNewLabel_1_1_2);
 		
 		JLabel lblNewLabel_1_1_2_1 = new JLabel("อีเมล");
 		lblNewLabel_1_1_2_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_2_1.setBounds(50, 183, 46, 14);
+		lblNewLabel_1_1_2_1.setBounds(33, 202, 46, 14);
 		contentPane.add(lblNewLabel_1_1_2_1);
 		
 		tfFirstname = new JTextField();
 		tfFirstname.setColumns(10);
-		tfFirstname.setBounds(106, 102, 138, 20);
+		tfFirstname.setBounds(89, 121, 138, 20);
 		contentPane.add(tfFirstname);
 		
 		tfLastname = new JTextField();
 		tfLastname.setColumns(10);
-		tfLastname.setBounds(106, 127, 138, 20);
+		tfLastname.setBounds(89, 146, 138, 20);
 		contentPane.add(tfLastname);
 		
 		tfMobile = new JTextField();
 		tfMobile.setColumns(10);
-		tfMobile.setBounds(106, 155, 138, 20);
+		tfMobile.setBounds(89, 174, 138, 20);
 		contentPane.add(tfMobile);
 		
 		tfEmail = new JTextField();
 		tfEmail.setColumns(10);
-		tfEmail.setBounds(106, 180, 138, 20);
+		tfEmail.setBounds(89, 199, 138, 20);
 		contentPane.add(tfEmail);
 		
 		JButton btnNewButton = new JButton("ยืนยัน");
@@ -193,7 +207,7 @@ public class RegisterFrame extends JFrame{
 					Register register = new Register();
 					int id = Integer.parseInt(tfSid.getText());
 					String date = setFormatDate(dateChooser);
-					List<Student> students = sevice.getStudentById(id);
+					List<Student> students = service_student.getStudentById(id);
 					for(Student s : students) {
 						register.setTbStudent(s);
 					}
@@ -221,7 +235,7 @@ public class RegisterFrame extends JFrame{
 		
 		JLabel lblNewLabel_1_1_2_1_1 = new JLabel("วันที่ลงทะเบียน");
 		lblNewLabel_1_1_2_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_2_1_1.setBounds(27, 208, 69, 14);
+		lblNewLabel_1_1_2_1_1.setBounds(10, 227, 69, 14);
 		contentPane.add(lblNewLabel_1_1_2_1_1);
 		
 		label_title = new JLabel("ลงทะเบียนต้องการวัคซีน");
@@ -232,10 +246,38 @@ public class RegisterFrame extends JFrame{
 		dateChooser = new JDateChooser();
 		dateChooser.setDateFormatString("dd-MMMM-yyyy");
 		dateChooser.setDate(new Date());
-		dateChooser.setBounds(106, 208, 138, 20);
+		dateChooser.setBounds(89, 227, 138, 20);
 		contentPane.add(dateChooser);
+		
+		combo_student = new JComboBox<Integer>();
+		combo_student.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tfSid.setText(combo_student.getSelectedItem()+"");
+				if(!tfSid.getText().isEmpty()) {
+					setTextField(false);
+					int Sid = Integer.parseInt(tfSid.getText());
+					List<Student> students = service_student.getStudentById(Sid);
+					for(Student s : students) {
+						tfFirstname.setText(s.getFirstname());
+						tfLastname.setText(s.getLastname());
+						tfMobile.setText(s.getMobile());
+						tfEmail.setText(s.getEmail());	
+					}
+				}
+				
+			}
+		});
+		combo_student.setModel(new DefaultComboBoxModel<Integer>());
+		combo_student.setBounds(89, 88, 138, 22);
+		contentPane.add(combo_student);
 	}
 	
+	public RegisterFrame(ServiceStudent service_student,ServiceRegister service_register) {
+		this();
+		this.service_register=service_register;
+		this.service_student = service_student;
+	}
+
 	void setTextField(boolean b) {
 		tfFirstname.setEnabled(b);
 		tfLastname.setEnabled(b);
@@ -275,5 +317,4 @@ public class RegisterFrame extends JFrame{
 			
 		}
 	}
-
 }

@@ -20,4 +20,7 @@ public class ServiceStudent {
 	public List<Student> getStudentById(int id){
 		return student_repo.findBySid(id);
 	}
+	public List<Student> getStudentNotInRegister(){
+		return student_repo.getStudentNotRegister();
+	}
 }

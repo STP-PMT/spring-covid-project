@@ -244,7 +244,8 @@ public class MainFrame extends JFrame {
 		JButton btnNewButton_3 = new JButton("ลงทะเบียน");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				register_frame.setVisible(true);
+				RegisterFrame frame = new RegisterFrame(service_student,service_register);
+				frame.setVisible(true);
 			}
 		});
 		btnNewButton_3.setBackground(new Color(0, 204, 51));
@@ -297,7 +298,7 @@ public class MainFrame extends JFrame {
 		panel_vaccine.setLayout(null);
 		panel_card.add(panel_vaccine, "Vaccine");
 		
-		JLabel lblNewLabel_1_1_1_1 = new JLabel("ฉีดวัคซีน");
+		JLabel lblNewLabel_1_1_1_1 = new JLabel("ลงทะเบียนฉีดวัคซีน");
 		lblNewLabel_1_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel_1_1_1_1.setBounds(10, 5, 224, 25);
 		panel_vaccine.add(lblNewLabel_1_1_1_1);

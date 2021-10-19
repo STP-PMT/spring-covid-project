@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.csmsu.covid.entity.Register;
+import net.csmsu.covid.entity.Student;
 import net.csmsu.covid.repository.RegisterRepository;
 
 @Service
@@ -33,4 +34,6 @@ public class ServiceRegister {
 			return false;
 		}
 	}
+	
+	
 }
