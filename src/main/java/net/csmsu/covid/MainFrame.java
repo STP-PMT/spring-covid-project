@@ -145,7 +145,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {				
 				CardLayout cl =(CardLayout) panel_card.getLayout();
 				cl.show(panel_card,"Vaccine");
-				LoadDataRegister(table_allvaccine);
+				LoadDataVaccine(table_allvaccine);
 			}
 		});
 		btnNewButton_1_1.setBounds(10, 113, 141, 23);
@@ -382,6 +382,25 @@ public class MainFrame extends JFrame {
 		}
 		table.setModel(model);
 	}
+	
+	void LoadDataVaccine(JTable table) {
+		List<Register> registers =  service_register.getAllRegister();
+		
+		DefaultTableModel model = new DefaultTableModel();
+		Object[] columns = {"รหัสลงทะเบียน","รหัสนิสิต","ชื่อ","นามสกุล","วันที่ลงทะเบียน","เข็มที่ 1","เข็มที่ 2","เข็มที่ 3"};
+		model.setColumnIdentifiers(columns);
+		
+		for(Register r:registers) {
+			Object[] obj = {r.getRid(),r.getTbStudent().getSid(),r.getTbStudent().getFirstname(),r.getTbStudent().getLastname(),r.getDate(),
+					(r.getTbVaccine1()!=null)?r.getTbVaccine1().getTbVaccine().getName():"ไม่มีข้อมูล",
+					(r.getTbVaccine2()!=null)?r.getTbVaccine1().getTbVaccine().getName():"ไม่มีข้อมูล",
+					(r.getTbVaccine2()!=null)?r.getTbVaccine1().getTbVaccine().getName():"ไม่มีข้อมูล",
+					};
+			model.addRow(obj);
+		}
+		table.setModel(model);
+	}
+	
 	
 	void LoadDataStudent(List<Student> students) {
 		DefaultTableModel model = new DefaultTableModel();
