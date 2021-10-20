@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
@@ -81,6 +82,7 @@ public class VaccineFrame extends JFrame {
 			public void windowOpened(WindowEvent e) {
 				if(rid!=-1) {
 					Register register = service_register.getRegisterByRid(rid);
+					
 					List<Vaccine> vaccines = service_vaccine.getAllVaccine();
 					
 					Sid.setText(register.getTbStudent().getSid()+"");

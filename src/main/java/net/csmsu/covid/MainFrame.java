@@ -322,8 +322,14 @@ public class MainFrame extends JFrame {
 				try {
 					int id = (Integer) table_allvaccine.getValueAt(table_allvaccine.getSelectedRow(), 0);
 					VaccineFrame frame = new VaccineFrame(service_register,service_vaccine);
-					frame.setRid(id);
-					frame.setVisible(true);
+					Register r = service_register.getRegisterByRid(id);
+					if(r.getTbVaccine1()==null) {
+						frame.setRid(id);
+						frame.setVisible(true);
+					}else {
+						JOptionPane.showMessageDialog(null,"นิสิตรหัส "+r.getTbStudent().getSid()+" ลงทะเบียนแล้ว");
+					}
+					
 				} catch (Exception e2) {
 					
 				}
