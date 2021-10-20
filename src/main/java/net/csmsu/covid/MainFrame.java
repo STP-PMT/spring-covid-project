@@ -315,6 +315,12 @@ public class MainFrame extends JFrame {
 		panel_vaccine.add(btnNewButton_2_1_1_1);
 		
 		JButton btnNewButton_3_1_1 = new JButton("ฉีดวัคซีน");
+		btnNewButton_3_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VaccineFrame frame = new VaccineFrame();
+				frame.setVisible(true);
+			}
+		});
 		btnNewButton_3_1_1.setBackground(new Color(0, 204, 51));
 		btnNewButton_3_1_1.setBounds(10, 53, 89, 23);
 		panel_vaccine.add(btnNewButton_3_1_1);
@@ -393,9 +399,9 @@ public class MainFrame extends JFrame {
 		for(Register r:registers) {
 			Object[] obj = {r.getRid(),r.getTbStudent().getSid(),r.getTbStudent().getFirstname(),r.getTbStudent().getLastname(),r.getDate(),
 					(r.getTbVaccine1()!=null)?r.getTbVaccine1().getTbVaccine().getName():"ไม่มีข้อมูล",
-					(r.getTbVaccine2()!=null)?r.getTbVaccine1().getTbVaccine().getName():"ไม่มีข้อมูล",
-					(r.getTbVaccine2()!=null)?r.getTbVaccine1().getTbVaccine().getName():"ไม่มีข้อมูล",
-					};
+					(r.getTbVaccine2()!=null)?r.getTbVaccine2().getTbVaccine().getName():"ไม่มีข้อมูล",
+					(r.getTbVaccine3()!=null)?r.getTbVaccine3().getTbVaccine().getName():"ไม่มีข้อมูล",
+			};
 			model.addRow(obj);
 		}
 		table.setModel(model);
