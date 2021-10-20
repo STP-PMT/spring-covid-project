@@ -27,6 +27,9 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 @Component
@@ -57,6 +60,13 @@ public class VaccineFrame extends JFrame {
 		this.service_register = service_register;
 		this.service_vaccine = service_vaccine;
 	}
+	public Date setDateVaccine(Date date,int num) {
+		LocalDate localdate = LocalDate.parse(date+"");
+		LocalDate value = localdate.plusDays(num);
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		Date datevalue = Date.from(value.atStartOfDay(defaultZoneId).toInstant());
+		return datevalue;
+	}
 	public VaccineFrame() {
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -74,6 +84,13 @@ public class VaccineFrame extends JFrame {
 						vaccineMap.put(v.getVid(),v.getName());
 						combo_vaccine.addItem(v.getName());
 					}
+					
+					Date dateMin = setDateVaccine(register.getDate(),7);
+					Date dateMax = setDateVaccine(register.getDate(),14);
+					date_vaccine1.setMinSelectableDate(dateMin);
+					date_vaccine1.setMaxSelectableDate(dateMax);
+					System.out.println("date min :"+dateMin);
+					System.out.println("date max :"+dateMax);
 				}
 			}
 		});
