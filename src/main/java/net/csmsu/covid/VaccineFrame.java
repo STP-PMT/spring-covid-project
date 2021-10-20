@@ -27,11 +27,14 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Locale;
+import java.awt.Color;
 @Component
 public class VaccineFrame extends JFrame {
 
@@ -44,6 +47,7 @@ public class VaccineFrame extends JFrame {
 	private JLabel label_dateRegister;
 	private JComboBox<String> combo_vaccine;
 	private Hashtable<Integer, String> vaccineMap =  new Hashtable<Integer, String>();
+	private JLabel label_date;
 	
 	@Autowired ServiceRegister service_register;
 	@Autowired ServiceVaccine service_vaccine;
@@ -89,8 +93,9 @@ public class VaccineFrame extends JFrame {
 					Date dateMax = setDateVaccine(register.getDate(),14);
 					date_vaccine1.setMinSelectableDate(dateMin);
 					date_vaccine1.setMaxSelectableDate(dateMax);
-					System.out.println("date min :"+dateMin);
-					System.out.println("date max :"+dateMax);
+					
+					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+					label_date.setText(format.format(dateMin)+" - "+format.format(dateMax));
 				}
 			}
 		});
@@ -104,7 +109,7 @@ public class VaccineFrame extends JFrame {
 		}
 		UIManager.put("OptionPane.messageFont", new Font("Tahoma", Font.PLAIN, 14));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 337, 377);
+		setBounds(100, 100, 336, 443);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -120,10 +125,6 @@ public class VaccineFrame extends JFrame {
 		Sid.setBounds(98, 48, 157, 20);
 		contentPane.add(Sid);
 		Sid.setColumns(10);
-		
-		date_vaccine1 = new JDateChooser();
-		date_vaccine1.setBounds(98, 213, 157, 20);
-		contentPane.add(date_vaccine1);
 		
 		JLabel lblNewLabel_1 = new JLabel("ชื่อ");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -158,22 +159,12 @@ public class VaccineFrame extends JFrame {
 		Firstname.setBounds(98, 76, 157, 20);
 		contentPane.add(Firstname);
 		
-		JLabel lblNewLabel_2 = new JLabel("วัคซีนเข็มที่ 1");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_2.setBounds(10, 188, 78, 14);
-		contentPane.add(lblNewLabel_2);
-		
-		combo_vaccine = new JComboBox<String>();
-		combo_vaccine.setEnabled(false);
-		combo_vaccine.setBounds(98, 184, 157, 22);
-		contentPane.add(combo_vaccine);
-		
 		JButton btnNewButton = new JButton("ยืนยัน");
-		btnNewButton.setBounds(122, 304, 89, 23);
+		btnNewButton.setBounds(122, 370, 89, 23);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("ยกเลิก");
-		btnNewButton_1.setBounds(222, 304, 89, 23);
+		btnNewButton_1.setBounds(222, 370, 89, 23);
 		contentPane.add(btnNewButton_1);
 		
 		label_dateRegister = new JLabel("");
@@ -184,5 +175,34 @@ public class VaccineFrame extends JFrame {
 		textField_dateRegister_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		textField_dateRegister_1.setBounds(10, 157, 78, 14);
 		contentPane.add(textField_dateRegister_1);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(20, 185, 256, 150);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		date_vaccine1 = new JDateChooser();
+		date_vaccine1.setBounds(82, 97, 157, 20);
+		panel.add(date_vaccine1);
+		
+		label_date = new JLabel("null");
+		label_date.setBounds(82, 69, 157, 14);
+		panel.add(label_date);
+		label_date.setForeground(Color.RED);
+		label_date.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel lblNewLabel_3 = new JLabel("เลือกวันฉีดตั้งแต่วันที่ ");
+		lblNewLabel_3.setBounds(106, 44, 106, 14);
+		panel.add(lblNewLabel_3);
+		
+		combo_vaccine = new JComboBox<String>();
+		combo_vaccine.setBounds(82, 11, 157, 22);
+		panel.add(combo_vaccine);
+		combo_vaccine.setEnabled(false);
+		
+		JLabel lblNewLabel_2 = new JLabel("วัคซีนเข็มที่ 1");
+		lblNewLabel_2.setBounds(10, 15, 62, 14);
+		panel.add(lblNewLabel_2);
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
 	}
 }
