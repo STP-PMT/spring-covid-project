@@ -19,6 +19,7 @@ import com.toedter.calendar.JDateChooser;
 
 import net.csmsu.covid.entity.Register;
 import net.csmsu.covid.entity.Vaccine;
+import net.csmsu.covid.entity.Vaccine1;
 import net.csmsu.covid.service.ServiceRegister;
 import net.csmsu.covid.service.ServiceVaccine;
 
@@ -48,6 +49,7 @@ public class VaccineFrame extends JFrame {
 	private JComboBox<String> combo_vaccine;
 	private Hashtable<Integer, String> vaccineMap =  new Hashtable<Integer, String>();
 	private JLabel label_date;
+	private Vaccine1 vaccine1;
 	
 	@Autowired ServiceRegister service_register;
 	@Autowired ServiceVaccine service_vaccine;
@@ -64,6 +66,7 @@ public class VaccineFrame extends JFrame {
 		this.service_register = service_register;
 		this.service_vaccine = service_vaccine;
 	}
+	
 	public Date setDateVaccine(Date date,int num) {
 		LocalDate localdate = LocalDate.parse(date+"");
 		LocalDate value = localdate.plusDays(num);
@@ -71,6 +74,7 @@ public class VaccineFrame extends JFrame {
 		Date datevalue = Date.from(value.atStartOfDay(defaultZoneId).toInstant());
 		return datevalue;
 	}
+	
 	public VaccineFrame() {
 		addWindowListener(new WindowAdapter() {
 			@Override

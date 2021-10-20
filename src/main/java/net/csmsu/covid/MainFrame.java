@@ -325,7 +325,7 @@ public class MainFrame extends JFrame {
 					frame.setRid(id);
 					frame.setVisible(true);
 				} catch (Exception e2) {
-					// TODO: handle exception
+					
 				}
 				
 			}
