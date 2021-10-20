@@ -14,6 +14,7 @@ import net.csmsu.covid.entity.Register;
 import net.csmsu.covid.entity.Student;
 import net.csmsu.covid.service.ServiceRegister;
 import net.csmsu.covid.service.ServiceStudent;
+import net.csmsu.covid.service.ServiceVaccine;
 
 import java.awt.Color;
 import java.awt.Toolkit;
@@ -69,6 +70,7 @@ public class MainFrame extends JFrame {
 	
 	@Autowired ServiceRegister service_register;
 	@Autowired ServiceStudent service_student;
+	@Autowired ServiceVaccine service_vaccine;
 	@Autowired RegisterFrame register_frame;
 	
 	private JTextField search_register;
@@ -94,7 +96,7 @@ public class MainFrame extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\icon.png"));
 		setTitle("Covid Vaccination Project For Students");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 860, 500);
+		setBounds(100, 100, 1000, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -152,7 +154,7 @@ public class MainFrame extends JFrame {
 		panel_menu.add(btnNewButton_1_1);
 		
 		panel_card = new JPanel();
-		panel_card.setBounds(160, 0, 684, 461);
+		panel_card.setBounds(160, 0, 824, 461);
 		contentPane.add(panel_card);
 		panel_card.setLayout(new CardLayout(0, 0));
 		
@@ -177,7 +179,7 @@ public class MainFrame extends JFrame {
 		panel_student.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 87, 664, 363);
+		scrollPane.setBounds(10, 87, 804, 363);
 		panel_student.add(scrollPane);
 		
 		
@@ -197,7 +199,7 @@ public class MainFrame extends JFrame {
 				LoadDataStudent(students);
 			}
 		});
-		search_student.setBounds(453, 12, 144, 20);
+		search_student.setBounds(593, 12, 144, 20);
 		panel_student.add(search_student);
 		search_student.setToolTipText("search");
 		search_student.setForeground(Color.BLACK);
@@ -211,7 +213,7 @@ public class MainFrame extends JFrame {
 				LoadDataStudent(students);
 			}
 		});
-		btnNewButton_2.setBounds(600, 11, 74, 23);
+		btnNewButton_2.setBounds(740, 11, 74, 23);
 		panel_student.add(btnNewButton_2);
 		
 		JPanel panel_register = new JPanel();
@@ -219,7 +221,7 @@ public class MainFrame extends JFrame {
 		panel_card.add(panel_register, "Register");
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 87, 664, 363);
+		scrollPane_1.setBounds(10, 87, 804, 363);
 		panel_register.add(scrollPane_1);
 		
 		table_register = new JTable();
@@ -234,11 +236,11 @@ public class MainFrame extends JFrame {
 		search_register.setToolTipText("search");
 		search_register.setForeground(Color.BLACK);
 		search_register.setColumns(10);
-		search_register.setBounds(454, 8, 144, 20);
+		search_register.setBounds(594, 6, 144, 20);
 		panel_register.add(search_register);
 		
 		JButton btnNewButton_2_1 = new JButton("ค้นหา");
-		btnNewButton_2_1.setBounds(600, 7, 74, 23);
+		btnNewButton_2_1.setBounds(740, 5, 74, 23);
 		panel_register.add(btnNewButton_2_1);
 		
 		JButton btnNewButton_3 = new JButton("ลงทะเบียน");
@@ -307,18 +309,25 @@ public class MainFrame extends JFrame {
 		textField_2.setToolTipText("search");
 		textField_2.setForeground(Color.BLACK);
 		textField_2.setColumns(10);
-		textField_2.setBounds(454, 8, 144, 20);
+		textField_2.setBounds(594, 6, 144, 20);
 		panel_vaccine.add(textField_2);
 		
 		JButton btnNewButton_2_1_1_1 = new JButton("ค้นหา");
-		btnNewButton_2_1_1_1.setBounds(600, 7, 74, 23);
+		btnNewButton_2_1_1_1.setBounds(740, 5, 74, 23);
 		panel_vaccine.add(btnNewButton_2_1_1_1);
 		
 		JButton btnNewButton_3_1_1 = new JButton("ฉีดวัคซีน");
 		btnNewButton_3_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VaccineFrame frame = new VaccineFrame();
-				frame.setVisible(true);
+				try {
+					int id = (Integer) table_allvaccine.getValueAt(table_allvaccine.getSelectedRow(), 0);
+					VaccineFrame frame = new VaccineFrame(service_register,service_vaccine);
+					frame.setRid(id);
+					frame.setVisible(true);
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+				
 			}
 		});
 		btnNewButton_3_1_1.setBackground(new Color(0, 204, 51));
@@ -331,7 +340,7 @@ public class MainFrame extends JFrame {
 		panel_vaccine.add(btnNewButton_4_1_1);
 		
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane_1.setBounds(10, 87, 664, 363);
+		tabbedPane_1.setBounds(10, 87, 804, 363);
 		panel_vaccine.add(tabbedPane_1);
 		
 		JPanel panel_all = new JPanel();
@@ -339,7 +348,7 @@ public class MainFrame extends JFrame {
 		panel_all.setLayout(null);
 		
 		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(0, 0, 659, 335);
+		scrollPane_2.setBounds(0, 0, 799, 335);
 		panel_all.add(scrollPane_2);
 		
 		table_allvaccine = new JTable();
@@ -356,7 +365,7 @@ public class MainFrame extends JFrame {
 		
 		JDateChooser dateChooser = new JDateChooser();
 		
-		dateChooser.setBounds(563, 53, 111, 20);
+		dateChooser.setBounds(703, 51, 111, 20);
 		panel_vaccine.add(dateChooser);
 		dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
@@ -365,9 +374,7 @@ public class MainFrame extends JFrame {
 						String strdate = setFormatDate(dateChooser);
 						System.err.println(strdate);
 					} catch (NullPointerException e) {
-						
 					}
-					
 				}
 			}
 		});

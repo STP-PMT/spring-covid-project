@@ -1,8 +1,4 @@
 package net.csmsu.covid;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -25,7 +21,6 @@ import net.csmsu.covid.service.ServiceRegister;
 import net.csmsu.covid.service.ServiceStudent;
 
 import java.awt.event.ActionListener;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -34,8 +29,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 import javax.swing.DefaultComboBoxModel;
 
 @Component
@@ -53,7 +46,6 @@ public class RegisterFrame extends JFrame{
 	private JDateChooser dateChooser;
 	private JComboBox<Integer> combo_student;
 	private JLabel label_title;
-	
 	private int rid = 0;
 
 	
