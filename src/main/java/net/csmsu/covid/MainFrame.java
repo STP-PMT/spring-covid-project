@@ -410,9 +410,9 @@ public class MainFrame extends JFrame {
 		
 		for(Register r:registers) {
 			Object[] obj = {r.getRid(),r.getTbStudent().getSid(),r.getTbStudent().getFirstname(),r.getTbStudent().getLastname(),r.getDate(),
-					(r.getTbVaccine1()!=null)?r.getTbVaccine1().getTbVaccine().getName():"ไม่มีข้อมูล",
-					(r.getTbVaccine2()!=null)?r.getTbVaccine2().getTbVaccine().getName():"ไม่มีข้อมูล",
-					(r.getTbVaccine3()!=null)?r.getTbVaccine3().getTbVaccine().getName():"ไม่มีข้อมูล",
+					(r.getTbVaccine1()!=null)?r.getTbVaccine1().getTbVaccine().getName():"",
+					(r.getTbVaccine2()!=null)?r.getTbVaccine2().getTbVaccine().getName():"",
+					(r.getTbVaccine3()!=null)?r.getTbVaccine3().getTbVaccine().getName():"",
 			};
 			model.addRow(obj);
 		}
