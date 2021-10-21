@@ -25,6 +25,9 @@ public class ServiceVaccine {
 		return vaccine_repo.findAll();
 	}
 	/* vaccine1 */
+	public Vaccine1 getVaccine1ByRid(int rid) {
+		return vaccine1_repo.getVaccineByRid(rid);
+	}
 	public Vaccine1 updateVaccine1(Vaccine1 vaccine) {
 		return vaccine1_repo.save(vaccine);
 	}

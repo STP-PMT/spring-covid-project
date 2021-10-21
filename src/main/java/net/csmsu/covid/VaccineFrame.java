@@ -170,10 +170,26 @@ public class VaccineFrame extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(date_vaccine1.getDate()!=null) {
-					
+					Vaccine1 v1 = new Vaccine1();
+					Register register = service_register.getRegisterByRid(rid);
+					v1.addTbRegister(register);
+					String strdate = setFormatDate(date_vaccine1);
+					v1.setDate(java.sql.Date.valueOf(strdate));
+					if(service_vaccine.updateVaccine1(v1)!=null) {
+						Vaccine1 v = service_vaccine.getVaccine1ByRid(rid);
+						register.addTbVaccine1(v);
+						if(service_register.updateRegister(register)!=null) {
+							JOptionPane.showMessageDialog(null,"ลงทะเบียน สำเร็จ");
+						}else {
+							JOptionPane.showMessageDialog(null,"ลงทะเบียน ไม่สำเร็จ!");
+						}
+					}else {
+						JOptionPane.showMessageDialog(null,"ลงทะเบียน ไม่สำเร็จ!");
+					}
 				}else {
 					JOptionPane.showMessageDialog(null,"โปรดระบุวันที่!");
 				}
+				rid = -1;
 			}
 		});
 		btnNewButton.setBounds(122, 370, 89, 23);
@@ -220,5 +236,10 @@ public class VaccineFrame extends JFrame {
 		lblNewLabel_2.setBounds(10, 15, 62, 14);
 		panel.add(lblNewLabel_2);
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
+	}
+	String setFormatDate(JDateChooser date) {
+		Date d = date.getDate();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
+		return dateFormat.format(d);	
 	}
 }
