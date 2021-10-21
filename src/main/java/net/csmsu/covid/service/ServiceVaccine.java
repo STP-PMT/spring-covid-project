@@ -24,6 +24,9 @@ public class ServiceVaccine {
 	public List<Vaccine> getAllVaccine(){
 		return vaccine_repo.findAll();
 	}
+	public Vaccine getVaccineById(int id) {
+		return vaccine_repo.getById(id);
+	}
 	/* vaccine1 */
 	public Vaccine1 getVaccine1ByRid(int rid) {
 		return vaccine1_repo.getVaccineByRid(rid);

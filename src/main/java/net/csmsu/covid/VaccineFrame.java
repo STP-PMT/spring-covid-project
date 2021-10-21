@@ -172,12 +172,16 @@ public class VaccineFrame extends JFrame {
 				if(date_vaccine1.getDate()!=null) {
 					Vaccine1 v1 = new Vaccine1();
 					Register register = service_register.getRegisterByRid(rid);
-					v1.addTbRegister(register);
+					Vaccine vaccine_type = service_vaccine.getVaccineById(1);
 					String strdate = setFormatDate(date_vaccine1);
+					
+					v1.setTbRegister(register);
+					v1.setTbVaccine(vaccine_type);
 					v1.setDate(java.sql.Date.valueOf(strdate));
+					
 					if(service_vaccine.updateVaccine1(v1)!=null) {
 						Vaccine1 v = service_vaccine.getVaccine1ByRid(rid);
-						register.addTbVaccine1(v);
+						register.setTbVaccine1(v);
 						if(service_register.updateRegister(register)!=null) {
 							JOptionPane.showMessageDialog(null,"ลงทะเบียน สำเร็จ");
 						}else {
