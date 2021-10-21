@@ -329,7 +329,6 @@ public class MainFrame extends JFrame {
 					}else {
 						JOptionPane.showMessageDialog(null,"นิสิตรหัส "+r.getTbStudent().getSid()+" ลงทะเบียนแล้ว");
 					}
-					
 				} catch (Exception e2) {
 					
 				}

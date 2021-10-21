@@ -37,6 +37,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 @Component
 public class VaccineFrame extends JFrame {
 
@@ -88,13 +90,12 @@ public class VaccineFrame extends JFrame {
 					Sid.setText(register.getTbStudent().getSid()+"");
 					Firstname.setText(register.getTbStudent().getFirstname());
 					Lastname.setText(register.getTbStudent().getLastname());
-					Mobile.setText(register.getTbStudent().getLastname());
+					Mobile.setText(register.getTbStudent().getMobile());
 					label_dateRegister.setText(register.getDate()+"");
 					for(Vaccine v : vaccines) {
 						vaccineMap.put(v.getVid(),v.getName());
 						combo_vaccine.addItem(v.getName());
 					}
-					
 					Date dateMin = setDateVaccine(register.getDate(),7);
 					Date dateMax = setDateVaccine(register.getDate(),14);
 					date_vaccine1.setMinSelectableDate(dateMin);
@@ -166,6 +167,15 @@ public class VaccineFrame extends JFrame {
 		contentPane.add(Firstname);
 		
 		JButton btnNewButton = new JButton("ยืนยัน");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(date_vaccine1.getDate()!=null) {
+					
+				}else {
+					JOptionPane.showMessageDialog(null,"โปรดระบุวันที่!");
+				}
+			}
+		});
 		btnNewButton.setBounds(122, 370, 89, 23);
 		contentPane.add(btnNewButton);
 		
