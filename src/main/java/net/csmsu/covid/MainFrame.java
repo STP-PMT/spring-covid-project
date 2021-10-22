@@ -76,6 +76,9 @@ public class MainFrame extends JFrame {
 	private JTextField search_register;
 	private JTextField textField_2;
 	private JTable table_allvaccine;
+	private JTable table_vaccine1;
+	private JTable table_vaccine2;
+	private JTable table_vaccine3;
 	
 	/**
 	 * Launch the application.
@@ -361,12 +364,36 @@ public class MainFrame extends JFrame {
 		
 		JPanel panel_dose1 = new JPanel();
 		tabbedPane_1.addTab("เข็มที่ 1", null, panel_dose1, null);
+		panel_dose1.setLayout(null);
+		
+		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBounds(0, 0, 799, 335);
+		panel_dose1.add(scrollPane_3);
+		
+		table_vaccine1 = new JTable();
+		scrollPane_3.setViewportView(table_vaccine1);
 		
 		JPanel panel_dose2 = new JPanel();
 		tabbedPane_1.addTab("เข็มที่ 2", null, panel_dose2, null);
+		panel_dose2.setLayout(null);
+		
+		JScrollPane scrollPane_4 = new JScrollPane();
+		scrollPane_4.setBounds(0, 0, 799, 335);
+		panel_dose2.add(scrollPane_4);
+		
+		table_vaccine2 = new JTable();
+		scrollPane_4.setViewportView(table_vaccine2);
 		
 		JPanel panel_dose3 = new JPanel();
 		tabbedPane_1.addTab("เข็มที่ 3", null, panel_dose3, null);
+		panel_dose3.setLayout(null);
+		
+		JScrollPane scrollPane_5 = new JScrollPane();
+		scrollPane_5.setBounds(0, 0, 799, 335);
+		panel_dose3.add(scrollPane_5);
+		
+		table_vaccine3 = new JTable();
+		scrollPane_5.setViewportView(table_vaccine3);
 		
 		JDateChooser dateChooser = new JDateChooser();
 		
