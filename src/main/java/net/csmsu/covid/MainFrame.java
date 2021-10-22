@@ -62,6 +62,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 @Component
 public class MainFrame extends JFrame {
@@ -89,6 +91,7 @@ public class MainFrame extends JFrame {
 	private JTable table_vaccine2;
 	private JTable table_vaccine3;
 	private JTabbedPane tabbedPane_1;
+	private JComboBox<String> comboBox;
 
 	/**
 	 * Launch the application.
@@ -141,7 +144,8 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout cl = (CardLayout) panel_card.getLayout();
 				cl.show(panel_card, "Register");
-				LoadDataRegister(table_register);
+				List<Register> registers = service_register.getAllRegister();
+				LoadDataRegister(registers);
 			}
 		});
 		btnNewButton_1.setBounds(10, 79, 141, 23);
@@ -163,7 +167,8 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout cl = (CardLayout) panel_card.getLayout();
 				cl.show(panel_card, "Vaccine");
-				LoadDataVaccine(table_allvaccine);
+				List<Register> registers = service_register.getAllRegister();
+				LoadDataVaccine(registers);
 			}
 		});
 		btnNewButton_1_1.setBounds(10, 113, 141, 23);
@@ -282,7 +287,8 @@ public class MainFrame extends JFrame {
 					frame.addWindowListener(new WindowAdapter() {
 						@Override
 						public void windowClosed(WindowEvent e) {
-							LoadDataRegister(table_register);
+							List<Register> registers = service_register.getAllRegister();
+							LoadDataRegister(registers);
 						}
 					});
 				} catch (Exception ex) {
@@ -304,7 +310,8 @@ public class MainFrame extends JFrame {
 					} else {
 						JOptionPane.showMessageDialog(null, "ลบไม่สำเร็จ");
 					}
-					LoadDataRegister(table_register);
+					List<Register> registers = service_register.getAllRegister();
+					LoadDataRegister(registers);
 				} catch (Exception ex) {
 				}
 			}
@@ -334,7 +341,7 @@ public class MainFrame extends JFrame {
 		btnNewButton_2_1_1_1.setBounds(740, 5, 74, 23);
 		panel_vaccine.add(btnNewButton_2_1_1_1);
 
-		JButton btnNewButton_3_1_1 = new JButton("ฉีดวัคซีน");
+		JButton btnNewButton_3_1_1 = new JButton("ลงทะเบียน");
 		btnNewButton_3_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
@@ -344,7 +351,7 @@ public class MainFrame extends JFrame {
 						Register r = service_register.getRegisterByRid(id);
 						if (r.getTbVaccine1() == null) {
 							frame.setRid(id);
-							frame.setVaccineTable(1);
+							frame.setVaccineTable(0);
 							frame.setVisible(true);
 						} else {
 							JOptionPane.showMessageDialog(null,
@@ -361,7 +368,7 @@ public class MainFrame extends JFrame {
 						Register r = service_register.getRegisterByRid(id);
 						if (r.getTbVaccine2() == null) {
 							frame.setRid(id);
-							frame.setVaccineTable(2);
+							frame.setVaccineTable(1);
 							frame.setVisible(true);
 						} else {
 							JOptionPane.showMessageDialog(null,
@@ -394,6 +401,9 @@ public class MainFrame extends JFrame {
 		tabbedPane_1.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 			    if(tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
+			    	if(service_register!=null) {
+			    		Filter();
+			    	}
 			    	btn_manage.setVisible(true);
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 1")) {
@@ -461,9 +471,23 @@ public class MainFrame extends JFrame {
 		scrollPane_5.setViewportView(table_vaccine3);
 
 		JDateChooser dateChooser = new JDateChooser();
-
 		dateChooser.setBounds(10, 550, 119, 20);
 		panel_vaccine.add(dateChooser);
+		
+		comboBox = new JComboBox<String>();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Filter();
+			}
+		});
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"ทั้งหมด", "ลงทะเบียนแล้ว", "ยังไม่ลงทะเบียน"}));
+		comboBox.setBounds(662, 59, 144, 22);
+		panel_vaccine.add(comboBox);
+		
+		JLabel lblNewLabel = new JLabel("ตัวกรอง");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel.setBounds(606, 63, 46, 14);
+		panel_vaccine.add(lblNewLabel);
 		dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
@@ -503,8 +527,8 @@ public class MainFrame extends JFrame {
 
 	}
 
-	void LoadDataRegister(JTable table) {
-		List<Register> registers = service_register.getAllRegister();
+	void LoadDataRegister(List<Register> registers) {
+		
 
 		DefaultTableModel model = new DefaultTableModel();
 		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เบอร์โทร", "วันที่ลงทะเบียน" };
@@ -515,11 +539,11 @@ public class MainFrame extends JFrame {
 					r.getTbStudent().getLastname(), r.getTbStudent().getMobile(), r.getDate() };
 			model.addRow(obj);
 		}
-		table.setModel(model);
+		table_register.setModel(model);
 	}
 
-	void LoadDataVaccine(JTable table) {
-		List<Register> registers = service_register.getAllRegister();
+	void LoadDataVaccine(List<Register> registers) {
+		
 
 		DefaultTableModel model = new DefaultTableModel();
 		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "วันที่ลงทะเบียน", "เข็มที่ 1",
@@ -534,7 +558,7 @@ public class MainFrame extends JFrame {
 					(r.getTbVaccine3() != null) ? r.getTbVaccine3().getTbVaccine().getName() : "", };
 			model.addRow(obj);
 		}
-		table.setModel(model);
+		table_allvaccine.setModel(model);
 	}
 
 	void LoadVaccine1(List<Vaccine1> vaccine1s) {
@@ -615,6 +639,24 @@ public class MainFrame extends JFrame {
 		} else {
 			return "";
 		}
-
+	}
+	void Filter() {
+		if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
+			if(comboBox.getSelectedItem().equals("ทั้งหมด")) {
+				List<Register> registers = service_register.getAllRegister();
+				LoadDataVaccine(registers);
+				//System.err.println("ทั้งหมด");
+			}
+			if(comboBox.getSelectedItem().equals("ลงทะเบียนแล้ว")) {
+				List<Register> registers = service_register.getNotNullVaccine();
+				LoadDataVaccine(registers);
+				//System.err.println("ลงทะเบียนแล้ว");
+			}
+			if(comboBox.getSelectedItem().equals("ยังไม่ลงทะเบียน")) {
+				List<Register> registers = service_register.getNotVaccine();
+				LoadDataVaccine(registers);
+				//System.err.println("ยังไม่ลงทะเบียน");
+			}
+		}
 	}
 }

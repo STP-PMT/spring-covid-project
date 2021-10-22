@@ -26,6 +26,13 @@ public class ServiceRegister {
 		return register_repo.findByRid(rid);
 	}
 	
+	public List<Register> getNotVaccine(){
+		return register_repo.getRegisterNullVaccine();
+	}
+	public List<Register> getNotNullVaccine(){
+		return register_repo.getRegisterNotNullVaccine();
+	}
+	
 	public boolean deleteByRid(int rid) {
 		try {			
 			 register_repo.deleteById(rid);

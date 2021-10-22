@@ -59,6 +59,9 @@ public class ServiceVaccine {
 	public List<Vaccine2> getVaccine2ByDate(Date date){
 		return vaccine2_repo.findByDate(date);
 	}
+	public Vaccine2 getVaccine2ByRid(int rid) {
+		return vaccine2_repo.getVaccineByRid(rid);
+	}
 
 	public Vaccine2 updateVaccine2(Vaccine2 vaccine) {
 		return vaccine2_repo.save(vaccine);
