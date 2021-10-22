@@ -88,6 +88,7 @@ public class MainFrame extends JFrame {
 	private JTable table_vaccine1;
 	private JTable table_vaccine2;
 	private JTable table_vaccine3;
+	private JTabbedPane tabbedPane_1;
 
 	/**
 	 * Launch the application.
@@ -111,7 +112,7 @@ public class MainFrame extends JFrame {
 				"D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\icon.png"));
 		setTitle("Covid Vaccination Project For Students");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1000, 600);
+		setBounds(100, 100, 1000, 620);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -119,7 +120,7 @@ public class MainFrame extends JFrame {
 
 		JPanel panel_menu = new JPanel();
 		panel_menu.setBackground(new Color(51, 204, 255));
-		panel_menu.setBounds(0, 0, 161, 561);
+		panel_menu.setBounds(0, 0, 161, 581);
 		contentPane.add(panel_menu);
 		panel_menu.setLayout(null);
 
@@ -169,7 +170,7 @@ public class MainFrame extends JFrame {
 		panel_menu.add(btnNewButton_1_1);
 
 		panel_card = new JPanel();
-		panel_card.setBounds(160, 0, 824, 561);
+		panel_card.setBounds(160, 0, 824, 581);
 		contentPane.add(panel_card);
 		panel_card.setLayout(new CardLayout(0, 0));
 
@@ -317,7 +318,7 @@ public class MainFrame extends JFrame {
 		panel_vaccine.setLayout(null);
 		panel_card.add(panel_vaccine, "Vaccine");
 
-		JLabel lblNewLabel_1_1_1_1 = new JLabel("ลงทะเบียนฉีดวัคซีน");
+		JLabel lblNewLabel_1_1_1_1 = new JLabel("ลงทะเบียนและฉีดวัคซีน");
 		lblNewLabel_1_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel_1_1_1_1.setBounds(10, 5, 224, 25);
 		panel_vaccine.add(lblNewLabel_1_1_1_1);
@@ -336,33 +337,60 @@ public class MainFrame extends JFrame {
 		JButton btnNewButton_3_1_1 = new JButton("ฉีดวัคซีน");
 		btnNewButton_3_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					int id = (Integer) table_allvaccine.getValueAt(table_allvaccine.getSelectedRow(), 0);
-					VaccineFrame frame = new VaccineFrame(service_register, service_vaccine);
-					Register r = service_register.getRegisterByRid(id);
-					if (r.getTbVaccine1() == null) {
-						frame.setRid(id);
-						frame.setVisible(true);
-					} else {
-						JOptionPane.showMessageDialog(null,
-								"นิสิตรหัส " + r.getTbStudent().getSid() + " ลงทะเบียนแล้ว");
-					}
-				} catch (Exception e2) {
+				if(tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
+					try {
+						int id = (Integer) table_allvaccine.getValueAt(table_allvaccine.getSelectedRow(), 0);
+						VaccineFrame frame = new VaccineFrame(service_register, service_vaccine);
+						Register r = service_register.getRegisterByRid(id);
+						if (r.getTbVaccine1() == null) {
+							frame.setRid(id);
+							frame.setVaccineTable(1);
+							frame.setVisible(true);
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"นิสิตรหัส " + r.getTbStudent().getSid() + " ลงทะเบียนแล้ว");
+						}
+					} catch (Exception e2) {
 
+					}
 				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 1")) {
+					try {
+						int id = (Integer) table_vaccine1.getValueAt(table_vaccine1.getSelectedRow(), 0);
+						VaccineFrame frame = new VaccineFrame(service_register, service_vaccine);
+						Register r = service_register.getRegisterByRid(id);
+						if (r.getTbVaccine2() == null) {
+							frame.setRid(id);
+							frame.setVaccineTable(2);
+							frame.setVisible(true);
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"นิสิตรหัส " + r.getTbStudent().getSid() + " ลงทะเบียนแล้ว");
+						}
+					} catch (Exception e2) {
+
+					}
+				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 2")) {
+					
+				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 3")) {
+					
+				}
+				
 
 			}
 		});
 		btnNewButton_3_1_1.setBackground(new Color(0, 204, 51));
-		btnNewButton_3_1_1.setBounds(10, 53, 89, 23);
+		btnNewButton_3_1_1.setBounds(725, 547, 89, 23);
 		panel_vaccine.add(btnNewButton_3_1_1);
 
 		JButton btn_manage = new JButton("จัดการ");
 		btn_manage.setBackground(new Color(255, 255, 51));
-		btn_manage.setBounds(107, 53, 89, 23);
+		btn_manage.setBounds(626, 547, 89, 23);
 		panel_vaccine.add(btn_manage);
 
-		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_1.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 			    if(tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
@@ -385,7 +413,7 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
-		tabbedPane_1.setBounds(10, 87, 804, 463);
+		tabbedPane_1.setBounds(10, 92, 804, 439);
 		panel_vaccine.add(tabbedPane_1);
 
 		JPanel panel_all = new JPanel();
@@ -393,7 +421,7 @@ public class MainFrame extends JFrame {
 		panel_all.setLayout(null);
 
 		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(0, 0, 799, 435);
+		scrollPane_2.setBounds(0, 0, 799, 411);
 		panel_all.add(scrollPane_2);
 
 		table_allvaccine = new JTable();
@@ -404,7 +432,7 @@ public class MainFrame extends JFrame {
 		panel_dose1.setLayout(null);
 
 		JScrollPane scrollPane_3 = new JScrollPane();
-		scrollPane_3.setBounds(0, 0, 799, 435);
+		scrollPane_3.setBounds(0, 0, 799, 411);
 		panel_dose1.add(scrollPane_3);
 
 		table_vaccine1 = new JTable();
@@ -415,7 +443,7 @@ public class MainFrame extends JFrame {
 		panel_dose2.setLayout(null);
 
 		JScrollPane scrollPane_4 = new JScrollPane();
-		scrollPane_4.setBounds(0, 0, 799, 435);
+		scrollPane_4.setBounds(0, 0, 799, 411);
 		panel_dose2.add(scrollPane_4);
 
 		table_vaccine2 = new JTable();
@@ -426,7 +454,7 @@ public class MainFrame extends JFrame {
 		panel_dose3.setLayout(null);
 
 		JScrollPane scrollPane_5 = new JScrollPane();
-		scrollPane_5.setBounds(0, 0, 799, 435);
+		scrollPane_5.setBounds(0, 0, 799, 411);
 		panel_dose3.add(scrollPane_5);
 
 		table_vaccine3 = new JTable();
@@ -434,7 +462,7 @@ public class MainFrame extends JFrame {
 
 		JDateChooser dateChooser = new JDateChooser();
 
-		dateChooser.setBounds(703, 51, 111, 20);
+		dateChooser.setBounds(10, 550, 119, 20);
 		panel_vaccine.add(dateChooser);
 		dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
