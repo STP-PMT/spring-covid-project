@@ -379,7 +379,21 @@ public class MainFrame extends JFrame {
 					}
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 2")) {
-					
+					try {
+						int id = (Integer) table_vaccine2.getValueAt(table_vaccine2.getSelectedRow(), 0);
+						VaccineFrame frame = new VaccineFrame(service_register, service_vaccine);
+						Register r = service_register.getRegisterByRid(id);
+						if (r.getTbVaccine3() == null) {
+							frame.setRid(id);
+							frame.setVaccineTable(2);
+							frame.setVisible(true);
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"นิสิตรหัส " + r.getTbStudent().getSid() + " ลงทะเบียนแล้ว");
+						}
+					} catch (Exception e2) {
+
+					}
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 3")) {
 					

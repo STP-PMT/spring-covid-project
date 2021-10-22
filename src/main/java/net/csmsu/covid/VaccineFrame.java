@@ -22,6 +22,7 @@ import net.csmsu.covid.entity.Register;
 import net.csmsu.covid.entity.Vaccine;
 import net.csmsu.covid.entity.Vaccine1;
 import net.csmsu.covid.entity.Vaccine2;
+import net.csmsu.covid.entity.Vaccine3;
 import net.csmsu.covid.service.ServiceRegister;
 import net.csmsu.covid.service.ServiceVaccine;
 
@@ -54,16 +55,19 @@ public class VaccineFrame extends JFrame {
 	private JDateChooser date_vaccine1;
 	private JLabel label_dateRegister;
 
-	private Hashtable<Integer, String> vaccineMap = new Hashtable<Integer, String>();
+	private Hashtable<String, Integer> vaccineMap = new Hashtable<String, Integer>();
 	private JLabel label_date;
 	private JLabel label_vaccine1;
 	private JLabel label_vaccine2;
 	private JLabel label_vaccine3;
 	private JLabel label_dateVaccine2;
+	private JLabel label_dateVaccine3;
 	private JPanel panel_card;
 	private JComboBox<String> combo_vaccine1;
 	private JComboBox<String> combo_vaccine2;
+	private JComboBox<String> combo_vaccine3;
 	private Date dateVaccine2;
+	private Date dateVaccine3;
 
 	@Autowired
 	ServiceRegister service_register;
@@ -117,7 +121,7 @@ public class VaccineFrame extends JFrame {
 
 				if (rid != -1 && vaccineTable == 0) {
 					for (Vaccine v : vaccines) {
-						vaccineMap.put(v.getVid(), v.getName());
+						vaccineMap.put(v.getName(), v.getVid());
 						combo_vaccine1.addItem(v.getName());
 					}
 					Date dateMin = setDateVaccine(register.getDate(), 7);
@@ -132,7 +136,7 @@ public class VaccineFrame extends JFrame {
 					CardLayout cl = (CardLayout) panel_card.getLayout();
 					cl.show(panel_card, "vaccine2");
 					for (Vaccine v : vaccines) {
-						vaccineMap.put(v.getVid(), v.getName());
+						vaccineMap.put( v.getName(),v.getVid());
 						combo_vaccine2.addItem(v.getName());
 					}
 					Random random = new Random();
@@ -145,36 +149,25 @@ public class VaccineFrame extends JFrame {
 				}
 				
 				if (rid != -1 && vaccineTable == 2) {
+					List<Vaccine> vs = service_vaccine.getEfficacy(register.getTbVaccine2().getTbVaccine().getEfficacy());
 					CardLayout cl = (CardLayout) panel_card.getLayout();
 					cl.show(panel_card, "vaccine3");
-					for (Vaccine v : vaccines) {
-						vaccineMap.put(v.getVid(), v.getName());
-						combo_vaccine2.addItem(v.getName());
+					for (Vaccine v : vs) {
+						System.out.println("Name : "+v.getName());
+						vaccineMap.put(v.getName(),v.getVid());
+						combo_vaccine3.addItem(v.getName());
 					}
 					Random random = new Random();
-					int day = random.nextInt(30 - 45+ 1) + 30;
-					// ystem.err.println("Day : "+day);
-					dateVaccine2 = setDateVaccine(register.getTbVaccine1().getDate(), day);
+					int day = random.nextInt(45 - 30 + 1) + 30;
+					//System.err.println("Day vaccine 3: "+day);
+					dateVaccine3 = setDateVaccine(register.getTbVaccine2().getDate(), day);
 					SimpleDateFormat format = new SimpleDateFormat("dd/MMMM/yyyy", Locale.ENGLISH);
-					label_dateVaccine2.setText(format.format(dateVaccine2));
+					label_dateVaccine3.setText(format.format(dateVaccine3));
 					label_vaccine1.setText(register.getTbVaccine1().getTbVaccine().getName());
+					label_vaccine2.setText(register.getTbVaccine2().getTbVaccine().getName());
 				}
 				
-				if (rid != -1 && vaccineTable == 3) {
-					CardLayout cl = (CardLayout) panel_card.getLayout();
-					cl.show(panel_card, "vaccine3");
-					for (Vaccine v : vaccines) {
-						vaccineMap.put(v.getVid(), v.getName());
-						combo_vaccine2.addItem(v.getName());
-					}
-					Random random = new Random();
-					int day = random.nextInt(14 - 7 + 1) + 7;
-					// ystem.err.println("Day : "+day);
-					dateVaccine2 = setDateVaccine(register.getTbVaccine1().getDate(), day);
-					SimpleDateFormat format = new SimpleDateFormat("dd/MMMM/yyyy", Locale.ENGLISH);
-					label_dateVaccine2.setText(format.format(dateVaccine2));
-					label_vaccine1.setText(register.getTbVaccine1().getTbVaccine().getName());
-				}
+				
 			}
 		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
@@ -267,7 +260,7 @@ public class VaccineFrame extends JFrame {
 				
 				if (vaccineTable == 1) {
 					Vaccine2 v2 = new Vaccine2();
-					Vaccine vaccine_type = service_vaccine.getVaccineById(1);
+					Vaccine vaccine_type = service_vaccine.getVaccineById(vaccineMap.get(combo_vaccine2.getSelectedItem().toString()));
 					date_vaccine1.setDate(dateVaccine2);
 					String strdate = setFormatDate(date_vaccine1);
 
@@ -286,7 +279,29 @@ public class VaccineFrame extends JFrame {
 					} else {
 						JOptionPane.showMessageDialog(null, "ลงทะเบียนวัคซีน 2 ไม่สำเร็จ!");
 					}
-				} 
+				}
+				if (vaccineTable == 2) {
+					Vaccine3 v3 = new Vaccine3();
+					Vaccine vaccine_type = service_vaccine.getVaccineById(vaccineMap.get(combo_vaccine3.getSelectedItem().toString()));
+					date_vaccine1.setDate(dateVaccine3);
+					String strdate = setFormatDate(date_vaccine1);
+
+					v3.setTbRegister(register);
+					v3.setTbVaccine(vaccine_type);
+					v3.setDate(java.sql.Date.valueOf(strdate));
+
+					if (service_vaccine.updateVaccine3(v3) != null) {
+						Vaccine3 v = service_vaccine.getVaccine3ByRid(rid);
+						register.setTbVaccine3(v);
+						if (service_register.updateRegister(register) != null) {
+							JOptionPane.showMessageDialog(null, "ลงทะเบียนวัคซีน 2 สำเร็จ");
+						} else {
+							JOptionPane.showMessageDialog(null, "ลงทะเบียนวัคซีน 2 ไม่สำเร็จ!");
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "ลงทะเบียนวัคซีน 2 ไม่สำเร็จ!");
+					}
+				}
 				
 			}
 		});
@@ -402,7 +417,7 @@ public class VaccineFrame extends JFrame {
 		panel_card.add(panel_vaccine3, "vaccine3");
 		panel_vaccine3.setLayout(null);
 
-		JLabel label_dateVaccine3 = new JLabel("null");
+		label_dateVaccine3 = new JLabel("null");
 		label_dateVaccine3.setHorizontalAlignment(SwingConstants.CENTER);
 		label_dateVaccine3.setForeground(Color.RED);
 		label_dateVaccine3.setBounds(82, 69, 157, 14);
@@ -413,10 +428,9 @@ public class VaccineFrame extends JFrame {
 		lblNewLabel_3_1_1.setBounds(106, 44, 106, 14);
 		panel_vaccine3.add(lblNewLabel_3_1_1);
 
-		JComboBox<String> combo_vaccine_1_1 = new JComboBox<String>();
-		combo_vaccine_1_1.setEnabled(false);
-		combo_vaccine_1_1.setBounds(82, 11, 157, 22);
-		panel_vaccine3.add(combo_vaccine_1_1);
+		combo_vaccine3 = new JComboBox<String>();
+		combo_vaccine3.setBounds(82, 11, 157, 22);
+		panel_vaccine3.add(combo_vaccine3);
 
 		JLabel lblNewLabel_2_1_1 = new JLabel("วัคซีนเข็มที่ 3");
 		lblNewLabel_2_1_1.setHorizontalAlignment(SwingConstants.RIGHT);

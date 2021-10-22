@@ -34,6 +34,10 @@ public class ServiceVaccine {
 	public Vaccine getVaccineById(int id) {
 		return vaccine_repo.getById(id);
 	}
+	
+	public List<Vaccine> getEfficacy(int efficacy){
+		return vaccine_repo.findByEfficacyGreaterThanEqual(efficacy);
+	}
 
 	/* vaccine1 */
 	public List<Vaccine1> getAllVaccine1() {
@@ -73,6 +77,9 @@ public class ServiceVaccine {
 	}
 	public List<Vaccine3> getVaccine3ByDate(Date date){
 		return vaccine3_repo.findByDate(date);
+	}
+	public Vaccine3 getVaccine3ByRid(int rid) {
+		return vaccine3_repo.getVaccineByRid(rid);
 	}
 
 	public Vaccine3 updateVaccine3(Vaccine3 vaccine) {
