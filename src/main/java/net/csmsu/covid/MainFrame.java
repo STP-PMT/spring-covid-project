@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 
 import net.csmsu.covid.entity.Register;
 import net.csmsu.covid.entity.Student;
+import net.csmsu.covid.entity.Vaccine1;
+import net.csmsu.covid.entity.Vaccine2;
+import net.csmsu.covid.entity.Vaccine3;
 import net.csmsu.covid.service.ServiceRegister;
 import net.csmsu.covid.service.ServiceStudent;
 import net.csmsu.covid.service.ServiceVaccine;
@@ -57,6 +60,8 @@ import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 @Component
 public class MainFrame extends JFrame {
@@ -65,140 +70,147 @@ public class MainFrame extends JFrame {
 	private JTextField search_student;
 	private JTable table_student;
 	private JTable table_register;
-	
+
 	private JPanel panel_card;
-	
-	@Autowired ServiceRegister service_register;
-	@Autowired ServiceStudent service_student;
-	@Autowired ServiceVaccine service_vaccine;
-	@Autowired RegisterFrame register_frame;
-	
+
+	@Autowired
+	ServiceRegister service_register;
+	@Autowired
+	ServiceStudent service_student;
+	@Autowired
+	ServiceVaccine service_vaccine;
+	@Autowired
+	RegisterFrame register_frame;
+
 	private JTextField search_register;
 	private JTextField textField_2;
 	private JTable table_allvaccine;
 	private JTable table_vaccine1;
 	private JTable table_vaccine2;
 	private JTable table_vaccine3;
-	
+
 	/**
 	 * Launch the application.
 	 */
-	
+
 	/**
 	 * Create the frame.
-	 * @throws UnsupportedLookAndFeelException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
-	 * @throws ClassNotFoundException 
+	 * 
+	 * @throws UnsupportedLookAndFeelException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws ClassNotFoundException
 	 */
-	public MainFrame() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-		
-		setResizable(false);	
+	public MainFrame() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+			UnsupportedLookAndFeelException {
+
+		setResizable(false);
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		UIManager.put("OptionPane.messageFont", new Font("Tahoma", Font.PLAIN, 14));
-		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\icon.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				"D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\icon.png"));
 		setTitle("Covid Vaccination Project For Students");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1000, 500);
+		setBounds(100, 100, 1000, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JPanel panel_menu = new JPanel();
 		panel_menu.setBackground(new Color(51, 204, 255));
-		panel_menu.setBounds(0, 0, 161, 461);
+		panel_menu.setBounds(0, 0, 161, 561);
 		contentPane.add(panel_menu);
 		panel_menu.setLayout(null);
-		
+
 		JButton btnNewButton = new JButton("รายชื่อนิสิต");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl =(CardLayout) panel_card.getLayout();
-				cl.show(panel_card,"Student");
-				List<Student> students =  service_student.getAllStudent();
+				CardLayout cl = (CardLayout) panel_card.getLayout();
+				cl.show(panel_card, "Student");
+				List<Student> students = service_student.getAllStudent();
 				LoadDataStudent(students);
 			}
 		});
 		btnNewButton.setBounds(10, 45, 141, 23);
 		panel_menu.add(btnNewButton);
-		
+
 		JButton btnNewButton_1 = new JButton("ลงทะเบียนเข้าระบบ");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl =(CardLayout) panel_card.getLayout();
-				cl.show(panel_card,"Register");
+				CardLayout cl = (CardLayout) panel_card.getLayout();
+				cl.show(panel_card, "Register");
 				LoadDataRegister(table_register);
 			}
 		});
 		btnNewButton_1.setBounds(10, 79, 141, 23);
 		panel_menu.add(btnNewButton_1);
-		
+
 		JButton btnSohkcid = new JButton("หน้าแรก");
 		btnSohkcid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl =(CardLayout) panel_card.getLayout();
-				cl.show(panel_card,"Home");
+				CardLayout cl = (CardLayout) panel_card.getLayout();
+				cl.show(panel_card, "Home");
 			}
 		});
 		btnSohkcid.setBounds(10, 11, 141, 23);
 		panel_menu.add(btnSohkcid);
-		
+
 		JButton btnNewButton_1_1 = new JButton("ลงทะเบียนฉีดวัคซีน");
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnNewButton_1_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
-				CardLayout cl =(CardLayout) panel_card.getLayout();
-				cl.show(panel_card,"Vaccine");
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout) panel_card.getLayout();
+				cl.show(panel_card, "Vaccine");
 				LoadDataVaccine(table_allvaccine);
 			}
 		});
 		btnNewButton_1_1.setBounds(10, 113, 141, 23);
 		panel_menu.add(btnNewButton_1_1);
-		
+
 		panel_card = new JPanel();
-		panel_card.setBounds(160, 0, 824, 461);
+		panel_card.setBounds(160, 0, 824, 561);
 		contentPane.add(panel_card);
 		panel_card.setLayout(new CardLayout(0, 0));
-		
+
 		JPanel panel_home = new JPanel();
 		panel_home.setBackground(Color.BLUE);
 		panel_card.add(panel_home, "Home");
 		panel_home.setLayout(null);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\icon.png"));
+		lblNewLabel_2.setIcon(new ImageIcon(
+				"D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\icon.png"));
 		lblNewLabel_2.setBounds(251, 11, 128, 128);
 		panel_home.add(lblNewLabel_2);
-		
+
 		JLabel lblNewLabel_3 = new JLabel("โครงการฉีดวัคซีนโควิดสำหรับนักศึกษา");
 		lblNewLabel_3.setForeground(Color.WHITE);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 35));
 		lblNewLabel_3.setBounds(26, 152, 614, 62);
 		panel_home.add(lblNewLabel_3);
-		
+
 		JPanel panel_student = new JPanel();
 		panel_card.add(panel_student, "Student");
 		panel_student.setLayout(null);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 87, 804, 363);
+		scrollPane.setBounds(10, 87, 804, 463);
 		panel_student.add(scrollPane);
-		
-		
+
 		table_student = new JTable();
 		scrollPane.setViewportView(table_student);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("รายชื่อนิสิต");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel_1.setBounds(10, 11, 211, 25);
 		panel_student.add(lblNewLabel_1);
-		
+
 		search_student = new JTextField();
 		search_student.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id = Integer.parseInt(search_student.getText());
-				List<Student> students =  service_student.getStudentById(id);
+				List<Student> students = service_student.getStudentById(id);
 				LoadDataStudent(students);
 			}
 		});
@@ -207,266 +219,371 @@ public class MainFrame extends JFrame {
 		search_student.setToolTipText("search");
 		search_student.setForeground(Color.BLACK);
 		search_student.setColumns(10);
-		
+
 		JButton btnNewButton_2 = new JButton("ค้นหา");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id = Integer.parseInt(search_student.getText());
-				List<Student> students =  service_student.getStudentById(id);
+				List<Student> students = service_student.getStudentById(id);
 				LoadDataStudent(students);
 			}
 		});
 		btnNewButton_2.setBounds(740, 11, 74, 23);
 		panel_student.add(btnNewButton_2);
-		
+
 		JPanel panel_register = new JPanel();
 		panel_register.setLayout(null);
 		panel_card.add(panel_register, "Register");
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 87, 804, 363);
+		scrollPane_1.setBounds(10, 87, 804, 463);
 		panel_register.add(scrollPane_1);
-		
+
 		table_register = new JTable();
 		scrollPane_1.setViewportView(table_register);
-		
+
 		JLabel lblNewLabel_1_1 = new JLabel("ลงทะเบียนเพื่อฉีดวัคซีน");
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel_1_1.setBounds(10, 5, 224, 25);
 		panel_register.add(lblNewLabel_1_1);
-		
+
 		search_register = new JTextField();
 		search_register.setToolTipText("search");
 		search_register.setForeground(Color.BLACK);
 		search_register.setColumns(10);
 		search_register.setBounds(594, 6, 144, 20);
 		panel_register.add(search_register);
-		
+
 		JButton btnNewButton_2_1 = new JButton("ค้นหา");
 		btnNewButton_2_1.setBounds(740, 5, 74, 23);
 		panel_register.add(btnNewButton_2_1);
-		
+
 		JButton btnNewButton_3 = new JButton("ลงทะเบียน");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RegisterFrame frame = new RegisterFrame(service_student,service_register);
+				RegisterFrame frame = new RegisterFrame(service_student, service_register);
 				frame.setVisible(true);
 			}
 		});
 		btnNewButton_3.setBackground(new Color(0, 204, 51));
 		btnNewButton_3.setBounds(10, 53, 89, 23);
 		panel_register.add(btnNewButton_3);
-		
+
 		JButton btnNewButton_4 = new JButton("แก้ไข");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-	        		int id = (Integer) table_register.getValueAt(table_register.getSelectedRow(), 0);
-	        		System.err.println("Selected : "+id);
-	        		RegisterFrame frame = new RegisterFrame(service_register);
-	        		frame.setRid(id);
-	        		frame.setVisible(true);
-	        		frame.addWindowListener(new WindowAdapter() {
-	        			@Override
-	        			public void windowClosed(WindowEvent e) {
-	        				LoadDataRegister(table_register);
-	        			}
-	        		});
-	        	}catch(Exception ex){}
+					int id = (Integer) table_register.getValueAt(table_register.getSelectedRow(), 0);
+					System.err.println("Selected : " + id);
+					RegisterFrame frame = new RegisterFrame(service_register);
+					frame.setRid(id);
+					frame.setVisible(true);
+					frame.addWindowListener(new WindowAdapter() {
+						@Override
+						public void windowClosed(WindowEvent e) {
+							LoadDataRegister(table_register);
+						}
+					});
+				} catch (Exception ex) {
+				}
 			}
 		});
 		btnNewButton_4.setBackground(new Color(255, 255, 51));
 		btnNewButton_4.setBounds(107, 53, 89, 23);
 		panel_register.add(btnNewButton_4);
-		
+
 		JButton btnNewButton_5 = new JButton("ลบ");
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-	        		int id = (Integer) table_register.getValueAt(table_register.getSelectedRow(), 0);
-	        		System.err.println("Delete rid : "+id);
-	        		if(service_register.deleteByRid(id)) {
-	        			JOptionPane.showMessageDialog(null,"ลบสำเร็จ");
-	        		}else {
-	        			JOptionPane.showMessageDialog(null,"ลบไม่สำเร็จ");
-	        		}
-	        		LoadDataRegister(table_register);
-	        	}catch(Exception ex){}
+					int id = (Integer) table_register.getValueAt(table_register.getSelectedRow(), 0);
+					System.err.println("Delete rid : " + id);
+					if (service_register.deleteByRid(id)) {
+						JOptionPane.showMessageDialog(null, "ลบสำเร็จ");
+					} else {
+						JOptionPane.showMessageDialog(null, "ลบไม่สำเร็จ");
+					}
+					LoadDataRegister(table_register);
+				} catch (Exception ex) {
+				}
 			}
 		});
 		btnNewButton_5.setForeground(Color.WHITE);
 		btnNewButton_5.setBackground(Color.RED);
 		btnNewButton_5.setBounds(205, 53, 89, 23);
 		panel_register.add(btnNewButton_5);
-		
+
 		JPanel panel_vaccine = new JPanel();
 		panel_vaccine.setLayout(null);
 		panel_card.add(panel_vaccine, "Vaccine");
-		
+
 		JLabel lblNewLabel_1_1_1_1 = new JLabel("ลงทะเบียนฉีดวัคซีน");
 		lblNewLabel_1_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel_1_1_1_1.setBounds(10, 5, 224, 25);
 		panel_vaccine.add(lblNewLabel_1_1_1_1);
-		
+
 		textField_2 = new JTextField();
 		textField_2.setToolTipText("search");
 		textField_2.setForeground(Color.BLACK);
 		textField_2.setColumns(10);
 		textField_2.setBounds(594, 6, 144, 20);
 		panel_vaccine.add(textField_2);
-		
+
 		JButton btnNewButton_2_1_1_1 = new JButton("ค้นหา");
 		btnNewButton_2_1_1_1.setBounds(740, 5, 74, 23);
 		panel_vaccine.add(btnNewButton_2_1_1_1);
-		
+
 		JButton btnNewButton_3_1_1 = new JButton("ฉีดวัคซีน");
 		btnNewButton_3_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					int id = (Integer) table_allvaccine.getValueAt(table_allvaccine.getSelectedRow(), 0);
-					VaccineFrame frame = new VaccineFrame(service_register,service_vaccine);
+					VaccineFrame frame = new VaccineFrame(service_register, service_vaccine);
 					Register r = service_register.getRegisterByRid(id);
-					if(r.getTbVaccine1()==null) {
+					if (r.getTbVaccine1() == null) {
 						frame.setRid(id);
 						frame.setVisible(true);
-					}else {
-						JOptionPane.showMessageDialog(null,"นิสิตรหัส "+r.getTbStudent().getSid()+" ลงทะเบียนแล้ว");
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"นิสิตรหัส " + r.getTbStudent().getSid() + " ลงทะเบียนแล้ว");
 					}
 				} catch (Exception e2) {
-					
+
 				}
-				
+
 			}
 		});
 		btnNewButton_3_1_1.setBackground(new Color(0, 204, 51));
 		btnNewButton_3_1_1.setBounds(10, 53, 89, 23);
 		panel_vaccine.add(btnNewButton_3_1_1);
-		
+
 		JButton btnNewButton_4_1_1 = new JButton("แก้ไข");
 		btnNewButton_4_1_1.setBackground(new Color(255, 255, 51));
 		btnNewButton_4_1_1.setBounds(107, 53, 89, 23);
 		panel_vaccine.add(btnNewButton_4_1_1);
-		
+
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane_1.setBounds(10, 87, 804, 363);
+		tabbedPane_1.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+//			    if(tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
+//			    	LoadDataVaccine(table_allvaccine);
+//				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 1")) {
+					List<Vaccine1> vaccine1s = service_vaccine.getAllVaccine1();
+					LoadVaccine1(vaccine1s);
+				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 2")) {
+					List<Vaccine2> vaccine2s = service_vaccine.getAllVaccine2();
+					LoadVaccine2(vaccine2s);
+				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 3")) {
+					List<Vaccine3> vaccine3s = service_vaccine.getAllVaccine3();
+					LoadVaccine3(vaccine3s);
+				}
+			}
+		});
+		tabbedPane_1.setBounds(10, 87, 804, 463);
 		panel_vaccine.add(tabbedPane_1);
-		
+
 		JPanel panel_all = new JPanel();
 		tabbedPane_1.addTab("รายชื่อลงทะเบียน", null, panel_all, null);
 		panel_all.setLayout(null);
-		
+
 		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(0, 0, 799, 335);
+		scrollPane_2.setBounds(0, 0, 799, 435);
 		panel_all.add(scrollPane_2);
-		
+
 		table_allvaccine = new JTable();
 		scrollPane_2.setViewportView(table_allvaccine);
-		
+
 		JPanel panel_dose1 = new JPanel();
 		tabbedPane_1.addTab("เข็มที่ 1", null, panel_dose1, null);
 		panel_dose1.setLayout(null);
-		
+
 		JScrollPane scrollPane_3 = new JScrollPane();
-		scrollPane_3.setBounds(0, 0, 799, 335);
+		scrollPane_3.setBounds(0, 0, 799, 435);
 		panel_dose1.add(scrollPane_3);
-		
+
 		table_vaccine1 = new JTable();
 		scrollPane_3.setViewportView(table_vaccine1);
-		
+
 		JPanel panel_dose2 = new JPanel();
 		tabbedPane_1.addTab("เข็มที่ 2", null, panel_dose2, null);
 		panel_dose2.setLayout(null);
-		
+
 		JScrollPane scrollPane_4 = new JScrollPane();
-		scrollPane_4.setBounds(0, 0, 799, 335);
+		scrollPane_4.setBounds(0, 0, 799, 435);
 		panel_dose2.add(scrollPane_4);
-		
+
 		table_vaccine2 = new JTable();
 		scrollPane_4.setViewportView(table_vaccine2);
-		
+
 		JPanel panel_dose3 = new JPanel();
 		tabbedPane_1.addTab("เข็มที่ 3", null, panel_dose3, null);
 		panel_dose3.setLayout(null);
-		
+
 		JScrollPane scrollPane_5 = new JScrollPane();
-		scrollPane_5.setBounds(0, 0, 799, 335);
+		scrollPane_5.setBounds(0, 0, 799, 435);
 		panel_dose3.add(scrollPane_5);
-		
+
 		table_vaccine3 = new JTable();
 		scrollPane_5.setViewportView(table_vaccine3);
-		
+
 		JDateChooser dateChooser = new JDateChooser();
-		
+
 		dateChooser.setBounds(703, 51, 111, 20);
 		panel_vaccine.add(dateChooser);
 		dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
-				if(tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
 					try {
 						String strdate = setFormatDate(dateChooser);
 						System.err.println(strdate);
 					} catch (NullPointerException e) {
 					}
 				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 1")) {
+
+					try {
+						String strdate = setFormatDate(dateChooser);
+						List<Vaccine1> vaccine1s = service_vaccine.getVaccine1ByDate(java.sql.Date.valueOf(strdate));
+						LoadVaccine1(vaccine1s);
+					} catch (NullPointerException e) {
+					}
+				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 2")) {
+					try {
+						String strdate = setFormatDate(dateChooser);
+						List<Vaccine2> vaccine2s = service_vaccine.getVaccine2ByDate(java.sql.Date.valueOf(strdate));
+						LoadVaccine2(vaccine2s);
+					} catch (NullPointerException e) {
+					}
+				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 3")) {
+					try {
+						String strdate = setFormatDate(dateChooser);
+						List<Vaccine3> vaccine3s = service_vaccine.getVaccine3ByDate(java.sql.Date.valueOf(strdate));
+						LoadVaccine3(vaccine3s);
+					} catch (NullPointerException e) {
+					}
+				}
 			}
 		});
-		
+
 	}
-	
+
 	void LoadDataRegister(JTable table) {
-		List<Register> registers =  service_register.getAllRegister();
-		
+		List<Register> registers = service_register.getAllRegister();
+
 		DefaultTableModel model = new DefaultTableModel();
-		Object[] columns = {"รหัสลงทะเบียน","รหัสนิสิต","ชื่อ","นามสกุล","เบอร์โทร","วันที่ลงทะเบียน"};
+		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เบอร์โทร", "วันที่ลงทะเบียน" };
 		model.setColumnIdentifiers(columns);
-		
-		for(Register r:registers) {
-			Object[] obj = {r.getRid(),r.getTbStudent().getSid(),r.getTbStudent().getFirstname(),r.getTbStudent().getLastname(),
-					r.getTbStudent().getMobile(),r.getDate()};
+
+		for (Register r : registers) {
+			Object[] obj = { r.getRid(), r.getTbStudent().getSid(), r.getTbStudent().getFirstname(),
+					r.getTbStudent().getLastname(), r.getTbStudent().getMobile(), r.getDate() };
 			model.addRow(obj);
 		}
 		table.setModel(model);
 	}
-	
+
 	void LoadDataVaccine(JTable table) {
-		List<Register> registers =  service_register.getAllRegister();
-		
+		List<Register> registers = service_register.getAllRegister();
+
 		DefaultTableModel model = new DefaultTableModel();
-		Object[] columns = {"รหัสลงทะเบียน","รหัสนิสิต","ชื่อ","นามสกุล","วันที่ลงทะเบียน","เข็มที่ 1","เข็มที่ 2","เข็มที่ 3"};
+		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "วันที่ลงทะเบียน", "เข็มที่ 1",
+				"เข็มที่ 2", "เข็มที่ 3" };
 		model.setColumnIdentifiers(columns);
-		
-		for(Register r:registers) {
-			Object[] obj = {r.getRid(),r.getTbStudent().getSid(),r.getTbStudent().getFirstname(),r.getTbStudent().getLastname(),r.getDate(),
-					(r.getTbVaccine1()!=null)?r.getTbVaccine1().getTbVaccine().getName():"",
-					(r.getTbVaccine2()!=null)?r.getTbVaccine2().getTbVaccine().getName():"",
-					(r.getTbVaccine3()!=null)?r.getTbVaccine3().getTbVaccine().getName():"",
-			};
+
+		for (Register r : registers) {
+			Object[] obj = { r.getRid(), r.getTbStudent().getSid(), r.getTbStudent().getFirstname(),
+					r.getTbStudent().getLastname(), r.getDate(),
+					(r.getTbVaccine1() != null) ? r.getTbVaccine1().getTbVaccine().getName() : "",
+					(r.getTbVaccine2() != null) ? r.getTbVaccine2().getTbVaccine().getName() : "",
+					(r.getTbVaccine3() != null) ? r.getTbVaccine3().getTbVaccine().getName() : "", };
 			model.addRow(obj);
 		}
 		table.setModel(model);
 	}
-	
-	
+
+	void LoadVaccine1(List<Vaccine1> vaccine1s) {
+		DefaultTableModel model = new DefaultTableModel();
+		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 1", "วันที่ฉีด" };
+		model.setColumnIdentifiers(columns);
+
+		for (Vaccine1 v : vaccine1s) {
+			int rid = v.getTbRegister().getRid();
+			int sid = v.getTbRegister().getTbStudent().getSid();
+			String firstname = v.getTbRegister().getTbStudent().getFirstname();
+			String lastname = v.getTbRegister().getTbStudent().getLastname();
+			String vaccineType = v.getTbVaccine().getName();
+			Date dateVaccine1 = v.getDate();
+
+			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine1 };
+			model.addRow(obj);
+		}
+		table_vaccine1.setModel(model);
+	}
+
+	void LoadVaccine2(List<Vaccine2> vaccine2s) {
+
+		DefaultTableModel model = new DefaultTableModel();
+		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 2", "วันที่ฉีด" };
+		model.setColumnIdentifiers(columns);
+
+		for (Vaccine2 v : vaccine2s) {
+			int rid = v.getTbRegister().getRid();
+			int sid = v.getTbRegister().getTbStudent().getSid();
+			String firstname = v.getTbRegister().getTbStudent().getFirstname();
+			String lastname = v.getTbRegister().getTbStudent().getLastname();
+			String vaccineType = v.getTbVaccine().getName();
+			Date dateVaccine1 = v.getDate();
+
+			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine1 };
+			model.addRow(obj);
+		}
+		table_vaccine2.setModel(model);
+	}
+
+	void LoadVaccine3(List<Vaccine3> vaccine3s) {
+
+		DefaultTableModel model = new DefaultTableModel();
+		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 3", "วันที่ฉีด" };
+		model.setColumnIdentifiers(columns);
+
+		for (Vaccine3 v : vaccine3s) {
+			int rid = v.getTbRegister().getRid();
+			int sid = v.getTbRegister().getTbStudent().getSid();
+			String firstname = v.getTbRegister().getTbStudent().getFirstname();
+			String lastname = v.getTbRegister().getTbStudent().getLastname();
+			String vaccineType = v.getTbVaccine().getName();
+			Date dateVaccine1 = v.getDate();
+
+			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine1 };
+			model.addRow(obj);
+		}
+		table_vaccine3.setModel(model);
+	}
+
 	void LoadDataStudent(List<Student> students) {
 		DefaultTableModel model = new DefaultTableModel();
-		Object[] columns = {"รหัสนิสิต","ชื่อ","นามสกุล","เบอร์โทร","อีเมล"};
+		Object[] columns = { "รหัสนิสิต", "ชื่อ", "นามสกุล", "เบอร์โทร", "อีเมล" };
 		model.setColumnIdentifiers(columns);
-		
-		for(Student s:students) {
-			Object[] obj = {s.getSid(),s.getFirstname(),s.getLastname(),s.getMobile(),s.getEmail()};
+		for (Student s : students) {
+			Object[] obj = { s.getSid(), s.getFirstname(), s.getLastname(), s.getMobile(), s.getEmail() };
 			model.addRow(obj);
 		}
 		table_student.setModel(model);
 	}
-	
+
 	String setFormatDate(JDateChooser date) {
-		if(date.getDate() != null) {
+		if (date.getDate() != null) {
 			Date d = date.getDate();
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
-			return dateFormat.format(d);	
-		}else {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+			return dateFormat.format(d);
+		} else {
 			return "";
 		}
-		
+
 	}
 }
