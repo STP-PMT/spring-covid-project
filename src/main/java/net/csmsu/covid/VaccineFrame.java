@@ -159,7 +159,7 @@ public class VaccineFrame extends JFrame {
 					}
 					Random random = new Random();
 					int day = random.nextInt(45 - 30 + 1) + 30;
-					//System.err.println("Day vaccine 3: "+day);
+				
 					dateVaccine3 = setDateVaccine(register.getTbVaccine2().getDate(), day);
 					SimpleDateFormat format = new SimpleDateFormat("dd/MMMM/yyyy", Locale.ENGLISH);
 					label_dateVaccine3.setText(format.format(dateVaccine3));
