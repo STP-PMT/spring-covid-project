@@ -52,7 +52,7 @@ public class VaccineFrame extends JFrame {
 	private JComboBox<String> combo_vaccine;
 	private Hashtable<Integer, String> vaccineMap =  new Hashtable<Integer, String>();
 	private JLabel label_date;
-	private Vaccine1 vaccine1;
+	
 	
 	@Autowired ServiceRegister service_register;
 	@Autowired ServiceVaccine service_vaccine;
@@ -79,6 +79,7 @@ public class VaccineFrame extends JFrame {
 	}
 	
 	public VaccineFrame() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
@@ -116,7 +117,7 @@ public class VaccineFrame extends JFrame {
 		}
 		UIManager.put("OptionPane.messageFont", new Font("Tahoma", Font.PLAIN, 14));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 336, 443);
+		setBounds(100, 100, 586, 345);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -196,11 +197,11 @@ public class VaccineFrame extends JFrame {
 				rid = -1;
 			}
 		});
-		btnNewButton.setBounds(122, 370, 89, 23);
+		btnNewButton.setBounds(345, 272, 89, 23);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("ยกเลิก");
-		btnNewButton_1.setBounds(222, 370, 89, 23);
+		btnNewButton_1.setBounds(445, 272, 89, 23);
 		contentPane.add(btnNewButton_1);
 		
 		label_dateRegister = new JLabel("");
@@ -213,7 +214,8 @@ public class VaccineFrame extends JFrame {
 		contentPane.add(textField_dateRegister_1);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(20, 185, 256, 150);
+		panel.setBackground(new Color(176, 224, 230));
+		panel.setBounds(278, 48, 256, 142);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		

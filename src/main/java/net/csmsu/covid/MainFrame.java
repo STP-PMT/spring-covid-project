@@ -357,26 +357,29 @@ public class MainFrame extends JFrame {
 		btnNewButton_3_1_1.setBounds(10, 53, 89, 23);
 		panel_vaccine.add(btnNewButton_3_1_1);
 
-		JButton btnNewButton_4_1_1 = new JButton("แก้ไข");
-		btnNewButton_4_1_1.setBackground(new Color(255, 255, 51));
-		btnNewButton_4_1_1.setBounds(107, 53, 89, 23);
-		panel_vaccine.add(btnNewButton_4_1_1);
+		JButton btn_manage = new JButton("จัดการ");
+		btn_manage.setBackground(new Color(255, 255, 51));
+		btn_manage.setBounds(107, 53, 89, 23);
+		panel_vaccine.add(btn_manage);
 
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_1.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-//			    if(tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
-//			    	LoadDataVaccine(table_allvaccine);
-//				}
+			    if(tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
+			    	btn_manage.setVisible(true);
+				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 1")) {
+					btn_manage.setVisible(false);
 					List<Vaccine1> vaccine1s = service_vaccine.getAllVaccine1();
 					LoadVaccine1(vaccine1s);
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 2")) {
+					btn_manage.setVisible(false);
 					List<Vaccine2> vaccine2s = service_vaccine.getAllVaccine2();
 					LoadVaccine2(vaccine2s);
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 3")) {
+					btn_manage.setVisible(false);
 					List<Vaccine3> vaccine3s = service_vaccine.getAllVaccine3();
 					LoadVaccine3(vaccine3s);
 				}
@@ -443,7 +446,7 @@ public class MainFrame extends JFrame {
 					}
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 1")) {
-
+					
 					try {
 						String strdate = setFormatDate(dateChooser);
 						List<Vaccine1> vaccine1s = service_vaccine.getVaccine1ByDate(java.sql.Date.valueOf(strdate));
