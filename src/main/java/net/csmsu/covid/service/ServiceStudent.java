@@ -23,4 +23,8 @@ public class ServiceStudent {
 	public List<Student> getStudentNotInRegister(){
 		return student_repo.getStudentNotRegister();
 	}
+	
+	public List<Student> getStudentBySidOrName(String text){
+		return student_repo.findBySidOrFirstnameStartingWith(text, text);
+	}
 }

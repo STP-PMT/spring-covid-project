@@ -12,4 +12,6 @@ public interface StudentRepository extends JpaRepository<Student, String>{
 	
 	@Query("SELECT s FROM  Student s LEFT JOIN Register r on s.sid = r.tbStudent.sid WHERE r.tbStudent.sid IS NULL")
 	List<Student> getStudentNotRegister();
+	
+	List<Student> findBySidOrFirstnameStartingWith(String sid,String fistname);
 }

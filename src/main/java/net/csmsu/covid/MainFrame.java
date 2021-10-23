@@ -257,7 +257,7 @@ public class MainFrame extends JFrame {
 		search_student.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String id = search_student.getText();
-				List<Student> students = service_student.getStudentById(id);
+				List<Student> students = service_student.getStudentBySidOrName(id);
 				LoadDataStudent(students);
 			}
 		});
@@ -271,7 +271,7 @@ public class MainFrame extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String id = search_student.getText();
-				List<Student> students = service_student.getStudentById(id);
+				List<Student> students = service_student.getStudentBySidOrName(id);
 				LoadDataStudent(students);
 			}
 		});
@@ -306,7 +306,7 @@ public class MainFrame extends JFrame {
 		btnNewButton_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				List<Register> r = service_register.getRegisterByRidOrName(search_register.getText());
-				LoadDataRegister(r);
+				LoadReport(r);
 			}
 		});
 		btnNewButton_2_1.setBounds(740, 11, 74, 23);
