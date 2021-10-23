@@ -226,6 +226,7 @@ public class MainFrame extends JFrame {
 		panel_home.add(btnNewButton_6_3);
 
 		JPanel panel_student = new JPanel();
+		panel_student.setBackground(new Color(224, 255, 255));
 		panel_card.add(panel_student, "Student");
 		panel_student.setLayout(null);
 
@@ -267,6 +268,7 @@ public class MainFrame extends JFrame {
 		panel_student.add(btnNewButton_2);
 
 		JPanel panel_register = new JPanel();
+		panel_register.setBackground(new Color(224, 255, 255));
 		panel_register.setLayout(null);
 		panel_card.add(panel_register, "Register");
 
@@ -286,11 +288,11 @@ public class MainFrame extends JFrame {
 		search_register.setToolTipText("search");
 		search_register.setForeground(Color.BLACK);
 		search_register.setColumns(10);
-		search_register.setBounds(594, 6, 144, 20);
+		search_register.setBounds(594, 12, 144, 20);
 		panel_register.add(search_register);
 
 		JButton btnNewButton_2_1 = new JButton("ค้นหา");
-		btnNewButton_2_1.setBounds(740, 5, 74, 23);
+		btnNewButton_2_1.setBounds(740, 11, 74, 23);
 		panel_register.add(btnNewButton_2_1);
 
 		JButton btnNewButton_3 = new JButton("ลงทะเบียน");
@@ -361,6 +363,7 @@ public class MainFrame extends JFrame {
 		panel_register.add(btnNewButton_5);
 
 		JPanel panel_vaccine = new JPanel();
+		panel_vaccine.setBackground(new Color(224, 255, 255));
 		panel_vaccine.setLayout(null);
 		panel_card.add(panel_vaccine, "Vaccine");
 
@@ -373,11 +376,11 @@ public class MainFrame extends JFrame {
 		textField_2.setToolTipText("search");
 		textField_2.setForeground(Color.BLACK);
 		textField_2.setColumns(10);
-		textField_2.setBounds(594, 6, 144, 20);
+		textField_2.setBounds(594, 12, 144, 20);
 		panel_vaccine.add(textField_2);
 
 		JButton btnNewButton_2_1_1_1 = new JButton("ค้นหา");
-		btnNewButton_2_1_1_1.setBounds(740, 5, 74, 23);
+		btnNewButton_2_1_1_1.setBounds(740, 11, 74, 23);
 		panel_vaccine.add(btnNewButton_2_1_1_1);
 
 		JButton btnNewButton_3_1_1 = new JButton("ลงทะเบียน");
@@ -610,6 +613,7 @@ public class MainFrame extends JFrame {
 		panel_vaccine.add(lblNewLabel);
 		
 		JPanel panel_report = new JPanel();
+		panel_report.setBackground(new Color(224, 255, 255));
 		panel_report.setLayout(null);
 		panel_card.add(panel_report, "name_100331049844900");
 		

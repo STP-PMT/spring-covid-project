@@ -3,6 +3,7 @@ package net.csmsu.covid;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,6 +32,8 @@ import javax.swing.JComboBox;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 @Component
 public class RegisterFrame extends JFrame {
@@ -53,6 +56,8 @@ public class RegisterFrame extends JFrame {
 	ServiceStudent service_student;
 	@Autowired
 	ServiceRegister service_register;
+	private JPanel panel;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -87,9 +92,16 @@ public class RegisterFrame extends JFrame {
 				LoadEdit();
 				if (rid == 0) {
 					List<Student> student = service_student.getStudentNotInRegister();
+					DefaultTableModel model = new DefaultTableModel();
+					Object[] columns = { "รหัสนิสิต", "ชื่อ", "นามสกุล"};
+					model.setColumnIdentifiers(columns);
+
 					for (Student s : student) {
+						Object[] obj = {s.getSid(),s.getFirstname(),s.getLastname()};
+						model.addRow(obj);
 						combo_student.addItem(s.getSid());
 					}
+					table.setModel(model);
 				}
 
 			}
@@ -103,7 +115,7 @@ public class RegisterFrame extends JFrame {
 		UIManager.put("OptionPane.messageFont", new Font("Tahoma", Font.PLAIN, 14));
 		setTitle("ลงทะเบียนต้องการวัคซีน");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 300, 400);
+		setBounds(100, 100, 638, 355);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -215,7 +227,7 @@ public class RegisterFrame extends JFrame {
 				dispose();
 			}
 		});
-		btnNewButton.setBounds(86, 327, 89, 23);
+		btnNewButton.setBounds(39, 278, 89, 23);
 		contentPane.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("ยกเลิก");
@@ -224,7 +236,7 @@ public class RegisterFrame extends JFrame {
 				dispose();
 			}
 		});
-		btnNewButton_1.setBounds(185, 327, 89, 23);
+		btnNewButton_1.setBounds(138, 278, 89, 23);
 		contentPane.add(btnNewButton_1);
 
 		JLabel lblNewLabel_1_1_2_1_1 = new JLabel("วันที่ลงทะเบียน");
@@ -234,7 +246,7 @@ public class RegisterFrame extends JFrame {
 
 		label_title = new JLabel("ลงทะเบียนต้องการวัคซีน");
 		label_title.setFont(new Font("Tahoma", Font.BOLD, 16));
-		label_title.setBounds(50, 11, 186, 23);
+		label_title.setBounds(321, 11, 186, 23);
 		contentPane.add(label_title);
 
 		dateChooser = new JDateChooser();
@@ -264,6 +276,18 @@ public class RegisterFrame extends JFrame {
 		combo_student.setModel(new DefaultComboBoxModel<Integer>());
 		combo_student.setBounds(89, 88, 138, 22);
 		contentPane.add(combo_student);
+		
+		panel = new JPanel();
+		panel.setBounds(237, 64, 375, 237);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 0, 375, 237);
+		panel.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
 	}
 
 	public RegisterFrame(ServiceStudent service_student, ServiceRegister service_register) {
