@@ -274,12 +274,12 @@ public class VaccineFrame extends JFrame {
 						Vaccine2 v = service_vaccine.getVaccine2ByRid(rid);
 						register.setTbVaccine2(v);
 						if (service_register.updateRegister(register) != null) {
-							JOptionPane.showMessageDialog(null, "ลงทะเบียนวัคซีน 2 สำเร็จ");
+							JOptionPane.showMessageDialog(null, "ฉีดวัคซีน 1 สำเร็จ");
 						} else {
-							JOptionPane.showMessageDialog(null, "ลงทะเบียนวัคซีน 2 ไม่สำเร็จ!");
+							JOptionPane.showMessageDialog(null, "ฉีดวัคซีน 1 ไม่สำเร็จ!");
 						}
 					} else {
-						JOptionPane.showMessageDialog(null, "ลงทะเบียนวัคซีน 2 ไม่สำเร็จ!");
+						JOptionPane.showMessageDialog(null, "ฉีดวัคซีน1 ไม่สำเร็จ!");
 					}
 				}
 				if (vaccineTable == 2) {
@@ -291,19 +291,35 @@ public class VaccineFrame extends JFrame {
 
 					v3.setTbRegister(register);
 					v3.setTbVaccine(vaccine_type);
-
 					v3.setDate(java.sql.Date.valueOf(strdate));
-
+					Vaccine2 v2 = service_vaccine.getVaccine2ByRid(rid);
+					v2.setStatus("ฉีดวัคซีนแล้ว");
+					if (service_vaccine.updateVaccine3(v3) != null&&service_vaccine.updateVaccine2(v2) != null) {
+						Vaccine3 v = service_vaccine.getVaccine3ByRid(rid);
+						register.setTbVaccine3(v);
+						if (service_register.updateRegister(register) != null) {
+							JOptionPane.showMessageDialog(null, "ฉีดวัคซีน 2 สำเร็จ");
+						} else {
+							JOptionPane.showMessageDialog(null, "ฉีดวัคซีน 2 ไม่สำเร็จ!");
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "ฉีดวัคซีน 2 ไม่สำเร็จ!");
+					}
+				}
+				if (vaccineTable == 3) {
+					
+					Vaccine3 v3 = service_vaccine.getVaccine3ByRid(rid);
+					v3.setStatus("ฉีดวัคซีนแล้ว");
 					if (service_vaccine.updateVaccine3(v3) != null) {
 						Vaccine3 v = service_vaccine.getVaccine3ByRid(rid);
 						register.setTbVaccine3(v);
 						if (service_register.updateRegister(register) != null) {
-							JOptionPane.showMessageDialog(null, "ลงทะเบียนวัคซีน 2 สำเร็จ");
+							JOptionPane.showMessageDialog(null, "ฉีดวัคซีน 3 สำเร็จ");
 						} else {
-							JOptionPane.showMessageDialog(null, "ลงทะเบียนวัคซีน 2 ไม่สำเร็จ!");
+							JOptionPane.showMessageDialog(null, "ฉีดวัคซีน 3 ไม่สำเร็จ!");
 						}
 					} else {
-						JOptionPane.showMessageDialog(null, "ลงทะเบียนวัคซีน 2 ไม่สำเร็จ!");
+						JOptionPane.showMessageDialog(null, "ฉีดวัคซีน 3 ไม่สำเร็จ!");
 					}
 				}
 

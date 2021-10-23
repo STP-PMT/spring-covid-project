@@ -598,7 +598,7 @@ public class MainFrame extends JFrame {
 	void LoadVaccine2(List<Vaccine2> vaccine2s) {
 
 		DefaultTableModel model = new DefaultTableModel();
-		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 2", "วันที่ฉีด" };
+		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 2", "วันที่ฉีด","สถานะ" };
 		model.setColumnIdentifiers(columns);
 
 		for (Vaccine2 v : vaccine2s) {
@@ -607,9 +607,10 @@ public class MainFrame extends JFrame {
 			String firstname = v.getTbRegister().getTbStudent().getFirstname();
 			String lastname = v.getTbRegister().getTbStudent().getLastname();
 			String vaccineType = v.getTbVaccine().getName();
-			Date dateVaccine1 = v.getDate();
+			Date dateVaccine2 = v.getDate();
+			String status = v.getStatus();
 
-			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine1 };
+			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine2,status };
 			model.addRow(obj);
 		}
 		table_vaccine2.setModel(model);
@@ -618,7 +619,7 @@ public class MainFrame extends JFrame {
 	void LoadVaccine3(List<Vaccine3> vaccine3s) {
 
 		DefaultTableModel model = new DefaultTableModel();
-		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 3", "วันที่ฉีด" };
+		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 3", "วันที่ฉีด","สถานะ" };
 		model.setColumnIdentifiers(columns);
 
 		for (Vaccine3 v : vaccine3s) {
@@ -627,9 +628,10 @@ public class MainFrame extends JFrame {
 			String firstname = v.getTbRegister().getTbStudent().getFirstname();
 			String lastname = v.getTbRegister().getTbStudent().getLastname();
 			String vaccineType = v.getTbVaccine().getName();
-			Date dateVaccine1 = v.getDate();
+			Date dateVaccine3 = v.getDate();
+			String status = v.getStatus();
 
-			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine1 };
+			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine3,status };
 			model.addRow(obj);
 		}
 		table_vaccine3.setModel(model);
