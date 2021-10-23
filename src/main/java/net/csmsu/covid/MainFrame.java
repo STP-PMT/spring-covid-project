@@ -577,7 +577,7 @@ public class MainFrame extends JFrame {
 
 	void LoadVaccine1(List<Vaccine1> vaccine1s) {
 		DefaultTableModel model = new DefaultTableModel();
-		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 1", "วันที่ฉีด" };
+		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 1", "วันที่ฉีด","สถานะ" };
 		model.setColumnIdentifiers(columns);
 
 		for (Vaccine1 v : vaccine1s) {
@@ -587,8 +587,9 @@ public class MainFrame extends JFrame {
 			String lastname = v.getTbRegister().getTbStudent().getLastname();
 			String vaccineType = v.getTbVaccine().getName();
 			Date dateVaccine1 = v.getDate();
+			String status = v.getStatus();
 
-			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine1 };
+			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine1,status};
 			model.addRow(obj);
 		}
 		table_vaccine1.setModel(model);

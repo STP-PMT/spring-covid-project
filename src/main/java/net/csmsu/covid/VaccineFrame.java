@@ -136,7 +136,7 @@ public class VaccineFrame extends JFrame {
 					CardLayout cl = (CardLayout) panel_card.getLayout();
 					cl.show(panel_card, "vaccine2");
 					for (Vaccine v : vaccines) {
-						vaccineMap.put( v.getName(),v.getVid());
+						vaccineMap.put(v.getName(), v.getVid());
 						combo_vaccine2.addItem(v.getName());
 					}
 					Random random = new Random();
@@ -147,27 +147,27 @@ public class VaccineFrame extends JFrame {
 					label_dateVaccine2.setText(format.format(dateVaccine2));
 					label_vaccine1.setText(register.getTbVaccine1().getTbVaccine().getName());
 				}
-				
+
 				if (rid != -1 && vaccineTable == 2) {
-					List<Vaccine> vs = service_vaccine.getEfficacy(register.getTbVaccine2().getTbVaccine().getEfficacy());
+					List<Vaccine> vs = service_vaccine
+							.getEfficacy(register.getTbVaccine2().getTbVaccine().getEfficacy());
 					CardLayout cl = (CardLayout) panel_card.getLayout();
 					cl.show(panel_card, "vaccine3");
 					for (Vaccine v : vs) {
-						System.out.println("Name : "+v.getName());
-						vaccineMap.put(v.getName(),v.getVid());
+						System.out.println("Name : " + v.getName());
+						vaccineMap.put(v.getName(), v.getVid());
 						combo_vaccine3.addItem(v.getName());
 					}
 					Random random = new Random();
 					int day = random.nextInt(45 - 30 + 1) + 30;
-				
+
 					dateVaccine3 = setDateVaccine(register.getTbVaccine2().getDate(), day);
 					SimpleDateFormat format = new SimpleDateFormat("dd/MMMM/yyyy", Locale.ENGLISH);
 					label_dateVaccine3.setText(format.format(dateVaccine3));
 					label_vaccine1.setText(register.getTbVaccine1().getTbVaccine().getName());
 					label_vaccine2.setText(register.getTbVaccine2().getTbVaccine().getName());
 				}
-				
-				
+
 			}
 		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
@@ -235,7 +235,7 @@ public class VaccineFrame extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Register register = service_register.getRegisterByRid(rid);
-				
+
 				if (date_vaccine1.getDate() != null && vaccineTable == 0) {
 					Vaccine1 v1 = new Vaccine1();
 					Vaccine vaccine_type = service_vaccine.getVaccineById(1);
@@ -256,19 +256,21 @@ public class VaccineFrame extends JFrame {
 					} else {
 						JOptionPane.showMessageDialog(null, "ลงทะเบียนวัคซีน 1 ไม่สำเร็จ!");
 					}
-				} 
-				
+				}
+
 				if (vaccineTable == 1) {
 					Vaccine2 v2 = new Vaccine2();
-					Vaccine vaccine_type = service_vaccine.getVaccineById(vaccineMap.get(combo_vaccine2.getSelectedItem().toString()));
+					Vaccine vaccine_type = service_vaccine
+							.getVaccineById(vaccineMap.get(combo_vaccine2.getSelectedItem().toString()));
 					date_vaccine1.setDate(dateVaccine2);
 					String strdate = setFormatDate(date_vaccine1);
 
 					v2.setTbRegister(register);
 					v2.setTbVaccine(vaccine_type);
 					v2.setDate(java.sql.Date.valueOf(strdate));
-
-					if (service_vaccine.updateVaccine2(v2) != null) {
+					Vaccine1 v1 = service_vaccine.getVaccine1ByRid(rid);
+					v1.setStatus("ฉีดวัคซีนแล้ว");
+					if (service_vaccine.updateVaccine2(v2) != null && service_vaccine.updateVaccine1(v1) != null) {
 						Vaccine2 v = service_vaccine.getVaccine2ByRid(rid);
 						register.setTbVaccine2(v);
 						if (service_register.updateRegister(register) != null) {
@@ -282,12 +284,14 @@ public class VaccineFrame extends JFrame {
 				}
 				if (vaccineTable == 2) {
 					Vaccine3 v3 = new Vaccine3();
-					Vaccine vaccine_type = service_vaccine.getVaccineById(vaccineMap.get(combo_vaccine3.getSelectedItem().toString()));
+					Vaccine vaccine_type = service_vaccine
+							.getVaccineById(vaccineMap.get(combo_vaccine3.getSelectedItem().toString()));
 					date_vaccine1.setDate(dateVaccine3);
 					String strdate = setFormatDate(date_vaccine1);
 
 					v3.setTbRegister(register);
 					v3.setTbVaccine(vaccine_type);
+
 					v3.setDate(java.sql.Date.valueOf(strdate));
 
 					if (service_vaccine.updateVaccine3(v3) != null) {
@@ -302,7 +306,7 @@ public class VaccineFrame extends JFrame {
 						JOptionPane.showMessageDialog(null, "ลงทะเบียนวัคซีน 2 ไม่สำเร็จ!");
 					}
 				}
-				
+
 			}
 		});
 		btnNewButton.setBounds(345, 272, 89, 23);
@@ -449,6 +453,5 @@ public class VaccineFrame extends JFrame {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		return dateFormat.format(d);
 	}
-	
-	
+
 }
