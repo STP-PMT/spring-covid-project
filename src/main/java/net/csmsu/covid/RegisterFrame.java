@@ -36,6 +36,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Toolkit;
 
 @Component
 public class RegisterFrame extends JFrame {
@@ -87,6 +88,7 @@ public class RegisterFrame extends JFrame {
 	}
 
 	public RegisterFrame() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\icon.png"));
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override

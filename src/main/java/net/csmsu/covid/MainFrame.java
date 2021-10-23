@@ -651,19 +651,25 @@ public class MainFrame extends JFrame {
 
 		JLabel lbReport = new JLabel("รายงานข้อมูลการฉีดวัคซีนของนิสิต");
 		lbReport.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lbReport.setBounds(10, 5, 334, 20);
+		lbReport.setBounds(10, 8, 334, 20);
 		panel_report.add(lbReport);
 
 		textField = new JTextField();
 		textField.setToolTipText("search");
 		textField.setForeground(Color.BLACK);
 		textField.setColumns(10);
-		textField.setBounds(594, 6, 144, 20);
+		textField.setBounds(594, 12, 144, 20);
 		panel_report.add(textField);
 
-		JButton btnNewButton_2_1_1_1_1 = new JButton("ค้นหา");
-		btnNewButton_2_1_1_1_1.setBounds(740, 5, 74, 23);
-		panel_report.add(btnNewButton_2_1_1_1_1);
+		JButton btnSearch = new JButton("ค้นหา");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Register> r = service_register.getRegisterByIdOrSidOrName(textField.getText());
+				LoadDataRegister(r);
+			}
+		});
+		btnSearch.setBounds(740, 11, 74, 23);
+		panel_report.add(btnSearch);
 
 		JTabbedPane tabbedPane_1_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_1_1.setBounds(10, 92, 804, 478);
@@ -678,24 +684,12 @@ public class MainFrame extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				int selected = table_report.getSelectedRow();
 				int rid = (int) table_report.getModel().getValueAt(selected, 0);
-				ReportFrame report = new ReportFrame();
+				ReportFrame report = new ReportFrame(service_register);
+				report.setRid(rid);
 				report.setVisible(true);
 			}
 		});
 		scrollPane_6.setViewportView(table_report);
-
-		JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBounds(10, 61, 119, 20);
-		panel_report.add(dateChooser_1);
-
-		JComboBox<String> comboBox_1 = new JComboBox<String>();
-		comboBox_1.setBounds(662, 59, 144, 22);
-		panel_report.add(comboBox_1);
-
-		JLabel lblNewLabel_4 = new JLabel("ตัวกรอง");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_4.setBounds(606, 63, 46, 14);
-		panel_report.add(lblNewLabel_4);
 		dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
