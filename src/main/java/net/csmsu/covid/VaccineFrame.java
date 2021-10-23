@@ -172,6 +172,8 @@ public class VaccineFrame extends JFrame {
 					label_vaccine2.setText(register.getTbVaccine2().getTbVaccine().getName());
 				}
 				if (rid != -1 && vaccineTable == 3) {
+					CardLayout cl = (CardLayout) panel_card.getLayout();
+					cl.show(panel_card, "null");
 					label_title.setText("ฉีดวัคซีนเข็มที่ 3");
 					label_vaccine1.setText(register.getTbVaccine1().getTbVaccine().getName());
 					label_vaccine2.setText(register.getTbVaccine2().getTbVaccine().getName());
@@ -470,6 +472,9 @@ public class VaccineFrame extends JFrame {
 		lblNewLabel_2_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2_1_1.setBounds(57, 15, 157, 14);
 		panel_vaccine3.add(lblNewLabel_2_1_1);
+		
+		JPanel panel_null = new JPanel();
+		panel_card.add(panel_null, "null");
 
 		label_title = new JLabel("ลงทะเบียนวัคซีน");
 		label_title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -483,5 +488,4 @@ public class VaccineFrame extends JFrame {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		return dateFormat.format(d);
 	}
-
 }
