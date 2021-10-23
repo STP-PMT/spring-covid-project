@@ -87,6 +87,7 @@ public class RegisterFrame extends JFrame {
 	}
 
 	public RegisterFrame() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {

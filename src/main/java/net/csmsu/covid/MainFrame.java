@@ -94,6 +94,7 @@ public class MainFrame extends JFrame {
 	private JTabbedPane tabbedPane_1;
 	private JComboBox<String> comboBox;
 	private JTextField textField;
+	private JPanel panel;
 
 	/**
 	 * Launch the application.
@@ -520,10 +521,14 @@ public class MainFrame extends JFrame {
 
 		tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_1.addChangeListener(new ChangeListener() {
-
+			
 			public void stateChanged(ChangeEvent e) {
+				if(panel!=null) {
+					panel.setVisible(false);
+				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
 					if (service_register != null) {
+						panel.setVisible(true);
 						Filter();
 					}
 					btn_manage.setVisible(true);
@@ -595,22 +600,28 @@ public class MainFrame extends JFrame {
 		JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setBounds(10, 59, 119, 20);
 		panel_vaccine.add(dateChooser);
-
-		comboBox = new JComboBox<String>();
-		comboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Filter();
-			}
-		});
-		comboBox.setModel(
-				new DefaultComboBoxModel<String>(new String[] { "ทั้งหมด", "ลงทะเบียนแล้ว", "ยังไม่ลงทะเบียน" }));
-		comboBox.setBounds(662, 59, 144, 22);
-		panel_vaccine.add(comboBox);
-
-		JLabel lblNewLabel = new JLabel("ตัวกรอง");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel.setBounds(606, 63, 46, 14);
-		panel_vaccine.add(lblNewLabel);
+		
+		panel = new JPanel();
+		panel.setBackground(new Color(224, 255, 255));
+		panel.setBounds(594, 43, 220, 42);
+		panel_vaccine.add(panel);
+		panel.setLayout(null);
+		
+				comboBox = new JComboBox<String>();
+				comboBox.setBounds(66, 11, 144, 22);
+				panel.add(comboBox);
+				comboBox.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Filter();
+					}
+				});
+				comboBox.setModel(
+						new DefaultComboBoxModel<String>(new String[] { "ทั้งหมด", "ลงทะเบียนแล้ว", "ยังไม่ลงทะเบียน" }));
+				
+						JLabel lblNewLabel = new JLabel("ตัวกรอง");
+						lblNewLabel.setBounds(10, 15, 46, 14);
+						panel.add(lblNewLabel);
+						lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		JPanel panel_report = new JPanel();
 		panel_report.setBackground(new Color(224, 255, 255));
