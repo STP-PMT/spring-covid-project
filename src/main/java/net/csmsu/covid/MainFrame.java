@@ -261,7 +261,7 @@ public class MainFrame extends JFrame {
 				LoadDataStudent(students);
 			}
 		});
-		search_student.setBounds(593, 12, 144, 20);
+		search_student.setBounds(560, 12, 177, 20);
 		panel_student.add(search_student);
 		search_student.setToolTipText("search");
 		search_student.setForeground(Color.BLACK);
@@ -277,6 +277,18 @@ public class MainFrame extends JFrame {
 		});
 		btnNewButton_2.setBounds(740, 11, 74, 23);
 		panel_student.add(btnNewButton_2);
+		
+		JButton btnNewButton_7 = new JButton("เพิ่มข้อมูล");
+		btnNewButton_7.setBounds(560, 53, 79, 23);
+		panel_student.add(btnNewButton_7);
+		
+		JButton btnNewButton_7_1 = new JButton("เพิ่มข้อมูล");
+		btnNewButton_7_1.setBounds(646, 53, 79, 23);
+		panel_student.add(btnNewButton_7_1);
+		
+		JButton btnNewButton_7_2 = new JButton("เพิ่มข้อมูล");
+		btnNewButton_7_2.setBounds(735, 53, 79, 23);
+		panel_student.add(btnNewButton_7_2);
 
 		JPanel panel_register = new JPanel();
 		panel_register.setBackground(new Color(224, 255, 255));
