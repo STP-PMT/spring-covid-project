@@ -257,7 +257,7 @@ public class MainFrame extends JFrame {
 		search_student = new JTextField();
 		search_student.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int id = Integer.parseInt(search_student.getText());
+				String id = search_student.getText();
 				List<Student> students = service_student.getStudentById(id);
 				LoadDataStudent(students);
 			}
@@ -271,7 +271,7 @@ public class MainFrame extends JFrame {
 		JButton btnNewButton_2 = new JButton("ค้นหา");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int id = Integer.parseInt(search_student.getText());
+				String id = search_student.getText();
 				List<Student> students = service_student.getStudentById(id);
 				LoadDataStudent(students);
 			}
@@ -664,8 +664,8 @@ public class MainFrame extends JFrame {
 		JButton btnSearch = new JButton("ค้นหา");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				List<Register> r = service_register.getRegisterByIdOrSidOrName(textField.getText());
-				LoadDataRegister(r);
+//				List<Register> r = service_register.getRegisterByIdOrSidOrName(textField.getText());
+//				LoadDataRegister(r);
 			}
 		});
 		btnSearch.setBounds(740, 11, 74, 23);
@@ -784,7 +784,7 @@ public class MainFrame extends JFrame {
 		model.setColumnIdentifiers(columns);
 		for (Vaccine1 v : vaccine1s) {
 			int rid = v.getTbRegister().getRid();
-			int sid = v.getTbRegister().getTbStudent().getSid();
+			String sid = v.getTbRegister().getTbStudent().getSid();
 			String firstname = v.getTbRegister().getTbStudent().getFirstname();
 			String lastname = v.getTbRegister().getTbStudent().getLastname();
 			String vaccineType = v.getTbVaccine().getName();
@@ -806,7 +806,7 @@ public class MainFrame extends JFrame {
 
 		for (Vaccine2 v : vaccine2s) {
 			int rid = v.getTbRegister().getRid();
-			int sid = v.getTbRegister().getTbStudent().getSid();
+			String sid = v.getTbRegister().getTbStudent().getSid();
 			String firstname = v.getTbRegister().getTbStudent().getFirstname();
 			String lastname = v.getTbRegister().getTbStudent().getLastname();
 			String vaccineType = v.getTbVaccine().getName();
@@ -828,7 +828,7 @@ public class MainFrame extends JFrame {
 
 		for (Vaccine3 v : vaccine3s) {
 			int rid = v.getTbRegister().getRid();
-			int sid = v.getTbRegister().getTbStudent().getSid();
+			String sid = v.getTbRegister().getTbStudent().getSid();
 			String firstname = v.getTbRegister().getTbStudent().getFirstname();
 			String lastname = v.getTbRegister().getTbStudent().getLastname();
 			String vaccineType = v.getTbVaccine().getName();

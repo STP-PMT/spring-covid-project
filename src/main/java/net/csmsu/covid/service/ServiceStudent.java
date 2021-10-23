@@ -17,7 +17,7 @@ public class ServiceStudent {
 		return student_repo.findAll();
 	}
 	
-	public List<Student> getStudentById(int id){
+	public List<Student> getStudentById(String id){
 		return student_repo.findBySid(id);
 	}
 	public List<Student> getStudentNotInRegister(){

@@ -201,7 +201,7 @@ public class RegisterFrame extends JFrame {
 					rid = 0;
 				} else if (!tfSid.getText().isEmpty()) {
 					Register register = new Register();
-					int id = Integer.parseInt(tfSid.getText());
+					String id = tfSid.getText();
 					String date = setFormatDate(dateChooser);
 					List<Student> students = service_student.getStudentById(id);
 					for (Student s : students) {
@@ -263,7 +263,7 @@ public class RegisterFrame extends JFrame {
 				int sid = (int) table.getModel().getValueAt(selected, 0);
 				tfSid.setText(sid+"");
 				if (!tfSid.getText().isEmpty()) {
-					int Sid = Integer.parseInt(tfSid.getText());
+					String Sid = tfSid.getText();
 					List<Student> students = service_student.getStudentById(Sid);
 					for (Student s : students) {
 						tfFirstname.setText(s.getFirstname());
