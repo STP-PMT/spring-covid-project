@@ -33,6 +33,10 @@ public class ServiceRegister {
 		return register_repo.getRegisterNotNullVaccine();
 	}
 	
+	public List<Register> getRegisterByRidOrName(String text){
+		return register_repo.getRegisterByRidOrName(text,"%"+text+"%");
+	}
+	
 	public boolean deleteByRid(int rid) {
 		try {			
 			 register_repo.deleteById(rid);

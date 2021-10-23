@@ -664,8 +664,8 @@ public class MainFrame extends JFrame {
 		JButton btnSearch = new JButton("ค้นหา");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				List<Register> r = service_register.getRegisterByIdOrSidOrName(textField.getText());
-//				LoadDataRegister(r);
+				List<Register> r = service_register.getRegisterByRidOrName(textField.getText());
+				LoadReport(r);
 			}
 		});
 		btnSearch.setBounds(740, 11, 74, 23);

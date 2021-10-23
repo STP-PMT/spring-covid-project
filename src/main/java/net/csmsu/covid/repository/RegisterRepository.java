@@ -17,4 +17,7 @@ public interface RegisterRepository extends JpaRepository<Register, Integer> {
 	
 	@Query("select r from  Register r LEFT JOIN Vaccine1 v on r.rid = v.tbRegister where v.tbRegister.rid IS NOT NULL")
 	List<Register> getRegisterNotNullVaccine();
+	
+	@Query("select tr from Register tr WHERE tr.tbStudent.sid =:id OR tr.tbStudent.firstname LIKE :text")
+	List<Register> getRegisterByRidOrName(String id,String text);
 }
