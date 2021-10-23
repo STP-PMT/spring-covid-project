@@ -74,7 +74,6 @@ public class MainFrame extends JFrame {
 	private JTextField search_student;
 	private JTable table_student;
 	private JTable table_register;
-
 	private JPanel panel_card;
 
 	@Autowired
@@ -87,7 +86,7 @@ public class MainFrame extends JFrame {
 	RegisterFrame register_frame;
 
 	private JTextField search_register;
-	private JTextField textField_2;
+	private JTextField tfVaccine;
 	private JTable table_allvaccine;
 	private JTable table_vaccine1;
 	private JTable table_vaccine2;
@@ -384,14 +383,31 @@ public class MainFrame extends JFrame {
 		lblNewLabel_1_1_1_1.setBounds(10, 5, 224, 25);
 		panel_vaccine.add(lblNewLabel_1_1_1_1);
 
-		textField_2 = new JTextField();
-		textField_2.setToolTipText("search");
-		textField_2.setForeground(Color.BLACK);
-		textField_2.setColumns(10);
-		textField_2.setBounds(594, 12, 144, 20);
-		panel_vaccine.add(textField_2);
+		tfVaccine = new JTextField();
+		tfVaccine.setToolTipText("search");
+		tfVaccine.setForeground(Color.BLACK);
+		tfVaccine.setColumns(10);
+		tfVaccine.setBounds(594, 12, 144, 20);
+		panel_vaccine.add(tfVaccine);
 
 		JButton btnNewButton_2_1_1_1 = new JButton("ค้นหา");
+		btnNewButton_2_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
+					List<Register> r = service_register.getRegisterByRidOrName(tfVaccine.getText());
+					LoadDataVaccine(r);
+				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 1")) {
+					
+				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 2")) {
+					
+				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 3")) {
+					
+				}
+			}
+		});
 		btnNewButton_2_1_1_1.setBounds(740, 11, 74, 23);
 		panel_vaccine.add(btnNewButton_2_1_1_1);
 
@@ -538,10 +554,10 @@ public class MainFrame extends JFrame {
 
 		tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_1.addChangeListener(new ChangeListener() {
-
 			public void stateChanged(ChangeEvent e) {
 				if (panel != null) {
 					panel.setVisible(false);
+					tfVaccine.setText("");
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
 					if (service_register != null) {
