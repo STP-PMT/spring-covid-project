@@ -62,6 +62,7 @@ public class VaccineFrame extends JFrame {
 	private JLabel label_vaccine3;
 	private JLabel label_dateVaccine2;
 	private JLabel label_dateVaccine3;
+	private JLabel label_title;
 	private JPanel panel_card;
 	private JComboBox<String> combo_vaccine1;
 	private JComboBox<String> combo_vaccine2;
@@ -120,6 +121,7 @@ public class VaccineFrame extends JFrame {
 				label_dateRegister.setText(register.getDate() + "");
 
 				if (rid != -1 && vaccineTable == 0) {
+					
 					for (Vaccine v : vaccines) {
 						vaccineMap.put(v.getName(), v.getVid());
 						combo_vaccine1.addItem(v.getName());
@@ -133,6 +135,7 @@ public class VaccineFrame extends JFrame {
 					label_date.setText(format.format(dateMin) + " - " + format.format(dateMax));
 				}
 				if (rid != -1 && vaccineTable == 1) {
+					label_title.setText("ฉีดวัคซีนเข็มที่ 1");
 					CardLayout cl = (CardLayout) panel_card.getLayout();
 					cl.show(panel_card, "vaccine2");
 					for (Vaccine v : vaccines) {
@@ -149,6 +152,7 @@ public class VaccineFrame extends JFrame {
 				}
 
 				if (rid != -1 && vaccineTable == 2) {
+					label_title.setText("ฉีดวัคซีนเข็มที่ 2");
 					List<Vaccine> vs = service_vaccine
 							.getEfficacy(register.getTbVaccine2().getTbVaccine().getEfficacy());
 					CardLayout cl = (CardLayout) panel_card.getLayout();
@@ -166,6 +170,12 @@ public class VaccineFrame extends JFrame {
 					label_dateVaccine3.setText(format.format(dateVaccine3));
 					label_vaccine1.setText(register.getTbVaccine1().getTbVaccine().getName());
 					label_vaccine2.setText(register.getTbVaccine2().getTbVaccine().getName());
+				}
+				if (rid != -1 && vaccineTable == 3) {
+					label_title.setText("ฉีดวัคซีนเข็มที่ 3");
+					label_vaccine1.setText(register.getTbVaccine1().getTbVaccine().getName());
+					label_vaccine2.setText(register.getTbVaccine2().getTbVaccine().getName());
+					label_vaccine3.setText(register.getTbVaccine3().getTbVaccine().getName());
 				}
 
 			}
@@ -315,6 +325,7 @@ public class VaccineFrame extends JFrame {
 						register.setTbVaccine3(v);
 						if (service_register.updateRegister(register) != null) {
 							JOptionPane.showMessageDialog(null, "ฉีดวัคซีน 3 สำเร็จ");
+							
 						} else {
 							JOptionPane.showMessageDialog(null, "ฉีดวัคซีน 3 ไม่สำเร็จ!");
 						}
@@ -322,7 +333,7 @@ public class VaccineFrame extends JFrame {
 						JOptionPane.showMessageDialog(null, "ฉีดวัคซีน 3 ไม่สำเร็จ!");
 					}
 				}
-
+				dispose();
 			}
 		});
 		btnNewButton.setBounds(345, 272, 89, 23);
@@ -384,52 +395,54 @@ public class VaccineFrame extends JFrame {
 		panel_vaccine1.setLayout(null);
 
 		date_vaccine1 = new JDateChooser();
-		date_vaccine1.setBounds(82, 97, 157, 20);
+		date_vaccine1.setBounds(51, 126, 157, 20);
 		panel_vaccine1.add(date_vaccine1);
 
 		label_date = new JLabel("null");
-		label_date.setBounds(82, 69, 157, 14);
+		label_date.setBounds(51, 98, 157, 14);
 		panel_vaccine1.add(label_date);
 		label_date.setForeground(Color.RED);
 		label_date.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JLabel lblNewLabel_3 = new JLabel("เลือกวันฉีดตั้งแต่วันที่ ");
-		lblNewLabel_3.setBounds(106, 44, 106, 14);
+		lblNewLabel_3.setBounds(75, 73, 106, 14);
 		panel_vaccine1.add(lblNewLabel_3);
 
 		combo_vaccine1 = new JComboBox<String>();
-		combo_vaccine1.setBounds(82, 11, 157, 22);
+		combo_vaccine1.setBounds(51, 40, 157, 22);
 		panel_vaccine1.add(combo_vaccine1);
 		combo_vaccine1.setEnabled(false);
 
-		JLabel lblNewLabel_2 = new JLabel("วัคซีนเข็มที่ 1");
-		lblNewLabel_2.setBounds(10, 15, 62, 14);
+		JLabel lblNewLabel_2 = new JLabel("เลือกวัคซีนเข็มที่ 1");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_2.setBounds(51, 11, 157, 18);
 		panel_vaccine1.add(lblNewLabel_2);
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JPanel panel_vaccine2 = new JPanel();
 		panel_vaccine2.setBackground(new Color(127, 255, 212));
 		panel_card.add(panel_vaccine2, "vaccine2");
 		panel_vaccine2.setLayout(null);
 
-		JLabel lblNewLabel_2_1 = new JLabel("วัคซีนเข็มที่ 2");
-		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_2_1.setBounds(10, 15, 62, 14);
+		JLabel lblNewLabel_2_1 = new JLabel("เลือกวัคซีนเข็มที่ 2");
+		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2_1.setBounds(51, 11, 157, 18);
 		panel_vaccine2.add(lblNewLabel_2_1);
 
 		combo_vaccine2 = new JComboBox<String>();
-		combo_vaccine2.setBounds(82, 11, 157, 22);
+		combo_vaccine2.setBounds(51, 40, 157, 22);
 		panel_vaccine2.add(combo_vaccine2);
 
 		JLabel lblNewLabel_3_1 = new JLabel("วันฉีดเข็มที่ 2");
 		lblNewLabel_3_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3_1.setBounds(106, 44, 106, 14);
+		lblNewLabel_3_1.setBounds(75, 73, 106, 14);
 		panel_vaccine2.add(lblNewLabel_3_1);
 
 		label_dateVaccine2 = new JLabel("null");
 		label_dateVaccine2.setHorizontalAlignment(SwingConstants.CENTER);
 		label_dateVaccine2.setForeground(Color.RED);
-		label_dateVaccine2.setBounds(82, 69, 157, 14);
+		label_dateVaccine2.setBounds(51, 98, 157, 14);
 		panel_vaccine2.add(label_dateVaccine2);
 
 		JPanel panel_vaccine3 = new JPanel();
@@ -440,24 +453,25 @@ public class VaccineFrame extends JFrame {
 		label_dateVaccine3 = new JLabel("null");
 		label_dateVaccine3.setHorizontalAlignment(SwingConstants.CENTER);
 		label_dateVaccine3.setForeground(Color.RED);
-		label_dateVaccine3.setBounds(82, 69, 157, 14);
+		label_dateVaccine3.setBounds(57, 98, 157, 14);
 		panel_vaccine3.add(label_dateVaccine3);
 
 		JLabel lblNewLabel_3_1_1 = new JLabel("วันฉีดเข็มที่ 3");
 		lblNewLabel_3_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3_1_1.setBounds(106, 44, 106, 14);
+		lblNewLabel_3_1_1.setBounds(81, 73, 106, 14);
 		panel_vaccine3.add(lblNewLabel_3_1_1);
 
 		combo_vaccine3 = new JComboBox<String>();
-		combo_vaccine3.setBounds(82, 11, 157, 22);
+		combo_vaccine3.setBounds(57, 40, 157, 22);
 		panel_vaccine3.add(combo_vaccine3);
 
-		JLabel lblNewLabel_2_1_1 = new JLabel("วัคซีนเข็มที่ 3");
-		lblNewLabel_2_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_2_1_1.setBounds(10, 15, 62, 14);
+		JLabel lblNewLabel_2_1_1 = new JLabel("เลือกวัคซีนเข็มที่ 3");
+		lblNewLabel_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_2_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2_1_1.setBounds(57, 15, 157, 14);
 		panel_vaccine3.add(lblNewLabel_2_1_1);
 
-		JLabel label_title = new JLabel("ลงทะเบียนวัคซีน");
+		label_title = new JLabel("ลงทะเบียนวัคซีน");
 		label_title.setHorizontalAlignment(SwingConstants.CENTER);
 		label_title.setFont(new Font("Tahoma", Font.BOLD, 16));
 		label_title.setBounds(194, 11, 175, 26);

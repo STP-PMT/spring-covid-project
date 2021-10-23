@@ -344,7 +344,7 @@ public class MainFrame extends JFrame {
 		JButton btnNewButton_3_1_1 = new JButton("ลงทะเบียน");
 		btnNewButton_3_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
 					try {
 						int id = (Integer) table_allvaccine.getValueAt(table_allvaccine.getSelectedRow(), 0);
 						VaccineFrame frame = new VaccineFrame(service_register, service_vaccine);
@@ -353,6 +353,12 @@ public class MainFrame extends JFrame {
 							frame.setRid(id);
 							frame.setVaccineTable(0);
 							frame.setVisible(true);
+							frame.addWindowListener(new WindowAdapter() {
+								@Override
+								public void windowClosed(WindowEvent e) {
+									Filter();
+								}
+							});
 						} else {
 							JOptionPane.showMessageDialog(null,
 									"นิสิตรหัส " + r.getTbStudent().getSid() + " ลงทะเบียนแล้ว");
@@ -370,6 +376,13 @@ public class MainFrame extends JFrame {
 							frame.setRid(id);
 							frame.setVaccineTable(1);
 							frame.setVisible(true);
+							frame.addWindowListener(new WindowAdapter() {
+								@Override
+								public void windowClosed(WindowEvent e) {
+									List<Vaccine1> vaccine1s = service_vaccine.getAllVaccine1();
+									LoadVaccine1(vaccine1s);
+								}
+							});
 						} else {
 							JOptionPane.showMessageDialog(null,
 									"นิสิตรหัส " + r.getTbStudent().getSid() + " ลงทะเบียนแล้ว");
@@ -387,6 +400,13 @@ public class MainFrame extends JFrame {
 							frame.setRid(id);
 							frame.setVaccineTable(2);
 							frame.setVisible(true);
+							frame.addWindowListener(new WindowAdapter() {
+								@Override
+								public void windowClosed(WindowEvent e) {
+									List<Vaccine2> vaccine2s = service_vaccine.getAllVaccine2();
+									LoadVaccine2(vaccine2s);
+								}
+							});
 						} else {
 							JOptionPane.showMessageDialog(null,
 									"นิสิตรหัส " + r.getTbStudent().getSid() + " ลงทะเบียนแล้ว");
@@ -396,9 +416,29 @@ public class MainFrame extends JFrame {
 					}
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 3")) {
-					
+					try {
+						int id = (Integer) table_vaccine3.getValueAt(table_vaccine3.getSelectedRow(), 0);
+						VaccineFrame frame = new VaccineFrame(service_register, service_vaccine);
+						Register r = service_register.getRegisterByRid(id);
+						if (r.getTbVaccine3() != null) {
+							frame.setRid(id);
+							frame.setVaccineTable(3);
+							frame.setVisible(true);
+							frame.addWindowListener(new WindowAdapter() {
+								@Override
+								public void windowClosed(WindowEvent e) {
+									List<Vaccine3> vaccine3s = service_vaccine.getAllVaccine3();
+									LoadVaccine3(vaccine3s);
+								}
+							});
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"นิสิตรหัส " + r.getTbStudent().getSid() + " ลงทะเบียนแล้ว");
+						}
+					} catch (Exception e2) {
+
+					}
 				}
-				
 
 			}
 		});
@@ -413,12 +453,13 @@ public class MainFrame extends JFrame {
 
 		tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_1.addChangeListener(new ChangeListener() {
+
 			public void stateChanged(ChangeEvent e) {
-			    if(tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
-			    	if(service_register!=null) {
-			    		Filter();
-			    	}
-			    	btn_manage.setVisible(true);
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
+					if (service_register != null) {
+						Filter();
+					}
+					btn_manage.setVisible(true);
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 1")) {
 					btn_manage.setVisible(false);
@@ -487,17 +528,18 @@ public class MainFrame extends JFrame {
 		JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setBounds(10, 550, 119, 20);
 		panel_vaccine.add(dateChooser);
-		
+
 		comboBox = new JComboBox<String>();
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Filter();
 			}
 		});
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"ทั้งหมด", "ลงทะเบียนแล้ว", "ยังไม่ลงทะเบียน"}));
+		comboBox.setModel(
+				new DefaultComboBoxModel<String>(new String[] { "ทั้งหมด", "ลงทะเบียนแล้ว", "ยังไม่ลงทะเบียน" }));
 		comboBox.setBounds(662, 59, 144, 22);
 		panel_vaccine.add(comboBox);
-		
+
 		JLabel lblNewLabel = new JLabel("ตัวกรอง");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel.setBounds(606, 63, 46, 14);
@@ -512,7 +554,7 @@ public class MainFrame extends JFrame {
 					}
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 1")) {
-					
+
 					try {
 						String strdate = setFormatDate(dateChooser);
 						List<Vaccine1> vaccine1s = service_vaccine.getVaccine1ByDate(java.sql.Date.valueOf(strdate));
@@ -542,7 +584,6 @@ public class MainFrame extends JFrame {
 	}
 
 	void LoadDataRegister(List<Register> registers) {
-		
 
 		DefaultTableModel model = new DefaultTableModel();
 		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เบอร์โทร", "วันที่ลงทะเบียน" };
@@ -557,7 +598,6 @@ public class MainFrame extends JFrame {
 	}
 
 	void LoadDataVaccine(List<Register> registers) {
-		
 
 		DefaultTableModel model = new DefaultTableModel();
 		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "วันที่ลงทะเบียน", "เข็มที่ 1",
@@ -577,7 +617,7 @@ public class MainFrame extends JFrame {
 
 	void LoadVaccine1(List<Vaccine1> vaccine1s) {
 		DefaultTableModel model = new DefaultTableModel();
-		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 1", "วันที่ฉีด","สถานะ" };
+		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 1", "วันที่ฉีด", "สถานะ" };
 		model.setColumnIdentifiers(columns);
 
 		for (Vaccine1 v : vaccine1s) {
@@ -589,7 +629,7 @@ public class MainFrame extends JFrame {
 			Date dateVaccine1 = v.getDate();
 			String status = v.getStatus();
 
-			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine1,status};
+			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine1, status };
 			model.addRow(obj);
 		}
 		table_vaccine1.setModel(model);
@@ -598,7 +638,7 @@ public class MainFrame extends JFrame {
 	void LoadVaccine2(List<Vaccine2> vaccine2s) {
 
 		DefaultTableModel model = new DefaultTableModel();
-		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 2", "วันที่ฉีด","สถานะ" };
+		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 2", "วันที่ฉีด", "สถานะ" };
 		model.setColumnIdentifiers(columns);
 
 		for (Vaccine2 v : vaccine2s) {
@@ -610,7 +650,7 @@ public class MainFrame extends JFrame {
 			Date dateVaccine2 = v.getDate();
 			String status = v.getStatus();
 
-			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine2,status };
+			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine2, status };
 			model.addRow(obj);
 		}
 		table_vaccine2.setModel(model);
@@ -619,7 +659,7 @@ public class MainFrame extends JFrame {
 	void LoadVaccine3(List<Vaccine3> vaccine3s) {
 
 		DefaultTableModel model = new DefaultTableModel();
-		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 3", "วันที่ฉีด","สถานะ" };
+		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 3", "วันที่ฉีด", "สถานะ" };
 		model.setColumnIdentifiers(columns);
 
 		for (Vaccine3 v : vaccine3s) {
@@ -631,7 +671,7 @@ public class MainFrame extends JFrame {
 			Date dateVaccine3 = v.getDate();
 			String status = v.getStatus();
 
-			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine3,status };
+			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine3, status };
 			model.addRow(obj);
 		}
 		table_vaccine3.setModel(model);
@@ -657,22 +697,23 @@ public class MainFrame extends JFrame {
 			return "";
 		}
 	}
+
 	void Filter() {
 		if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
-			if(comboBox.getSelectedItem().equals("ทั้งหมด")) {
+			if (comboBox.getSelectedItem().equals("ทั้งหมด")) {
 				List<Register> registers = service_register.getAllRegister();
 				LoadDataVaccine(registers);
-				//System.err.println("ทั้งหมด");
+				// System.err.println("ทั้งหมด");
 			}
-			if(comboBox.getSelectedItem().equals("ลงทะเบียนแล้ว")) {
+			if (comboBox.getSelectedItem().equals("ลงทะเบียนแล้ว")) {
 				List<Register> registers = service_register.getNotNullVaccine();
 				LoadDataVaccine(registers);
-				//System.err.println("ลงทะเบียนแล้ว");
+				// System.err.println("ลงทะเบียนแล้ว");
 			}
-			if(comboBox.getSelectedItem().equals("ยังไม่ลงทะเบียน")) {
+			if (comboBox.getSelectedItem().equals("ยังไม่ลงทะเบียน")) {
 				List<Register> registers = service_register.getNotVaccine();
 				LoadDataVaccine(registers);
-				//System.err.println("ยังไม่ลงทะเบียน");
+				// System.err.println("ยังไม่ลงทะเบียน");
 			}
 		}
 	}
