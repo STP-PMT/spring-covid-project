@@ -34,6 +34,8 @@ import java.awt.event.WindowEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @Component
 public class RegisterFrame extends JFrame {
@@ -48,7 +50,6 @@ public class RegisterFrame extends JFrame {
 	private JTextField tfMobile;
 	private JTextField tfEmail;
 	private JDateChooser dateChooser;
-	private JComboBox<Integer> combo_student;
 	private JLabel label_title;
 	private int rid = 0;
 
@@ -99,7 +100,6 @@ public class RegisterFrame extends JFrame {
 					for (Student s : student) {
 						Object[] obj = {s.getSid(),s.getFirstname(),s.getLastname()};
 						model.addRow(obj);
-						combo_student.addItem(s.getSid());
 					}
 					table.setModel(model);
 				}
@@ -127,27 +127,11 @@ public class RegisterFrame extends JFrame {
 		contentPane.add(lblNewLabel);
 
 		tfSid = new JTextField();
+		tfSid.setEditable(false);
 		tfSid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setTextField(true);
-				if (!tfSid.getText().isEmpty()) {
-					int Sid = Integer.parseInt(tfSid.getText());
-					List<Student> students = service_student.getStudentById(Sid);
-					for (Student s : students) {
-						tfFirstname.setText(s.getFirstname());
-						tfLastname.setText(s.getLastname());
-						tfMobile.setText(s.getMobile());
-						tfEmail.setText(s.getEmail());
-					}
-					if (!students.isEmpty()) {
-						setTextField(false);
-					} else {
-						clearTextField();
-					}
-
-				} else {
-					clearTextField();
-				}
+				
 			}
 		});
 		tfSid.setBounds(89, 64, 138, 20);
@@ -156,42 +140,46 @@ public class RegisterFrame extends JFrame {
 
 		JLabel lblNewLabel_1 = new JLabel("ชื่อ");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setBounds(33, 124, 46, 14);
+		lblNewLabel_1.setBounds(33, 92, 46, 14);
 		contentPane.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_1_1 = new JLabel("นามสกุล");
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1.setBounds(33, 149, 46, 14);
+		lblNewLabel_1_1.setBounds(33, 117, 46, 14);
 		contentPane.add(lblNewLabel_1_1);
 
 		JLabel lblNewLabel_1_1_2 = new JLabel("เบอร์โทร");
 		lblNewLabel_1_1_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_2.setBounds(33, 177, 46, 14);
+		lblNewLabel_1_1_2.setBounds(33, 145, 46, 14);
 		contentPane.add(lblNewLabel_1_1_2);
 
 		JLabel lblNewLabel_1_1_2_1 = new JLabel("อีเมล");
 		lblNewLabel_1_1_2_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_2_1.setBounds(33, 202, 46, 14);
+		lblNewLabel_1_1_2_1.setBounds(33, 170, 46, 14);
 		contentPane.add(lblNewLabel_1_1_2_1);
 
 		tfFirstname = new JTextField();
+		tfFirstname.setEditable(false);
 		tfFirstname.setColumns(10);
-		tfFirstname.setBounds(89, 121, 138, 20);
+		tfFirstname.setBounds(89, 89, 138, 20);
 		contentPane.add(tfFirstname);
 
 		tfLastname = new JTextField();
+		tfLastname.setEditable(false);
 		tfLastname.setColumns(10);
-		tfLastname.setBounds(89, 146, 138, 20);
+		tfLastname.setBounds(89, 114, 138, 20);
 		contentPane.add(tfLastname);
 
 		tfMobile = new JTextField();
+		tfMobile.setEditable(false);
 		tfMobile.setColumns(10);
-		tfMobile.setBounds(89, 174, 138, 20);
+		tfMobile.setBounds(89, 142, 138, 20);
 		contentPane.add(tfMobile);
 
 		tfEmail = new JTextField();
+		tfEmail.setEditable(false);
 		tfEmail.setColumns(10);
-		tfEmail.setBounds(89, 199, 138, 20);
+		tfEmail.setBounds(89, 167, 138, 20);
 		contentPane.add(tfEmail);
 
 		JButton btnNewButton = new JButton("ยืนยัน");
@@ -241,7 +229,7 @@ public class RegisterFrame extends JFrame {
 
 		JLabel lblNewLabel_1_1_2_1_1 = new JLabel("วันที่ลงทะเบียน");
 		lblNewLabel_1_1_2_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_2_1_1.setBounds(10, 227, 69, 14);
+		lblNewLabel_1_1_2_1_1.setBounds(10, 195, 69, 14);
 		contentPane.add(lblNewLabel_1_1_2_1_1);
 
 		label_title = new JLabel("ลงทะเบียนต้องการวัคซีน");
@@ -252,30 +240,8 @@ public class RegisterFrame extends JFrame {
 		dateChooser = new JDateChooser();
 		dateChooser.setDateFormatString("dd-MMMM-yyyy");
 		dateChooser.setDate(new Date());
-		dateChooser.setBounds(89, 227, 138, 20);
+		dateChooser.setBounds(89, 195, 138, 20);
 		contentPane.add(dateChooser);
-
-		combo_student = new JComboBox<Integer>();
-		combo_student.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tfSid.setText(combo_student.getSelectedItem() + "");
-				if (!tfSid.getText().isEmpty()) {
-					setTextField(false);
-					int Sid = Integer.parseInt(tfSid.getText());
-					List<Student> students = service_student.getStudentById(Sid);
-					for (Student s : students) {
-						tfFirstname.setText(s.getFirstname());
-						tfLastname.setText(s.getLastname());
-						tfMobile.setText(s.getMobile());
-						tfEmail.setText(s.getEmail());
-					}
-				}
-
-			}
-		});
-		combo_student.setModel(new DefaultComboBoxModel<Integer>());
-		combo_student.setBounds(89, 88, 138, 22);
-		contentPane.add(combo_student);
 		
 		panel = new JPanel();
 		panel.setBounds(237, 64, 375, 237);
@@ -287,6 +253,32 @@ public class RegisterFrame extends JFrame {
 		panel.add(scrollPane);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				int selected = table.getSelectedRow();
+				int sid = (int) table.getModel().getValueAt(selected, 0);
+				tfSid.setText(sid+"");
+				if (!tfSid.getText().isEmpty()) {
+					int Sid = Integer.parseInt(tfSid.getText());
+					List<Student> students = service_student.getStudentById(Sid);
+					for (Student s : students) {
+						tfFirstname.setText(s.getFirstname());
+						tfLastname.setText(s.getLastname());
+						tfMobile.setText(s.getMobile());
+						tfEmail.setText(s.getEmail());
+					}
+					if (!students.isEmpty()) {
+						setTextField(false);
+					} else {
+						clearTextField();
+					}
+
+				} else {
+					clearTextField();
+				}
+			}
+		});
 		scrollPane.setViewportView(table);
 	}
 
