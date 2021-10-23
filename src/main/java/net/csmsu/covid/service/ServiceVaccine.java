@@ -55,6 +55,15 @@ public class ServiceVaccine {
 	public Vaccine1 updateVaccine1(Vaccine1 vaccine) {
 		return vaccine1_repo.save(vaccine);
 	}
+	
+	public boolean deleteVaccin1ByVid(int vid1) {
+		try {			
+			 vaccine1_repo.deleteById(vid1);
+			 return true;
+		}catch (Exception e) {
+			return false;
+		}
+	}
 
 	/* vaccine2 */
 	public List<Vaccine2> getAllVaccine2() {
@@ -70,6 +79,15 @@ public class ServiceVaccine {
 	public Vaccine2 updateVaccine2(Vaccine2 vaccine) {
 		return vaccine2_repo.save(vaccine);
 	}
+	
+	public boolean deleteVaccin2ByVid(int vid2) {
+		try {			
+			 vaccine2_repo.deleteById(vid2);
+			 return true;
+		}catch (Exception e) {
+			return false;
+		}
+	}
 
 	/* vaccine3 */
 	public List<Vaccine3> getAllVaccine3() {
@@ -84,5 +102,13 @@ public class ServiceVaccine {
 
 	public Vaccine3 updateVaccine3(Vaccine3 vaccine) {
 		return vaccine3_repo.save(vaccine);
+	}
+	public boolean deleteVaccin3ByVid(int vid3) {
+		try {			
+			 vaccine3_repo.deleteById(vid3);
+			 return true;
+		}catch (Exception e) {
+			return false;
+		}
 	}
 }

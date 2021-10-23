@@ -196,7 +196,6 @@ public class RegisterFrame extends JFrame {
 						JOptionPane.showMessageDialog(null, "แก้ไข ไม่สำเร็จ!");
 					}
 					rid = 0;
-					dispose();
 				} else if (!tfSid.getText().isEmpty()) {
 					Register register = new Register();
 					int id = Integer.parseInt(tfSid.getText());
@@ -213,6 +212,7 @@ public class RegisterFrame extends JFrame {
 						JOptionPane.showMessageDialog(null, "ลงทะเบียน ไม่สำเร็จ!");
 					}
 				}
+				dispose();
 			}
 		});
 		btnNewButton.setBounds(86, 327, 89, 23);

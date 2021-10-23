@@ -16,6 +16,8 @@ import net.csmsu.covid.service.ServiceVaccine;
 
 import java.awt.Toolkit;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -115,6 +117,11 @@ public class ManageVaccineFrame extends JFrame {
 		contentPane.add(label_dateRegister);
 		
 		JButton btnNewButton = new JButton("ตกลง");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		btnNewButton.setBackground(new Color(50, 205, 50));
 		btnNewButton.setBounds(455, 227, 89, 23);
 		contentPane.add(btnNewButton);
@@ -142,6 +149,20 @@ public class ManageVaccineFrame extends JFrame {
 		panel.setLayout(null);
 		
 		btnDose3 = new JButton("ลบ");
+		btnDose3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Register register = service_register.getRegisterByRid(rid);
+				int input = JOptionPane.showConfirmDialog(null,"ลบวัคซีนเข็มที่ 3","ลบวัคซีน",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+				if(input == 0) {
+					if(register.getTbVaccine3()!=null) {
+						service_vaccine.deleteVaccin3ByVid(register.getTbVaccine3().getV3id());
+						btnDose3.setVisible(false);
+						label_vaccine3.setText("-");
+					}
+				}
+			}
+		});
 		btnDose3.setBounds(228, 61, 49, 20);
 		panel.add(btnDose3);
 		btnDose3.setBackground(Color.RED);
@@ -152,6 +173,30 @@ public class ManageVaccineFrame extends JFrame {
 		btnDose2.setBackground(Color.RED);
 		
 		btnDose1 = new JButton("ลบ");
+		btnDose1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Register register = service_register.getRegisterByRid(rid);
+				int input = JOptionPane.showConfirmDialog(null,"ลบวัคซีนเข็มที่ 1 เข็มที่ 2,3 ก็จะหายไปด้วย","ลบวัคซีน",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+				if(input == 0) {
+					if(register.getTbVaccine1()!=null) {
+						service_vaccine.deleteVaccin1ByVid(register.getTbVaccine1().getV1id());
+						btnDose1.setVisible(false);
+						label_vaccine1.setText("-");
+					}
+					if(register.getTbVaccine2()!=null) {
+						service_vaccine.deleteVaccin2ByVid(register.getTbVaccine2().getV2id());
+						btnDose2.setVisible(false);
+						label_vaccine2.setText("-");
+					}
+					if(register.getTbVaccine3()!=null) {
+						service_vaccine.deleteVaccin3ByVid(register.getTbVaccine3().getV3id());
+						btnDose3.setVisible(false);
+						label_vaccine3.setText("-");
+					}
+				}
+			}
+		});
 		btnDose1.setBounds(228, 11, 49, 20);
 		panel.add(btnDose1);
 		btnDose1.setBackground(Color.RED);
@@ -184,6 +229,21 @@ public class ManageVaccineFrame extends JFrame {
 		panel.add(label_vaccine3);
 		btnDose2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Register register = service_register.getRegisterByRid(rid);
+				int input = JOptionPane.showConfirmDialog(null,"ลบวัคซีนเข็มที่ 2 เข็มที่ 3 ก็จะหายไปด้วย","ลบวัคซีน",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+				if(input == 0) {
+					if(register.getTbVaccine2()!=null) {
+						service_vaccine.deleteVaccin2ByVid(register.getTbVaccine2().getV2id());
+						btnDose2.setVisible(false);
+						label_vaccine2.setText("-");
+					}
+					if(register.getTbVaccine3()!=null) {
+						service_vaccine.deleteVaccin3ByVid(register.getTbVaccine3().getV3id());
+						btnDose3.setVisible(false);
+						label_vaccine3.setText("-");
+					}
+				}
 			}
 		});
 	}
@@ -199,18 +259,21 @@ public class ManageVaccineFrame extends JFrame {
 			label_vaccine1.setText(register.getTbVaccine1().getTbVaccine().getName());
 		}else {
 			btnDose1.setVisible(false);
+			label_vaccine1.setText("-");
 		}
 		
 		if(register.getTbVaccine2() != null) {
 			label_vaccine2.setText(register.getTbVaccine2().getTbVaccine().getName());
 		}else {
 			btnDose2.setVisible(false);
+			label_vaccine2.setText("-");
 		}
 		
 		if(register.getTbVaccine3() != null) {
 			label_vaccine3.setText(register.getTbVaccine3().getTbVaccine().getName());
 		}else {
 			btnDose3.setVisible(false);
+			label_vaccine3.setText("-");
 		}
 	}
 	

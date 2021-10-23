@@ -269,6 +269,13 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				RegisterFrame frame = new RegisterFrame(service_student, service_register);
 				frame.setVisible(true);
+				frame.addWindowListener(new WindowAdapter() {
+					@Override
+					public void windowClosed(WindowEvent e) {
+						List<Register> registers = service_register.getAllRegister();
+						LoadDataRegister(registers);
+					}
+				});
 			}
 		});
 		btnNewButton_3.setBackground(new Color(0, 204, 51));
@@ -304,11 +311,14 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					int id = (Integer) table_register.getValueAt(table_register.getSelectedRow(), 0);
-					System.err.println("Delete rid : " + id);
-					if (service_register.deleteByRid(id)) {
-						JOptionPane.showMessageDialog(null, "ลบสำเร็จ");
-					} else {
-						JOptionPane.showMessageDialog(null, "ลบไม่สำเร็จ");
+					int input = JOptionPane.showConfirmDialog(null,"ลบข้อมูลลงทะเบียนรหัส "+id,"ลบวัคซีน",
+							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+					if(input == 0) {
+						if (service_register.deleteByRid(id)) {
+							JOptionPane.showMessageDialog(null, "ลบสำเร็จ");
+						} else {
+							JOptionPane.showMessageDialog(null, "ลบไม่สำเร็จ");
+						}
 					}
 					List<Register> registers = service_register.getAllRegister();
 					LoadDataRegister(registers);
