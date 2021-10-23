@@ -445,8 +445,33 @@ public class MainFrame extends JFrame {
 		btnNewButton_3_1_1.setBackground(new Color(0, 204, 51));
 		btnNewButton_3_1_1.setBounds(725, 547, 89, 23);
 		panel_vaccine.add(btnNewButton_3_1_1);
-
+		
 		JButton btn_manage = new JButton("จัดการ");
+		btn_manage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int id = (Integer) table_allvaccine.getValueAt(table_allvaccine.getSelectedRow(), 0);
+					ManageVaccineFrame manage = new ManageVaccineFrame(service_register,service_vaccine);
+					Register r = service_register.getRegisterByRid(id);
+					if (r.getTbVaccine1() != null) {
+						manage.setRid(id);
+						manage.setVisible(true);
+						manage.addWindowListener(new WindowAdapter() {
+							@Override
+							public void windowClosed(WindowEvent e) {
+								Filter();
+							}
+						});
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"นิสิตรหัส " + r.getTbStudent().getSid() + " ไม่มีข้อมูลวัคซีน");
+					}
+				} catch (Exception e2) {
+
+				}
+				
+			}
+		});
 		btn_manage.setBackground(new Color(255, 255, 51));
 		btn_manage.setBounds(626, 547, 89, 23);
 		panel_vaccine.add(btn_manage);
