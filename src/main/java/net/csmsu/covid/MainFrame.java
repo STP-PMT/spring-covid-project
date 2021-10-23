@@ -303,6 +303,12 @@ public class MainFrame extends JFrame {
 		panel_register.add(search_register);
 
 		JButton btnNewButton_2_1 = new JButton("ค้นหา");
+		btnNewButton_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Register> r = service_register.getRegisterByRidOrName(search_register.getText());
+				LoadDataRegister(r);
+			}
+		});
 		btnNewButton_2_1.setBounds(740, 11, 74, 23);
 		panel_register.add(btnNewButton_2_1);
 
