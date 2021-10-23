@@ -65,6 +65,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
+import javax.swing.JTextArea;
 
 @Component
 public class MainFrame extends JFrame {
@@ -96,6 +97,7 @@ public class MainFrame extends JFrame {
 	private JTextField textField;
 	private JPanel panel;
 	private JDateChooser dateChooser;
+	private JTable table_report;
 
 	/**
 	 * Launch the application.
@@ -177,12 +179,20 @@ public class MainFrame extends JFrame {
 		});
 		btnNewButton_1_1.setBounds(10, 113, 141, 23);
 		panel_menu.add(btnNewButton_1_1);
-		
+
 		JButton btnReport = new JButton("รายงานข้อมูลวัคซีน");
+		btnReport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout) panel_card.getLayout();
+				cl.show(panel_card, "report");
+				List<Register> registers = service_register.getAllRegister();
+				LoadReport(registers);
+			}
+		});
 		btnReport.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnReport.setBounds(10, 147, 141, 23);
 		panel_menu.add(btnReport);
-		
+
 		JLabel lblNewLabel_5 = new JLabel("สิทธิพงษื แปลมูลตรี");
 		lblNewLabel_5.setForeground(new Color(255, 255, 255));
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
@@ -210,19 +220,19 @@ public class MainFrame extends JFrame {
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 35));
 		lblNewLabel_3.setBounds(119, 301, 614, 62);
 		panel_home.add(lblNewLabel_3);
-		
+
 		JButton btnNewButton_6 = new JButton("New button");
 		btnNewButton_6.setBounds(176, 374, 89, 86);
 		panel_home.add(btnNewButton_6);
-		
+
 		JButton btnNewButton_6_1 = new JButton("New button");
 		btnNewButton_6_1.setBounds(305, 374, 89, 86);
 		panel_home.add(btnNewButton_6_1);
-		
+
 		JButton btnNewButton_6_2 = new JButton("New button");
 		btnNewButton_6_2.setBounds(586, 374, 89, 86);
 		panel_home.add(btnNewButton_6_2);
-		
+
 		JButton btnNewButton_6_3 = new JButton("New button");
 		btnNewButton_6_3.setBounds(449, 374, 89, 86);
 		panel_home.add(btnNewButton_6_3);
@@ -344,9 +354,9 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					int id = (Integer) table_register.getValueAt(table_register.getSelectedRow(), 0);
-					int input = JOptionPane.showConfirmDialog(null,"ลบข้อมูลลงทะเบียนรหัส "+id,"ลบวัคซีน",
+					int input = JOptionPane.showConfirmDialog(null, "ลบข้อมูลลงทะเบียนรหัส " + id, "ลบวัคซีน",
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
-					if(input == 0) {
+					if (input == 0) {
 						if (service_register.deleteByRid(id)) {
 							JOptionPane.showMessageDialog(null, "ลบสำเร็จ");
 						} else {
@@ -424,7 +434,8 @@ public class MainFrame extends JFrame {
 								@Override
 								public void windowClosed(WindowEvent e) {
 									String strdate = setFormatDate(dateChooser);
-									List<Vaccine1> vaccine1s = service_vaccine.getVaccine1ByDate(java.sql.Date.valueOf(strdate));
+									List<Vaccine1> vaccine1s = service_vaccine
+											.getVaccine1ByDate(java.sql.Date.valueOf(strdate));
 									LoadVaccine1(vaccine1s);
 								}
 							});
@@ -449,7 +460,8 @@ public class MainFrame extends JFrame {
 								@Override
 								public void windowClosed(WindowEvent e) {
 									String strdate = setFormatDate(dateChooser);
-									List<Vaccine2> vaccine2s = service_vaccine.getVaccine2ByDate(java.sql.Date.valueOf(strdate));
+									List<Vaccine2> vaccine2s = service_vaccine
+											.getVaccine2ByDate(java.sql.Date.valueOf(strdate));
 									LoadVaccine2(vaccine2s);
 								}
 							});
@@ -474,7 +486,8 @@ public class MainFrame extends JFrame {
 								@Override
 								public void windowClosed(WindowEvent e) {
 									String strdate = setFormatDate(dateChooser);
-									List<Vaccine3> vaccine3s = service_vaccine.getVaccine3ByDate(java.sql.Date.valueOf(strdate));
+									List<Vaccine3> vaccine3s = service_vaccine
+											.getVaccine3ByDate(java.sql.Date.valueOf(strdate));
 									LoadVaccine3(vaccine3s);
 								}
 							});
@@ -492,13 +505,13 @@ public class MainFrame extends JFrame {
 		btnNewButton_3_1_1.setBackground(new Color(0, 204, 51));
 		btnNewButton_3_1_1.setBounds(725, 547, 89, 23);
 		panel_vaccine.add(btnNewButton_3_1_1);
-		
+
 		JButton btn_manage = new JButton("จัดการ");
 		btn_manage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					int id = (Integer) table_allvaccine.getValueAt(table_allvaccine.getSelectedRow(), 0);
-					ManageVaccineFrame manage = new ManageVaccineFrame(service_register,service_vaccine);
+					ManageVaccineFrame manage = new ManageVaccineFrame(service_register, service_vaccine);
 					Register r = service_register.getRegisterByRid(id);
 					if (r.getTbVaccine1() != null) {
 						manage.setRid(id);
@@ -516,7 +529,7 @@ public class MainFrame extends JFrame {
 				} catch (Exception e2) {
 
 				}
-				
+
 			}
 		});
 		btn_manage.setBackground(new Color(255, 255, 51));
@@ -525,9 +538,9 @@ public class MainFrame extends JFrame {
 
 		tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_1.addChangeListener(new ChangeListener() {
-			
+
 			public void stateChanged(ChangeEvent e) {
-				if(panel!=null) {
+				if (panel != null) {
 					panel.setVisible(false);
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
@@ -608,62 +621,77 @@ public class MainFrame extends JFrame {
 		dateChooser.setDate(new Date());
 		dateChooser.setBounds(10, 59, 119, 20);
 		panel_vaccine.add(dateChooser);
-		
+
 		panel = new JPanel();
 		panel.setBackground(new Color(224, 255, 255));
 		panel.setBounds(594, 43, 220, 42);
 		panel_vaccine.add(panel);
 		panel.setLayout(null);
-		
-				comboBox = new JComboBox<String>();
-				comboBox.setBounds(66, 11, 144, 22);
-				panel.add(comboBox);
-				comboBox.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						Filter();
-					}
-				});
-				comboBox.setModel(
-						new DefaultComboBoxModel<String>(new String[] { "ทั้งหมด", "ลงทะเบียนแล้ว", "ยังไม่ลงทะเบียน" }));
-				
-						JLabel lblNewLabel = new JLabel("ตัวกรอง");
-						lblNewLabel.setBounds(10, 15, 46, 14);
-						panel.add(lblNewLabel);
-						lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		
+
+		comboBox = new JComboBox<String>();
+		comboBox.setBounds(66, 11, 144, 22);
+		panel.add(comboBox);
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Filter();
+			}
+		});
+		comboBox.setModel(
+				new DefaultComboBoxModel<String>(new String[] { "ทั้งหมด", "ลงทะเบียนแล้ว", "ยังไม่ลงทะเบียน" }));
+
+		JLabel lblNewLabel = new JLabel("ตัวกรอง");
+		lblNewLabel.setBounds(10, 15, 46, 14);
+		panel.add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
 		JPanel panel_report = new JPanel();
 		panel_report.setBackground(new Color(224, 255, 255));
 		panel_report.setLayout(null);
-		panel_card.add(panel_report, "name_100331049844900");
-		
+		panel_card.add(panel_report, "report");
+
 		JLabel lbReport = new JLabel("รายงานข้อมูลการฉีดวัคซีนของนิสิต");
 		lbReport.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lbReport.setBounds(10, 5, 334, 30);
+		lbReport.setBounds(10, 5, 334, 20);
 		panel_report.add(lbReport);
-		
+
 		textField = new JTextField();
 		textField.setToolTipText("search");
 		textField.setForeground(Color.BLACK);
 		textField.setColumns(10);
 		textField.setBounds(594, 6, 144, 20);
 		panel_report.add(textField);
-		
+
 		JButton btnNewButton_2_1_1_1_1 = new JButton("ค้นหา");
 		btnNewButton_2_1_1_1_1.setBounds(740, 5, 74, 23);
 		panel_report.add(btnNewButton_2_1_1_1_1);
-		
+
 		JTabbedPane tabbedPane_1_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_1_1.setBounds(10, 92, 804, 478);
 		panel_report.add(tabbedPane_1_1);
-		
+
+		JScrollPane scrollPane_6 = new JScrollPane();
+		tabbedPane_1_1.addTab("รายชื่อนิสิตฉีดวัคซีน", null, scrollPane_6, null);
+
+		table_report = new JTable();
+		table_report.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				int selected = table_report.getSelectedRow();
+				int rid = (int) table_report.getModel().getValueAt(selected, 0);
+				ReportFrame report = new ReportFrame();
+				report.setVisible(true);
+			}
+		});
+		scrollPane_6.setViewportView(table_report);
+
 		JDateChooser dateChooser_1 = new JDateChooser();
 		dateChooser_1.setBounds(10, 61, 119, 20);
 		panel_report.add(dateChooser_1);
-		
+
 		JComboBox<String> comboBox_1 = new JComboBox<String>();
 		comboBox_1.setBounds(662, 59, 144, 22);
 		panel_report.add(comboBox_1);
-		
+
 		JLabel lblNewLabel_4 = new JLabel("ตัวกรอง");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_4.setBounds(606, 63, 46, 14);
@@ -719,6 +747,24 @@ public class MainFrame extends JFrame {
 		}
 		table_register.setModel(model);
 	}
+	
+	void LoadReport(List<Register> registers) {
+
+		DefaultTableModel model = new DefaultTableModel();
+		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "วันที่ลงทะเบียน", "เข็มที่ 1",
+				"เข็มที่ 2", "เข็มที่ 3" };
+		model.setColumnIdentifiers(columns);
+
+		for (Register r : registers) {
+			Object[] obj = { r.getRid(), r.getTbStudent().getSid(), r.getTbStudent().getFirstname(),
+					r.getTbStudent().getLastname(), r.getDate(),
+					(r.getTbVaccine1() != null) ? r.getTbVaccine1().getTbVaccine().getName() : "",
+					(r.getTbVaccine2() != null) ? r.getTbVaccine2().getTbVaccine().getName() : "",
+					(r.getTbVaccine3() != null) ? r.getTbVaccine3().getTbVaccine().getName() : "", };
+			model.addRow(obj);
+		}
+		table_report.setModel(model);
+	}
 
 	void LoadDataVaccine(List<Register> registers) {
 
@@ -750,7 +796,7 @@ public class MainFrame extends JFrame {
 			String vaccineType = v.getTbVaccine().getName();
 			Date dateVaccine1 = v.getDate();
 			String status = v.getStatus();
-			if(v.getTbRegister().getTbVaccine2()==null) {
+			if (v.getTbRegister().getTbVaccine2() == null) {
 				Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine1, status };
 				model.addRow(obj);
 			}
@@ -772,7 +818,7 @@ public class MainFrame extends JFrame {
 			String vaccineType = v.getTbVaccine().getName();
 			Date dateVaccine2 = v.getDate();
 			String status = v.getStatus();
-			if(v.getTbRegister().getTbVaccine3()==null) {
+			if (v.getTbRegister().getTbVaccine3() == null) {
 				Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine2, status };
 				model.addRow(obj);
 			}
@@ -794,7 +840,7 @@ public class MainFrame extends JFrame {
 			String vaccineType = v.getTbVaccine().getName();
 			Date dateVaccine3 = v.getDate();
 			String status = v.getStatus();
-			if(v.getStatus()==null) {
+			if (v.getStatus() == null) {
 				Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine3, status };
 				model.addRow(obj);
 			}
