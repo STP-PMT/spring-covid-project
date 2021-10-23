@@ -64,6 +64,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingConstants;
 
 @Component
 public class MainFrame extends JFrame {
@@ -92,6 +93,7 @@ public class MainFrame extends JFrame {
 	private JTable table_vaccine3;
 	private JTabbedPane tabbedPane_1;
 	private JComboBox<String> comboBox;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -173,6 +175,17 @@ public class MainFrame extends JFrame {
 		});
 		btnNewButton_1_1.setBounds(10, 113, 141, 23);
 		panel_menu.add(btnNewButton_1_1);
+		
+		JButton btnReport = new JButton("รายงานข้อมูลวัคซีน");
+		btnReport.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnReport.setBounds(10, 147, 141, 23);
+		panel_menu.add(btnReport);
+		
+		JLabel lblNewLabel_5 = new JLabel("สิทธิพงษื แปลมูลตรี");
+		lblNewLabel_5.setForeground(new Color(255, 255, 255));
+		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_5.setBounds(10, 556, 141, 14);
+		panel_menu.add(lblNewLabel_5);
 
 		panel_card = new JPanel();
 		panel_card.setBounds(160, 0, 824, 581);
@@ -180,28 +193,44 @@ public class MainFrame extends JFrame {
 		panel_card.setLayout(new CardLayout(0, 0));
 
 		JPanel panel_home = new JPanel();
-		panel_home.setBackground(Color.BLUE);
+		panel_home.setBackground(new Color(224, 255, 255));
 		panel_card.add(panel_home, "Home");
 		panel_home.setLayout(null);
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(
 				"D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\icon.png"));
-		lblNewLabel_2.setBounds(251, 11, 128, 128);
+		lblNewLabel_2.setBounds(355, 149, 128, 128);
 		panel_home.add(lblNewLabel_2);
 
 		JLabel lblNewLabel_3 = new JLabel("โครงการฉีดวัคซีนโควิดสำหรับนักศึกษา");
-		lblNewLabel_3.setForeground(Color.WHITE);
+		lblNewLabel_3.setForeground(new Color(0, 0, 205));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 35));
-		lblNewLabel_3.setBounds(26, 152, 614, 62);
+		lblNewLabel_3.setBounds(119, 301, 614, 62);
 		panel_home.add(lblNewLabel_3);
+		
+		JButton btnNewButton_6 = new JButton("New button");
+		btnNewButton_6.setBounds(176, 374, 89, 86);
+		panel_home.add(btnNewButton_6);
+		
+		JButton btnNewButton_6_1 = new JButton("New button");
+		btnNewButton_6_1.setBounds(305, 374, 89, 86);
+		panel_home.add(btnNewButton_6_1);
+		
+		JButton btnNewButton_6_2 = new JButton("New button");
+		btnNewButton_6_2.setBounds(586, 374, 89, 86);
+		panel_home.add(btnNewButton_6_2);
+		
+		JButton btnNewButton_6_3 = new JButton("New button");
+		btnNewButton_6_3.setBounds(449, 374, 89, 86);
+		panel_home.add(btnNewButton_6_3);
 
 		JPanel panel_student = new JPanel();
 		panel_card.add(panel_student, "Student");
 		panel_student.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 87, 804, 463);
+		scrollPane.setBounds(10, 87, 804, 483);
 		panel_student.add(scrollPane);
 
 		table_student = new JTable();
@@ -242,7 +271,7 @@ public class MainFrame extends JFrame {
 		panel_card.add(panel_register, "Register");
 
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 87, 804, 463);
+		scrollPane_1.setBounds(10, 87, 804, 483);
 		panel_register.add(scrollPane_1);
 
 		table_register = new JTable();
@@ -561,7 +590,7 @@ public class MainFrame extends JFrame {
 		scrollPane_5.setViewportView(table_vaccine3);
 
 		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(10, 550, 119, 20);
+		dateChooser.setBounds(10, 59, 119, 20);
 		panel_vaccine.add(dateChooser);
 
 		comboBox = new JComboBox<String>();
@@ -579,6 +608,43 @@ public class MainFrame extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel.setBounds(606, 63, 46, 14);
 		panel_vaccine.add(lblNewLabel);
+		
+		JPanel panel_report = new JPanel();
+		panel_report.setLayout(null);
+		panel_card.add(panel_report, "name_100331049844900");
+		
+		JLabel lbReport = new JLabel("รายงานข้อมูลการฉีดวัคซีนของนิสิต");
+		lbReport.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lbReport.setBounds(10, 5, 334, 30);
+		panel_report.add(lbReport);
+		
+		textField = new JTextField();
+		textField.setToolTipText("search");
+		textField.setForeground(Color.BLACK);
+		textField.setColumns(10);
+		textField.setBounds(594, 6, 144, 20);
+		panel_report.add(textField);
+		
+		JButton btnNewButton_2_1_1_1_1 = new JButton("ค้นหา");
+		btnNewButton_2_1_1_1_1.setBounds(740, 5, 74, 23);
+		panel_report.add(btnNewButton_2_1_1_1_1);
+		
+		JTabbedPane tabbedPane_1_1 = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_1_1.setBounds(10, 92, 804, 478);
+		panel_report.add(tabbedPane_1_1);
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setBounds(10, 61, 119, 20);
+		panel_report.add(dateChooser_1);
+		
+		JComboBox<String> comboBox_1 = new JComboBox<String>();
+		comboBox_1.setBounds(662, 59, 144, 22);
+		panel_report.add(comboBox_1);
+		
+		JLabel lblNewLabel_4 = new JLabel("ตัวกรอง");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel_4.setBounds(606, 63, 46, 14);
+		panel_report.add(lblNewLabel_4);
 		dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
