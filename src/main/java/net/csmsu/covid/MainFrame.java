@@ -398,13 +398,16 @@ public class MainFrame extends JFrame {
 					LoadDataVaccine(r);
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 1")) {
-					
+					List<Vaccine1> vaccine1s = service_vaccine.getVaccine1ByRidOrName(tfVaccine.getText());
+					LoadVaccine1(vaccine1s);
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 2")) {
-					
+					List<Vaccine2> vaccine2s = service_vaccine.getVaccine2ByRidOrName(tfVaccine.getText());
+					LoadVaccine2(vaccine2s);
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 3")) {
-					
+					List<Vaccine3> vaccine3s = service_vaccine.getVaccine3ByRidOrName(tfVaccine.getText());
+					LoadVaccine3(vaccine3s);
 				}
 			}
 		});

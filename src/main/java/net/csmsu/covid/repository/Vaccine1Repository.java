@@ -13,4 +13,7 @@ public interface Vaccine1Repository extends JpaRepository<Vaccine1,Integer> {
 	Vaccine1 getVaccineByRid(int rid);
 	
 	public List<Vaccine1> findByDate(Date date);
+	
+	@Query("select v from Vaccine1 v WHERE v.tbRegister.tbStudent.sid =:id OR v.tbRegister.tbStudent.firstname LIKE :text")
+	List<Vaccine1> getVaccineByRidOrName(String id, String text);
 }

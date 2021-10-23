@@ -40,6 +40,10 @@ public class ServiceVaccine {
 	}
 
 	/* vaccine1 */
+	public List<Vaccine1> getVaccine1ByRidOrName(String text){
+		return vaccine1_repo.getVaccineByRidOrName(text,"%"+text+"%");
+	}
+	
 	public List<Vaccine1> getAllVaccine1() {
 		return vaccine1_repo.findAll();
 	}
@@ -66,6 +70,10 @@ public class ServiceVaccine {
 	}
 
 	/* vaccine2 */
+	public List<Vaccine2> getVaccine2ByRidOrName(String text){
+		return vaccine2_repo.getVaccineByRidOrName(text,"%"+text+"%");
+	}
+	
 	public List<Vaccine2> getAllVaccine2() {
 		return vaccine2_repo.findAll();
 	}
@@ -90,6 +98,9 @@ public class ServiceVaccine {
 	}
 
 	/* vaccine3 */
+	public List<Vaccine3> getVaccine3ByRidOrName(String text){
+		return vaccine3_repo.getVaccineByRidOrName(text,"%"+text+"%");
+	}
 	public List<Vaccine3> getAllVaccine3() {
 		return vaccine3_repo.findAll();
 	}
