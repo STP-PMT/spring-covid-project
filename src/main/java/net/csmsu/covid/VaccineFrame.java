@@ -179,7 +179,6 @@ public class VaccineFrame extends JFrame {
 					label_vaccine2.setText(register.getTbVaccine2().getTbVaccine().getName());
 					label_vaccine3.setText(register.getTbVaccine3().getTbVaccine().getName());
 				}
-
 			}
 		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(

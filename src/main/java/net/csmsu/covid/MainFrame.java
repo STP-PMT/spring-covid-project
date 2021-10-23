@@ -95,6 +95,7 @@ public class MainFrame extends JFrame {
 	private JComboBox<String> comboBox;
 	private JTextField textField;
 	private JPanel panel;
+	private JDateChooser dateChooser;
 
 	/**
 	 * Launch the application.
@@ -422,7 +423,8 @@ public class MainFrame extends JFrame {
 							frame.addWindowListener(new WindowAdapter() {
 								@Override
 								public void windowClosed(WindowEvent e) {
-									List<Vaccine1> vaccine1s = service_vaccine.getAllVaccine1();
+									String strdate = setFormatDate(dateChooser);
+									List<Vaccine1> vaccine1s = service_vaccine.getVaccine1ByDate(java.sql.Date.valueOf(strdate));
 									LoadVaccine1(vaccine1s);
 								}
 							});
@@ -446,7 +448,8 @@ public class MainFrame extends JFrame {
 							frame.addWindowListener(new WindowAdapter() {
 								@Override
 								public void windowClosed(WindowEvent e) {
-									List<Vaccine2> vaccine2s = service_vaccine.getAllVaccine2();
+									String strdate = setFormatDate(dateChooser);
+									List<Vaccine2> vaccine2s = service_vaccine.getVaccine2ByDate(java.sql.Date.valueOf(strdate));
 									LoadVaccine2(vaccine2s);
 								}
 							});
@@ -470,7 +473,8 @@ public class MainFrame extends JFrame {
 							frame.addWindowListener(new WindowAdapter() {
 								@Override
 								public void windowClosed(WindowEvent e) {
-									List<Vaccine3> vaccine3s = service_vaccine.getAllVaccine3();
+									String strdate = setFormatDate(dateChooser);
+									List<Vaccine3> vaccine3s = service_vaccine.getVaccine3ByDate(java.sql.Date.valueOf(strdate));
 									LoadVaccine3(vaccine3s);
 								}
 							});
@@ -535,17 +539,20 @@ public class MainFrame extends JFrame {
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 1")) {
 					btn_manage.setVisible(false);
-					List<Vaccine1> vaccine1s = service_vaccine.getAllVaccine1();
+					String strdate = setFormatDate(dateChooser);
+					List<Vaccine1> vaccine1s = service_vaccine.getVaccine1ByDate(java.sql.Date.valueOf(strdate));
 					LoadVaccine1(vaccine1s);
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 2")) {
 					btn_manage.setVisible(false);
-					List<Vaccine2> vaccine2s = service_vaccine.getAllVaccine2();
+					String strdate = setFormatDate(dateChooser);
+					List<Vaccine2> vaccine2s = service_vaccine.getVaccine2ByDate(java.sql.Date.valueOf(strdate));
 					LoadVaccine2(vaccine2s);
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 3")) {
 					btn_manage.setVisible(false);
-					List<Vaccine3> vaccine3s = service_vaccine.getAllVaccine3();
+					String strdate = setFormatDate(dateChooser);
+					List<Vaccine3> vaccine3s = service_vaccine.getVaccine3ByDate(java.sql.Date.valueOf(strdate));
 					LoadVaccine3(vaccine3s);
 				}
 			}
@@ -597,7 +604,8 @@ public class MainFrame extends JFrame {
 		table_vaccine3 = new JTable();
 		scrollPane_5.setViewportView(table_vaccine3);
 
-		JDateChooser dateChooser = new JDateChooser();
+		dateChooser = new JDateChooser();
+		dateChooser.setDate(new Date());
 		dateChooser.setBounds(10, 59, 119, 20);
 		panel_vaccine.add(dateChooser);
 		
@@ -670,7 +678,6 @@ public class MainFrame extends JFrame {
 					}
 				}
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 1")) {
-
 					try {
 						String strdate = setFormatDate(dateChooser);
 						List<Vaccine1> vaccine1s = service_vaccine.getVaccine1ByDate(java.sql.Date.valueOf(strdate));
@@ -735,7 +742,6 @@ public class MainFrame extends JFrame {
 		DefaultTableModel model = new DefaultTableModel();
 		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 1", "วันที่ฉีด", "สถานะ" };
 		model.setColumnIdentifiers(columns);
-
 		for (Vaccine1 v : vaccine1s) {
 			int rid = v.getTbRegister().getRid();
 			int sid = v.getTbRegister().getTbStudent().getSid();
@@ -744,9 +750,10 @@ public class MainFrame extends JFrame {
 			String vaccineType = v.getTbVaccine().getName();
 			Date dateVaccine1 = v.getDate();
 			String status = v.getStatus();
-
-			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine1, status };
-			model.addRow(obj);
+			if(v.getTbRegister().getTbVaccine2()==null) {
+				Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine1, status };
+				model.addRow(obj);
+			}
 		}
 		table_vaccine1.setModel(model);
 	}
@@ -765,9 +772,10 @@ public class MainFrame extends JFrame {
 			String vaccineType = v.getTbVaccine().getName();
 			Date dateVaccine2 = v.getDate();
 			String status = v.getStatus();
-
-			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine2, status };
-			model.addRow(obj);
+			if(v.getTbRegister().getTbVaccine3()==null) {
+				Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine2, status };
+				model.addRow(obj);
+			}
 		}
 		table_vaccine2.setModel(model);
 	}
@@ -786,9 +794,10 @@ public class MainFrame extends JFrame {
 			String vaccineType = v.getTbVaccine().getName();
 			Date dateVaccine3 = v.getDate();
 			String status = v.getStatus();
-
-			Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine3, status };
-			model.addRow(obj);
+			if(v.getStatus()==null) {
+				Object[] obj = { rid, sid, firstname, lastname, vaccineType, dateVaccine3, status };
+				model.addRow(obj);
+			}
 		}
 		table_vaccine3.setModel(model);
 	}

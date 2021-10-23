@@ -103,6 +103,7 @@ public class ServiceVaccine {
 	public Vaccine3 updateVaccine3(Vaccine3 vaccine) {
 		return vaccine3_repo.save(vaccine);
 	}
+	
 	public boolean deleteVaccin3ByVid(int vid3) {
 		try {			
 			 vaccine3_repo.deleteById(vid3);
