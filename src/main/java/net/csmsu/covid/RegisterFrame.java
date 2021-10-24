@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import java.awt.event.WindowAdapter;
@@ -88,7 +89,8 @@ public class RegisterFrame extends JFrame {
 	}
 
 	public RegisterFrame() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\icon.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				"D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\icon.png"));
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -97,11 +99,11 @@ public class RegisterFrame extends JFrame {
 				if (rid == 0) {
 					List<Student> student = service_student.getStudentNotInRegister();
 					DefaultTableModel model = new DefaultTableModel();
-					Object[] columns = { "รหัสนิสิต", "ชื่อ", "นามสกุล"};
+					Object[] columns = { "รหัสนิสิต", "ชื่อ", "นามสกุล" };
 					model.setColumnIdentifiers(columns);
 
 					for (Student s : student) {
-						Object[] obj = {s.getSid(),s.getFirstname(),s.getLastname()};
+						Object[] obj = { s.getSid(), s.getFirstname(), s.getLastname() };
 						model.addRow(obj);
 					}
 					table.setModel(model);
@@ -134,7 +136,7 @@ public class RegisterFrame extends JFrame {
 		tfSid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setTextField(true);
-				
+
 			}
 		});
 		tfSid.setBounds(89, 64, 138, 20);
@@ -203,14 +205,11 @@ public class RegisterFrame extends JFrame {
 					Register register = new Register();
 					String id = tfSid.getText();
 					String date = setFormatDate(dateChooser);
-					List<Student> students = service_student.getStudentById(id);
-					for (Student s : students) {
-						register.setTbStudent(s);
-					}
+					Student student = service_student.getStudentById(id).get();
+					register.setTbStudent(student);
 					register.setDate(java.sql.Date.valueOf(date));
 					if (service_register.updateRegister(register) != null) {
 						JOptionPane.showMessageDialog(null, "ลงทะเบียน สำเร็จ");
-
 					} else {
 						JOptionPane.showMessageDialog(null, "ลงทะเบียน ไม่สำเร็จ!");
 					}
@@ -245,37 +244,31 @@ public class RegisterFrame extends JFrame {
 		dateChooser.setDate(new Date());
 		dateChooser.setBounds(89, 195, 138, 20);
 		contentPane.add(dateChooser);
-		
+
 		panel = new JPanel();
 		panel.setBounds(237, 64, 375, 237);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 375, 237);
 		panel.add(scrollPane);
-		
+
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				int selected = table.getSelectedRow();
-				int sid = (int) table.getModel().getValueAt(selected, 0);
-				tfSid.setText(sid+"");
+				String sid = (String) table.getModel().getValueAt(selected, 0);
+				tfSid.setText(sid + "");
 				if (!tfSid.getText().isEmpty()) {
 					String Sid = tfSid.getText();
-					List<Student> students = service_student.getStudentById(Sid);
-					for (Student s : students) {
-						tfFirstname.setText(s.getFirstname());
-						tfLastname.setText(s.getLastname());
-						tfMobile.setText(s.getMobile());
-						tfEmail.setText(s.getEmail());
-					}
-					if (!students.isEmpty()) {
-						setTextField(false);
-					} else {
-						clearTextField();
-					}
+					Student student = service_student.getStudentById(Sid).get();
+
+					tfFirstname.setText(student.getFirstname());
+					tfLastname.setText(student.getLastname());
+					tfMobile.setText(student.getMobile());
+					tfEmail.setText(student.getEmail());
 
 				} else {
 					clearTextField();

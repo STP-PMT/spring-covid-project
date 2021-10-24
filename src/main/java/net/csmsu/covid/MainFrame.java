@@ -220,22 +220,6 @@ public class MainFrame extends JFrame {
 		lblNewLabel_3.setBounds(119, 301, 614, 62);
 		panel_home.add(lblNewLabel_3);
 
-		JButton btnNewButton_6 = new JButton("New button");
-		btnNewButton_6.setBounds(176, 374, 89, 86);
-		panel_home.add(btnNewButton_6);
-
-		JButton btnNewButton_6_1 = new JButton("New button");
-		btnNewButton_6_1.setBounds(305, 374, 89, 86);
-		panel_home.add(btnNewButton_6_1);
-
-		JButton btnNewButton_6_2 = new JButton("New button");
-		btnNewButton_6_2.setBounds(586, 374, 89, 86);
-		panel_home.add(btnNewButton_6_2);
-
-		JButton btnNewButton_6_3 = new JButton("New button");
-		btnNewButton_6_3.setBounds(449, 374, 89, 86);
-		panel_home.add(btnNewButton_6_3);
-
 		JPanel panel_student = new JPanel();
 		panel_student.setBackground(new Color(224, 255, 255));
 		panel_card.add(panel_student, "Student");
@@ -278,17 +262,69 @@ public class MainFrame extends JFrame {
 		btnNewButton_2.setBounds(740, 11, 74, 23);
 		panel_student.add(btnNewButton_2);
 		
-		JButton btnNewButton_7 = new JButton("เพิ่มข้อมูล");
-		btnNewButton_7.setBounds(560, 53, 79, 23);
-		panel_student.add(btnNewButton_7);
+		JButton btnAdd = new JButton("เพิ่มข้อมูล");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				StudentFrame frame = new StudentFrame(service_student);
+				frame.setVisible(true);
+				frame.addWindowListener(new WindowAdapter() {
+					@Override
+					public void windowClosed(WindowEvent e) {
+						List<Student> s = service_student.getAllStudent();
+						LoadDataStudent(s);
+					}
+				});
+			}
+		});
+		btnAdd.setBounds(560, 53, 79, 23);
+		panel_student.add(btnAdd);
 		
-		JButton btnNewButton_7_1 = new JButton("เพิ่มข้อมูล");
-		btnNewButton_7_1.setBounds(646, 53, 79, 23);
-		panel_student.add(btnNewButton_7_1);
+		JButton btnEdit = new JButton("แก้ไข");
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String id = (String) table_student.getValueAt(table_student.getSelectedRow(), 0);
+					System.err.println("Sid :"+id);
+					StudentFrame frame = new StudentFrame(service_student);
+					frame.setSid(id);
+					frame.setVisible(true);
+					frame.addWindowListener(new WindowAdapter() {
+						@Override
+						public void windowClosed(WindowEvent e) {
+							List<Student> s = service_student.getAllStudent();
+							LoadDataStudent(s);
+						}
+					});
+				} catch (Exception ex) {
+				}
+			}
+		});
 		
-		JButton btnNewButton_7_2 = new JButton("เพิ่มข้อมูล");
-		btnNewButton_7_2.setBounds(735, 53, 79, 23);
-		panel_student.add(btnNewButton_7_2);
+		btnEdit.setBounds(646, 53, 79, 23);
+		panel_student.add(btnEdit);
+		
+		JButton btnDelete = new JButton("ลบ");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String id = (String) table_student.getValueAt(table_student.getSelectedRow(), 0);
+					int input = JOptionPane.showConfirmDialog(null, "ลบข้อมูลนิสิตรหัส " + id, "ลบข้อมูลนิสิต",
+							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+					if (input == 0) {
+						if (service_student.deleteBySid(id)) {
+							JOptionPane.showMessageDialog(null, "ลบสำเร็จ");
+						} else {
+							JOptionPane.showMessageDialog(null, "ลบไม่สำเร็จ");
+						}
+					}
+					List<Student> s = service_student.getAllStudent();
+					LoadDataStudent(s);
+				} catch (Exception ex) {
+				}
+			}
+		});
+		btnDelete.setBounds(735, 53, 79, 23);
+		panel_student.add(btnDelete);
 
 		JPanel panel_register = new JPanel();
 		panel_register.setBackground(new Color(224, 255, 255));
