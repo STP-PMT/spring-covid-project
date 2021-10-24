@@ -1,7 +1,5 @@
 package net.csmsu.covid;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import net.csmsu.covid.entity.Register;
-import net.csmsu.covid.entity.Vaccine;
 import net.csmsu.covid.service.ServiceRegister;
 import net.csmsu.covid.service.ServiceVaccine;
 
@@ -20,15 +17,12 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.List;
 
 public class ManageVaccineFrame extends JFrame {
 

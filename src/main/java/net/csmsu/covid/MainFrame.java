@@ -1,7 +1,5 @@
 package net.csmsu.covid;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -32,12 +30,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.JList;
+
 import javax.swing.JButton;
-import java.awt.FlowLayout;
-import javax.swing.JDesktopPane;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+
+
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -48,16 +44,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTabbedPane;
 import com.toedter.calendar.JDateChooser;
-import java.awt.event.HierarchyListener;
-import java.awt.event.HierarchyEvent;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.VetoableChangeListener;
+
 import java.text.SimpleDateFormat;
-import java.awt.event.ContainerAdapter;
-import java.awt.event.ContainerEvent;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.event.ChangeListener;
@@ -65,7 +57,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
-import javax.swing.JTextArea;
 
 @Component
 public class MainFrame extends JFrame {

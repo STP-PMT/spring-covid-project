@@ -1,7 +1,5 @@
 package net.csmsu.covid;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,7 +20,6 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.List;
 import java.util.Optional;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -82,8 +79,8 @@ public class StudentFrame extends JFrame {
 		tfSid.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent ke) {
-				if ((ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') || ke.getKeyChar() == ke.VK_BACK_SPACE
-						|| ke.getKeyChar() == ke.VK_DELETE) {
+				if ((ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE
+						|| ke.getKeyChar() == KeyEvent.VK_DELETE) {
 					tfSid.setEditable(true);
 					adSid.setText("");
 				} else {
@@ -149,8 +146,8 @@ public class StudentFrame extends JFrame {
 		tfMobile.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent ke) {
-				if ((ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') || ke.getKeyChar() == ke.VK_BACK_SPACE
-						|| ke.getKeyChar() == ke.VK_DELETE) {
+				if ((ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE
+						|| ke.getKeyChar() == KeyEvent.VK_DELETE) {
 					tfMobile.setEditable(true);
 					adMobile.setText("");
 				} else {
