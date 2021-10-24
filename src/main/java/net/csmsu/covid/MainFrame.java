@@ -263,6 +263,7 @@ public class MainFrame extends JFrame {
 		panel_student.add(btnNewButton_2);
 		
 		JButton btnAdd = new JButton("เพิ่มข้อมูล");
+		btnAdd.setBackground(Color.GREEN);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				StudentFrame frame = new StudentFrame(service_student);
@@ -280,6 +281,7 @@ public class MainFrame extends JFrame {
 		panel_student.add(btnAdd);
 		
 		JButton btnEdit = new JButton("แก้ไข");
+		btnEdit.setBackground(Color.YELLOW);
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -304,6 +306,7 @@ public class MainFrame extends JFrame {
 		panel_student.add(btnEdit);
 		
 		JButton btnDelete = new JButton("ลบ");
+		btnDelete.setBackground(Color.RED);
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -347,7 +350,7 @@ public class MainFrame extends JFrame {
 		search_register.setToolTipText("search");
 		search_register.setForeground(Color.BLACK);
 		search_register.setColumns(10);
-		search_register.setBounds(594, 12, 144, 20);
+		search_register.setBounds(560, 12, 177, 20);
 		panel_register.add(search_register);
 
 		JButton btnNewButton_2_1 = new JButton("ค้นหา");
@@ -375,7 +378,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		btnNewButton_3.setBackground(new Color(0, 204, 51));
-		btnNewButton_3.setBounds(10, 53, 89, 23);
+		btnNewButton_3.setBounds(560, 53, 81, 23);
 		panel_register.add(btnNewButton_3);
 
 		JButton btnNewButton_4 = new JButton("แก้ไข");
@@ -399,7 +402,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		btnNewButton_4.setBackground(new Color(255, 255, 51));
-		btnNewButton_4.setBounds(107, 53, 89, 23);
+		btnNewButton_4.setBounds(647, 53, 79, 23);
 		panel_register.add(btnNewButton_4);
 
 		JButton btnNewButton_5 = new JButton("ลบ");
@@ -424,7 +427,7 @@ public class MainFrame extends JFrame {
 		});
 		btnNewButton_5.setForeground(Color.WHITE);
 		btnNewButton_5.setBackground(Color.RED);
-		btnNewButton_5.setBounds(205, 53, 89, 23);
+		btnNewButton_5.setBounds(735, 53, 79, 23);
 		panel_register.add(btnNewButton_5);
 
 		JPanel panel_vaccine = new JPanel();
