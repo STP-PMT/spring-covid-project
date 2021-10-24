@@ -38,6 +38,8 @@ import javax.swing.JTable;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
+import java.awt.Color;
+import javax.swing.ImageIcon;
 
 @Component
 public class RegisterFrame extends JFrame {
@@ -61,6 +63,7 @@ public class RegisterFrame extends JFrame {
 	ServiceRegister service_register;
 	private JPanel panel;
 	private JTable table;
+	private JTextField tfSearchStudent;
 
 	/**
 	 * Launch the application.
@@ -98,15 +101,7 @@ public class RegisterFrame extends JFrame {
 				LoadEdit();
 				if (rid == 0) {
 					List<Student> student = service_student.getStudentNotInRegister();
-					DefaultTableModel model = new DefaultTableModel();
-					Object[] columns = { "รหัสนิสิต", "ชื่อ", "นามสกุล" };
-					model.setColumnIdentifiers(columns);
-
-					for (Student s : student) {
-						Object[] obj = { s.getSid(), s.getFirstname(), s.getLastname() };
-						model.addRow(obj);
-					}
-					table.setModel(model);
+					LoadStudent(student);
 				}
 
 			}
@@ -120,7 +115,7 @@ public class RegisterFrame extends JFrame {
 		UIManager.put("OptionPane.messageFont", new Font("Tahoma", Font.PLAIN, 14));
 		setTitle("ลงทะเบียนต้องการวัคซีน");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 638, 355);
+		setBounds(100, 100, 638, 373);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -128,7 +123,7 @@ public class RegisterFrame extends JFrame {
 
 		JLabel lblNewLabel = new JLabel("รหัสนิสิต");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(33, 64, 46, 14);
+		lblNewLabel.setBounds(33, 92, 46, 14);
 		contentPane.add(lblNewLabel);
 
 		tfSid = new JTextField();
@@ -139,52 +134,52 @@ public class RegisterFrame extends JFrame {
 
 			}
 		});
-		tfSid.setBounds(89, 64, 138, 20);
+		tfSid.setBounds(89, 92, 138, 20);
 		contentPane.add(tfSid);
 		tfSid.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("ชื่อ");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setBounds(33, 92, 46, 14);
+		lblNewLabel_1.setBounds(33, 120, 46, 14);
 		contentPane.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_1_1 = new JLabel("นามสกุล");
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1.setBounds(33, 117, 46, 14);
+		lblNewLabel_1_1.setBounds(33, 145, 46, 14);
 		contentPane.add(lblNewLabel_1_1);
 
 		JLabel lblNewLabel_1_1_2 = new JLabel("เบอร์โทร");
 		lblNewLabel_1_1_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_2.setBounds(33, 145, 46, 14);
+		lblNewLabel_1_1_2.setBounds(33, 173, 46, 14);
 		contentPane.add(lblNewLabel_1_1_2);
 
 		JLabel lblNewLabel_1_1_2_1 = new JLabel("อีเมล");
 		lblNewLabel_1_1_2_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_2_1.setBounds(33, 170, 46, 14);
+		lblNewLabel_1_1_2_1.setBounds(33, 198, 46, 14);
 		contentPane.add(lblNewLabel_1_1_2_1);
 
 		tfFirstname = new JTextField();
 		tfFirstname.setEditable(false);
 		tfFirstname.setColumns(10);
-		tfFirstname.setBounds(89, 89, 138, 20);
+		tfFirstname.setBounds(89, 117, 138, 20);
 		contentPane.add(tfFirstname);
 
 		tfLastname = new JTextField();
 		tfLastname.setEditable(false);
 		tfLastname.setColumns(10);
-		tfLastname.setBounds(89, 114, 138, 20);
+		tfLastname.setBounds(89, 142, 138, 20);
 		contentPane.add(tfLastname);
 
 		tfMobile = new JTextField();
 		tfMobile.setEditable(false);
 		tfMobile.setColumns(10);
-		tfMobile.setBounds(89, 142, 138, 20);
+		tfMobile.setBounds(89, 170, 138, 20);
 		contentPane.add(tfMobile);
 
 		tfEmail = new JTextField();
 		tfEmail.setEditable(false);
 		tfEmail.setColumns(10);
-		tfEmail.setBounds(89, 167, 138, 20);
+		tfEmail.setBounds(89, 195, 138, 20);
 		contentPane.add(tfEmail);
 
 		JButton btnNewButton = new JButton("ยืนยัน");
@@ -217,7 +212,7 @@ public class RegisterFrame extends JFrame {
 				dispose();
 			}
 		});
-		btnNewButton.setBounds(39, 278, 89, 23);
+		btnNewButton.setBounds(39, 306, 89, 23);
 		contentPane.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("ยกเลิก");
@@ -226,12 +221,12 @@ public class RegisterFrame extends JFrame {
 				dispose();
 			}
 		});
-		btnNewButton_1.setBounds(138, 278, 89, 23);
+		btnNewButton_1.setBounds(138, 306, 89, 23);
 		contentPane.add(btnNewButton_1);
 
 		JLabel lblNewLabel_1_1_2_1_1 = new JLabel("วันที่ลงทะเบียน");
 		lblNewLabel_1_1_2_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_2_1_1.setBounds(10, 195, 69, 14);
+		lblNewLabel_1_1_2_1_1.setBounds(10, 223, 69, 14);
 		contentPane.add(lblNewLabel_1_1_2_1_1);
 
 		label_title = new JLabel("ลงทะเบียนต้องการวัคซีน");
@@ -242,11 +237,11 @@ public class RegisterFrame extends JFrame {
 		dateChooser = new JDateChooser();
 		dateChooser.setDateFormatString("dd-MMMM-yyyy");
 		dateChooser.setDate(new Date());
-		dateChooser.setBounds(89, 195, 138, 20);
+		dateChooser.setBounds(89, 223, 138, 20);
 		contentPane.add(dateChooser);
 
 		panel = new JPanel();
-		panel.setBounds(237, 64, 375, 237);
+		panel.setBounds(237, 92, 375, 237);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -276,6 +271,36 @@ public class RegisterFrame extends JFrame {
 			}
 		});
 		scrollPane.setViewportView(table);
+		
+		tfSearchStudent = new JTextField();
+		tfSearchStudent.setToolTipText("search");
+		tfSearchStudent.setForeground(Color.BLACK);
+		tfSearchStudent.setColumns(10);
+		tfSearchStudent.setBounds(347, 59, 144, 20);
+		contentPane.add(tfSearchStudent);
+		
+		JButton btnSearch = new JButton("ค้นหา");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String id = tfSearchStudent.getText();
+				List<Student> students = service_student.getStudentNotInRegister(id);
+				LoadStudent(students);
+			}
+		});
+		btnSearch.setBounds(493, 58, 59, 23);
+		contentPane.add(btnSearch);
+		
+		JButton btnRefresh = new JButton("");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Student> student = service_student.getStudentNotInRegister();
+				LoadStudent(student);
+				tfSearchStudent.setText("");
+			}
+		});
+		btnRefresh.setIcon(new ImageIcon("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\refresh.png"));
+		btnRefresh.setBounds(555, 58, 57, 23);
+		contentPane.add(btnRefresh);
 	}
 
 	public RegisterFrame(ServiceStudent service_student, ServiceRegister service_register) {
@@ -322,5 +347,16 @@ public class RegisterFrame extends JFrame {
 			setTitle("แก้ไขการลงทะเบียน");
 
 		}
+	}
+	void LoadStudent(List<Student> student) {
+		DefaultTableModel model = new DefaultTableModel();
+		Object[] columns = { "รหัสนิสิต", "ชื่อ", "นามสกุล" };
+		model.setColumnIdentifiers(columns);
+
+		for (Student s : student) {
+			Object[] obj = { s.getSid(), s.getFirstname(), s.getLastname() };
+			model.addRow(obj);
+		}
+		table.setModel(model);
 	}
 }
