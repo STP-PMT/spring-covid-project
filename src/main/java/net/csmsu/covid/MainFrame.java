@@ -923,6 +923,9 @@ public class MainFrame extends JFrame {
 		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 1", "วันที่ฉีด", "สถานะ" };
 		model.setColumnIdentifiers(columns);
 		for (Vaccine1 v : vaccine1s) {
+			if(v.getTbRegister() ==null) {
+				continue;
+			}
 			int rid = v.getTbRegister().getRid();
 			String sid = v.getTbRegister().getTbStudent().getSid();
 			String firstname = v.getTbRegister().getTbStudent().getFirstname();

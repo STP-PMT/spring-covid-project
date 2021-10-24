@@ -269,6 +269,11 @@ public class StudentFrame extends JFrame {
 	}
 
 	private void checkTextField(Student s) {
+		adSid.setText("");
+		adFirstname.setText("");
+		adMobile.setText("");
+		adLastname.setText("");
+		adEmail.setText("");
 		if (tfSid.getText().length() == 11) {
 			if(sid=="") {
 				Optional<Student> student = service_student.getStudentById(tfSid.getText());
@@ -286,9 +291,21 @@ public class StudentFrame extends JFrame {
 		} else {
 			adMobile.setText("เบอร์โทรไม่ถูกต้อง");
 		}
-		s.setFirstname(tfFirstname.getText());
-		s.setLastname(tfLastname.getText());
-		s.setEmail(tfEmail.getText());
+		if(!tfFirstname.getText().isEmpty()) {
+			s.setFirstname(tfFirstname.getText());
+		}else {
+			adFirstname.setText("ใส่ชื่อ");
+		}
+		if(!tfLastname.getText().isEmpty()) {
+			s.setLastname(tfLastname.getText());
+		}else {
+			adLastname.setText("ใส่นามสกุล");
+		}
+		if(!tfEmail.getText().isEmpty()) {
+			s.setEmail(tfEmail.getText());
+		}else {
+			adEmail.setText("ใส่อีเมล");
+		}
 	}
 
 }
