@@ -144,7 +144,7 @@ public class VaccineFrame extends JFrame {
 					}
 					Random random = new Random();
 					int day = random.nextInt(14 - 7 + 1) + 7;
-					// ystem.err.println("Day : "+day);
+					System.err.println("Vaccine 2 Day : "+day);
 					dateVaccine2 = setDateVaccine(register.getTbVaccine1().getDate(), day);
 					SimpleDateFormat format = new SimpleDateFormat("dd/MMMM/yyyy", Locale.ENGLISH);
 					label_dateVaccine2.setText(format.format(dateVaccine2));
@@ -158,13 +158,12 @@ public class VaccineFrame extends JFrame {
 					CardLayout cl = (CardLayout) panel_card.getLayout();
 					cl.show(panel_card, "vaccine3");
 					for (Vaccine v : vs) {
-						System.out.println("Name : " + v.getName());
 						vaccineMap.put(v.getName(), v.getVid());
 						combo_vaccine3.addItem(v.getName());
 					}
 					Random random = new Random();
 					int day = random.nextInt(45 - 30 + 1) + 30;
-
+					System.err.println("Vaccine 3 Day : "+day);
 					dateVaccine3 = setDateVaccine(register.getTbVaccine2().getDate(), day);
 					SimpleDateFormat format = new SimpleDateFormat("dd/MMMM/yyyy", Locale.ENGLISH);
 					label_dateVaccine3.setText(format.format(dateVaccine3));
