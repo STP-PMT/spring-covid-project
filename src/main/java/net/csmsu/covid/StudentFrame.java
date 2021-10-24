@@ -251,6 +251,11 @@ public class StudentFrame extends JFrame {
 		contentPane.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("ยกเลิก");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		btnNewButton_1.setBounds(235, 228, 89, 23);
 		contentPane.add(btnNewButton_1);
 	}
