@@ -948,6 +948,9 @@ public class MainFrame extends JFrame {
 		model.setColumnIdentifiers(columns);
 
 		for (Vaccine2 v : vaccine2s) {
+			if(v.getTbRegister() ==null) {
+				continue;
+			}
 			int rid = v.getTbRegister().getRid();
 			String sid = v.getTbRegister().getTbStudent().getSid();
 			String firstname = v.getTbRegister().getTbStudent().getFirstname();
@@ -970,6 +973,9 @@ public class MainFrame extends JFrame {
 		model.setColumnIdentifiers(columns);
 
 		for (Vaccine3 v : vaccine3s) {
+			if(v.getTbRegister() ==null) {
+				continue;
+			}
 			int rid = v.getTbRegister().getRid();
 			String sid = v.getTbRegister().getTbStudent().getSid();
 			String firstname = v.getTbRegister().getTbStudent().getFirstname();
