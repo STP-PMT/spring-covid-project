@@ -23,6 +23,8 @@ public class Vaccine1 implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date date;
 
+	private String status;
+
 	//bi-directional many-to-one association to Register
 	@OneToMany(mappedBy="tbVaccine1")
 	private List<Register> tbRegisters;
@@ -54,6 +56,14 @@ public class Vaccine1 implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public List<Register> getTbRegisters() {

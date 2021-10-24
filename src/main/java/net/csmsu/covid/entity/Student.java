@@ -16,7 +16,7 @@ public class Student implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int sid;
+	private String sid;
 
 	private String email;
 
@@ -33,11 +33,11 @@ public class Student implements Serializable {
 	public Student() {
 	}
 
-	public int getSid() {
+	public String getSid() {
 		return this.sid;
 	}
 
-	public void setSid(int sid) {
+	public void setSid(String sid) {
 		this.sid = sid;
 	}
 
