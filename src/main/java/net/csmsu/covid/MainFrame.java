@@ -328,6 +328,19 @@ public class MainFrame extends JFrame {
 		});
 		btnDelete.setBounds(735, 53, 79, 23);
 		panel_student.add(btnDelete);
+		
+		JButton btnRefresh = new JButton("");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				search_student.setText("");
+				String id = search_student.getText();
+				List<Student> students = service_student.getStudentBySidOrName(id);
+				LoadDataStudent(students);
+			}
+		});
+		btnRefresh.setIcon(new ImageIcon("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\refresh.png"));
+		btnRefresh.setBounds(525, 11, 31, 20);
+		panel_student.add(btnRefresh);
 
 		JPanel panel_register = new JPanel();
 		panel_register.setBackground(new Color(224, 255, 255));
@@ -357,7 +370,7 @@ public class MainFrame extends JFrame {
 		btnNewButton_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				List<Register> r = service_register.getRegisterByRidOrName(search_register.getText());
-				LoadReport(r);
+				LoadDataRegister(r);
 			}
 		});
 		btnNewButton_2_1.setBounds(740, 11, 74, 23);
@@ -429,6 +442,19 @@ public class MainFrame extends JFrame {
 		btnNewButton_5.setBackground(Color.RED);
 		btnNewButton_5.setBounds(735, 53, 79, 23);
 		panel_register.add(btnNewButton_5);
+		
+		JButton btnRefresh_1 = new JButton("");
+		btnRefresh_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				search_register.setText("");
+				List<Register> r = service_register.getRegisterByRidOrName(search_register.getText());
+				LoadDataRegister(r);
+				
+			}
+		});
+		btnRefresh_1.setIcon(new ImageIcon("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\refresh.png"));
+		btnRefresh_1.setBounds(525, 12, 31, 20);
+		panel_register.add(btnRefresh_1);
 
 		JPanel panel_vaccine = new JPanel();
 		panel_vaccine.setBackground(new Color(224, 255, 255));
@@ -719,6 +745,32 @@ public class MainFrame extends JFrame {
 		lblNewLabel.setBounds(10, 15, 46, 14);
 		panel.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
+		JButton btnRefresh_1_1_1 = new JButton("");
+		btnRefresh_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tfVaccine.setText("");
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
+					List<Register> r = service_register.getRegisterByRidOrName(tfVaccine.getText());
+					LoadDataVaccine(r);
+				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 1")) {
+					List<Vaccine1> vaccine1s = service_vaccine.getVaccine1ByRidOrName(tfVaccine.getText());
+					LoadVaccine1(vaccine1s);
+				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 2")) {
+					List<Vaccine2> vaccine2s = service_vaccine.getVaccine2ByRidOrName(tfVaccine.getText());
+					LoadVaccine2(vaccine2s);
+				}
+				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("เข็มที่ 3")) {
+					List<Vaccine3> vaccine3s = service_vaccine.getVaccine3ByRidOrName(tfVaccine.getText());
+					LoadVaccine3(vaccine3s);
+				}
+			}
+		});
+		btnRefresh_1_1_1.setIcon(new ImageIcon("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\refresh.png"));
+		btnRefresh_1_1_1.setBounds(561, 12, 31, 20);
+		panel_vaccine.add(btnRefresh_1_1_1);
 
 		JPanel panel_report = new JPanel();
 		panel_report.setBackground(new Color(224, 255, 255));
@@ -766,6 +818,18 @@ public class MainFrame extends JFrame {
 			}
 		});
 		scrollPane_6.setViewportView(table_report);
+		
+		JButton btnRefresh_1_1 = new JButton("");
+		btnRefresh_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField.setText("");
+				List<Register> r = service_register.getRegisterByRidOrName(textField.getText());
+				LoadReport(r);
+			}
+		});
+		btnRefresh_1_1.setIcon(new ImageIcon("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\refresh.png"));
+		btnRefresh_1_1.setBounds(560, 11, 31, 20);
+		panel_report.add(btnRefresh_1_1);
 		dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
@@ -940,6 +1004,7 @@ public class MainFrame extends JFrame {
 	}
 
 	void Filter() {
+		tfVaccine.setText("");
 		if (tabbedPane_1.getTitleAt(tabbedPane_1.getSelectedIndex()).equals("รายชื่อลงทะเบียน")) {
 			if (comboBox.getSelectedItem().equals("ทั้งหมด")) {
 				List<Register> registers = service_register.getAllRegister();
