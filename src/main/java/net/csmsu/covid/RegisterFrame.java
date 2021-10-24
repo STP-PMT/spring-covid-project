@@ -283,8 +283,13 @@ public class RegisterFrame extends JFrame {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String id = tfSearchStudent.getText();
-				List<Student> students = service_student.getStudentNotInRegister(id);
-				LoadStudent(students);
+				try {
+					List<Student> students = service_student.getStudentNotInRegister(id);
+					LoadStudent(students);
+				} catch (NullPointerException e2) {
+					// TODO: handle exception
+				}
+				
 			}
 		});
 		btnSearch.setBounds(493, 58, 59, 23);
@@ -293,9 +298,16 @@ public class RegisterFrame extends JFrame {
 		JButton btnRefresh = new JButton("");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				List<Student> student = service_student.getStudentNotInRegister();
-				LoadStudent(student);
-				tfSearchStudent.setText("");
+				try {
+					List<Student> student = service_student.getStudentNotInRegister();
+						LoadStudent(student);
+						tfSearchStudent.setText("");
+				} catch (NullPointerException e2) {
+					// TODO: handle exception
+				}
+				
+				
+				
 			}
 		});
 		btnRefresh.setIcon(new ImageIcon("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\refresh.png"));
@@ -354,6 +366,7 @@ public class RegisterFrame extends JFrame {
 		model.setColumnIdentifiers(columns);
 
 		for (Student s : student) {
+			
 			Object[] obj = { s.getSid(), s.getFirstname(), s.getLastname() };
 			model.addRow(obj);
 		}

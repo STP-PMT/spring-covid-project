@@ -39,7 +39,7 @@ public class StudentFrame extends JFrame {
 	private JTextField tfLastname;
 	private JTextField tfMobile;
 	private JTextField tfEmail;
-	private JLabel lblNewLabel_2;
+	private JLabel lbTitle;
 	private JLabel adSid;
 	private JLabel adFirstname;
 	private JLabel adLastname;
@@ -57,6 +57,7 @@ public class StudentFrame extends JFrame {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				if (sid != "") {
+					lbTitle.setText("แก้ไขข้อมูล");
 					Student student = service_student.getStudentById(sid).get();
 					tfSid.setText(student.getSid());
 					tfFirstname.setText(student.getFirstname());
@@ -177,11 +178,11 @@ public class StudentFrame extends JFrame {
 		lblNewLabel_1_1_2_1.setBounds(23, 163, 46, 14);
 		contentPane.add(lblNewLabel_1_1_2_1);
 
-		lblNewLabel_2 = new JLabel("เพิ่มข้อมูลนิสิต");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setBounds(79, 11, 138, 20);
-		contentPane.add(lblNewLabel_2);
+		lbTitle = new JLabel("เพิ่มข้อมูลนิสิต");
+		lbTitle.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lbTitle.setBounds(79, 11, 138, 20);
+		contentPane.add(lbTitle);
 
 		adSid = new JLabel("");
 		adSid.setHorizontalAlignment(SwingConstants.CENTER);
