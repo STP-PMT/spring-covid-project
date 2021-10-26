@@ -33,7 +33,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import javax.swing.JButton;
 
-
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -252,7 +251,7 @@ public class MainFrame extends JFrame {
 		});
 		btnNewButton_2.setBounds(740, 11, 74, 23);
 		panel_student.add(btnNewButton_2);
-		
+
 		JButton btnAdd = new JButton("เพิ่มข้อมูล");
 		btnAdd.setBackground(Color.GREEN);
 		btnAdd.addActionListener(new ActionListener() {
@@ -270,14 +269,14 @@ public class MainFrame extends JFrame {
 		});
 		btnAdd.setBounds(560, 53, 79, 23);
 		panel_student.add(btnAdd);
-		
+
 		JButton btnEdit = new JButton("แก้ไข");
 		btnEdit.setBackground(Color.YELLOW);
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					String id = (String) table_student.getValueAt(table_student.getSelectedRow(), 0);
-					System.err.println("Sid :"+id);
+					System.err.println("Sid :" + id);
 					StudentFrame frame = new StudentFrame(service_student);
 					frame.setSid(id);
 					frame.setVisible(true);
@@ -292,10 +291,10 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
-		
+
 		btnEdit.setBounds(646, 53, 79, 23);
 		panel_student.add(btnEdit);
-		
+
 		JButton btnDelete = new JButton("ลบ");
 		btnDelete.setBackground(Color.RED);
 		btnDelete.addActionListener(new ActionListener() {
@@ -319,7 +318,7 @@ public class MainFrame extends JFrame {
 		});
 		btnDelete.setBounds(735, 53, 79, 23);
 		panel_student.add(btnDelete);
-		
+
 		JButton btnRefresh = new JButton("");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -329,7 +328,8 @@ public class MainFrame extends JFrame {
 				LoadDataStudent(students);
 			}
 		});
-		btnRefresh.setIcon(new ImageIcon("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\refresh.png"));
+		btnRefresh.setIcon(new ImageIcon(
+				"D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\refresh.png"));
 		btnRefresh.setBounds(525, 11, 31, 20);
 		panel_student.add(btnRefresh);
 
@@ -433,17 +433,18 @@ public class MainFrame extends JFrame {
 		btnNewButton_5.setBackground(Color.RED);
 		btnNewButton_5.setBounds(735, 53, 79, 23);
 		panel_register.add(btnNewButton_5);
-		
+
 		JButton btnRefresh_1 = new JButton("");
 		btnRefresh_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				search_register.setText("");
 				List<Register> r = service_register.getRegisterByRidOrName(search_register.getText());
 				LoadDataRegister(r);
-				
+
 			}
 		});
-		btnRefresh_1.setIcon(new ImageIcon("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\refresh.png"));
+		btnRefresh_1.setIcon(new ImageIcon(
+				"D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\refresh.png"));
 		btnRefresh_1.setBounds(525, 12, 31, 20);
 		panel_register.add(btnRefresh_1);
 
@@ -736,7 +737,7 @@ public class MainFrame extends JFrame {
 		lblNewLabel.setBounds(10, 15, 46, 14);
 		panel.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		
+
 		JButton btnRefresh_1_1_1 = new JButton("");
 		btnRefresh_1_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -759,7 +760,8 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
-		btnRefresh_1_1_1.setIcon(new ImageIcon("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\refresh.png"));
+		btnRefresh_1_1_1.setIcon(new ImageIcon(
+				"D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\refresh.png"));
 		btnRefresh_1_1_1.setBounds(561, 12, 31, 20);
 		panel_vaccine.add(btnRefresh_1_1_1);
 
@@ -809,7 +811,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		scrollPane_6.setViewportView(table_report);
-		
+
 		JButton btnRefresh_1_1 = new JButton("");
 		btnRefresh_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -818,7 +820,8 @@ public class MainFrame extends JFrame {
 				LoadReport(r);
 			}
 		});
-		btnRefresh_1_1.setIcon(new ImageIcon("D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\refresh.png"));
+		btnRefresh_1_1.setIcon(new ImageIcon(
+				"D:\\Documents\\Data_warehouse\\Covid vaccination project for students\\covid-project\\src\\asssets\\imgaes\\refresh.png"));
 		btnRefresh_1_1.setBounds(560, 11, 31, 20);
 		panel_report.add(btnRefresh_1_1);
 		dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
@@ -872,7 +875,7 @@ public class MainFrame extends JFrame {
 		}
 		table_register.setModel(model);
 	}
-	
+
 	void LoadReport(List<Register> registers) {
 
 		DefaultTableModel model = new DefaultTableModel();
@@ -914,7 +917,7 @@ public class MainFrame extends JFrame {
 		Object[] columns = { "รหัสลงทะเบียน", "รหัสนิสิต", "ชื่อ", "นามสกุล", "เข็มที่ 1", "วันที่ฉีด", "สถานะ" };
 		model.setColumnIdentifiers(columns);
 		for (Vaccine1 v : vaccine1s) {
-			if(v.getTbRegister() ==null) {
+			if (v.getTbRegister() == null) {
 				continue;
 			}
 			int rid = v.getTbRegister().getRid();
@@ -939,7 +942,7 @@ public class MainFrame extends JFrame {
 		model.setColumnIdentifiers(columns);
 
 		for (Vaccine2 v : vaccine2s) {
-			if(v.getTbRegister() ==null) {
+			if (v.getTbRegister() == null) {
 				continue;
 			}
 			int rid = v.getTbRegister().getRid();
@@ -964,7 +967,7 @@ public class MainFrame extends JFrame {
 		model.setColumnIdentifiers(columns);
 
 		for (Vaccine3 v : vaccine3s) {
-			if(v.getTbRegister() ==null) {
+			if (v.getTbRegister() == null) {
 				continue;
 			}
 			int rid = v.getTbRegister().getRid();
